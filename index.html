@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQMAL LANGKAWI SERVICES | Car Rental, Tours and Transfers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --bg-soft: #fff8ef;
+            --ink: #10243f;
+            --brand: #0f7ff2;
+            --brand-strong: #005ec4;
+            --accent: #ff8c2a;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 10% 2%, rgba(15, 127, 242, 0.08), transparent 42%),
+                radial-gradient(circle at 90% 0%, rgba(255, 140, 42, 0.1), transparent 38%),
+                linear-gradient(180deg, #f4f5f7 0%, #fbfbfd 38%, #ffffff 100%);
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Sora', sans-serif;
+        }
+
+        .page-content {
+            display: none;
+            animation: rise 0.45s ease-out forwards;
+        }
+
+        .page-active {
+            display: block;
+        }
+
+        .active-link {
+            color: var(--brand);
+        }
+
+        .mesh-card {
+            background:
+                linear-gradient(140deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.72)),
+                radial-gradient(circle at 16% 16%, rgba(15, 127, 242, 0.12), transparent 46%);
+            backdrop-filter: blur(10px);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .mesh-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px rgba(15, 35, 64, 0.12);
+        }
+
+        .float-orb {
+            animation: drift 9s ease-in-out infinite;
+        }
+
+        .float-orb.delay {
+            animation-delay: 1.6s;
+        }
+
+        .animate-pop {
+            animation: popIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px) scale(0.985);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .reveal-delay-1 {
+            transition-delay: 0.08s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.16s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.24s;
+        }
+
+        .btn-lift {
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+        }
+
+        .btn-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(2, 12, 28, 0.15);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 30px rgba(15, 35, 64, 0.11);
+        }
+
+        .apple-card {
+            border-radius: 1.75rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .apple-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 46px rgba(2, 6, 23, 0.12);
+        }
+
+        .package-image {
+            width: 100%;
+            height: 220px;
+            border-radius: 1.2rem;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .pill-tag {
+            display: inline-flex;
+            border-radius: 999px;
+            padding: 0.25rem 0.7rem;
+            font-size: 0.66rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .photo-tile {
+            overflow: hidden;
+            border-radius: 1.4rem;
+            position: relative;
+        }
+
+        .photo-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .photo-tile:hover img {
+            transform: scale(1.08);
+        }
+
+        .photo-tile::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 48%, rgba(2, 12, 28, 0.52));
+        }
+
+        .fade-slider {
+            position: relative;
+            min-height: 360px;
+            border-radius: 2rem;
+            overflow: hidden;
+        }
+
+        .slide-image {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: scale(1.04);
+            transition: opacity 0.9s ease, transform 2.4s ease;
+        }
+
+        .slide-image.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.45);
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            width: 28px;
+            background: #ffffff;
+        }
+
+        .text-shimmer {
+            background: linear-gradient(90deg, #0f172a, #0f7ff2, #0f172a);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 5s ease-in-out infinite;
+        }
+
+        .slide-in-left,
+        .slide-in-right,
+        .slide-in-up {
+            animation-duration: 0.85s;
+            animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+            animation-fill-mode: both;
+        }
+
+        .slide-in-left {
+            animation-name: slideInLeft;
+        }
+
+        .slide-in-right {
+            animation-name: slideInRight;
+        }
+
+        .slide-in-up {
+            animation-name: slideInUp;
+        }
+
+        .delay-1 {
+            animation-delay: 0.12s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.24s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.36s;
+        }
+
+        .carousel-shell {
+            position: relative;
+        }
+
+        .h-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding-bottom: 0.4rem;
+        }
+
+        .h-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .h-scroll::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.55);
+            border-radius: 999px;
+        }
+
+        .snap-card {
+            scroll-snap-align: start;
+            flex: 0 0 84%;
+        }
+
+        @media (min-width: 640px) {
+            .snap-card {
+                flex-basis: 56%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .snap-card {
+                flex-basis: 32%;
+            }
+        }
+
+        .scroll-btn {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            background: rgba(255, 255, 255, 0.92);
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .rental-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) {
+            .rental-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .rental-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        .rental-card {
+            border-radius: 1.6rem;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            padding: 1rem;
+            box-shadow: 0 10px 24px rgba(15, 35, 64, 0.08);
+        }
+
+        .rental-card-image-wrap {
+            height: 170px;
+            border-radius: 1rem;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .rental-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0.5rem;
+        }
+
+        .rental-card-title {
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.9rem;
+        }
+
+        .rental-spec-row {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .rental-spec-item {
+            text-align: center;
+            color: #0f7ff2;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .rental-spec-icon {
+            width: 1.9rem;
+            height: 1.9rem;
+            border-radius: 999px;
+            border: 1.8px solid #0f7ff2;
+            margin: 0 auto 0.28rem;
+            display: grid;
+            place-items: center;
+            font-size: 0.8rem;
+            line-height: 1;
+        }
+
+        .rental-spec-icon i {
+            font-size: 0.9rem;
+            color: #0f7ff2;
+        }
+
+        .rental-card-price {
+            margin-top: 0.5rem;
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 900;
+            color: #0b6aa8;
+        }
+
+        .rental-card-book {
+            margin-top: 1.1rem;
+            width: 100%;
+            border-radius: 0.6rem;
+            background: #0b6aa8;
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.15rem;
+            padding: 0.7rem 0.9rem;
+        }
+
+        .rental-card-notes {
+            margin-top: 1rem;
+            font-size: 0.83rem;
+            line-height: 1.45;
+            color: #374151;
+        }
+
+        .rental-showroom {
+            border: 1px solid #d1d5db;
+            border-radius: 1.3rem;
+            overflow: hidden;
+            background: #f3f4f6;
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.14);
+        }
+
+        .rental-strip {
+            min-height: 42px;
+            background: linear-gradient(90deg, #eceff3, #d5dbe2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.7rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #1f2937;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .rental-strip-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            color: #475569;
+        }
+
+        .rental-strip-meta span {
+            border: 1px solid #cbd5e1;
+            border-radius: 999px;
+            padding: 0.2rem 0.55rem;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .rental-strip button {
+            background: #111827;
+            color: #fff;
+            border-radius: 0.45rem;
+            padding: 0.42rem 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 800;
+            line-height: 1;
+            transition: background-color 0.25s ease;
+        }
+
+        .rental-strip button:hover {
+            background: #0f7ff2;
+        }
+
+        .rental-hero-area {
+            padding: 1rem 1.1rem 0.9rem;
+            background:
+                radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.25) 58%),
+                linear-gradient(180deg, #eceff3 0%, #d9dde3 100%);
+        }
+
+        .rental-model-switch {
+            display: flex;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .rental-model-switch button {
+            border: 1px solid #cbd5e1;
+            border-radius: 999px;
+            padding: 0.45rem 0.95rem;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #334155;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.25s ease;
+        }
+
+        .rental-model-switch button.active {
+            border-color: #0f7ff2;
+            color: #0f7ff2;
+            background: #e8f2ff;
+            box-shadow: 0 8px 16px rgba(15, 127, 242, 0.18);
+        }
+
+        .rental-hero-media {
+            min-height: 300px;
+            display: grid;
+            place-items: center;
+            position: relative;
+        }
+
+        .rental-hero-media::after {
+            content: "";
+            width: min(90%, 760px);
+            height: 14px;
+            border-radius: 999px;
+            background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.28), rgba(15, 23, 42, 0));
+            position: absolute;
+            bottom: 24px;
+            filter: blur(4px);
+        }
+
+        .rental-hero-media img {
+            width: min(100%, 760px);
+            height: clamp(220px, 38vw, 380px);
+            object-fit: contain;
+            filter: drop-shadow(0 26px 20px rgba(15, 23, 42, 0.22));
+            animation: carEntry 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .rental-showroom-footer {
+            background: #f8fafc;
+            border-top: 1px solid #d1d5db;
+            padding: 1.1rem 1.2rem 1.3rem;
+        }
+
+        .rental-showroom-grid {
+            display: grid;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .rental-showroom-name {
+            font-size: clamp(1.9rem, 4vw, 3.1rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            color: #111827;
+        }
+
+        .rental-showroom-note {
+            margin-top: 0.42rem;
+            font-size: 0.8rem;
+            color: #475569;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .rental-showroom-specs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+        .rental-showroom-spec {
+            border-left: 1px solid #d1d5db;
+            padding-left: 0.75rem;
+        }
+
+        .rental-showroom-spec strong {
+            font-size: clamp(1.1rem, 2vw, 1.7rem);
+            font-weight: 900;
+            color: #111827;
+            line-height: 1;
+            display: block;
+        }
+
+        .rental-showroom-spec span {
+            margin-top: 0.2rem;
+            display: block;
+            font-size: 0.7rem;
+            color: #4b5563;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .rental-showroom-actions {
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+            margin-top: 0.85rem;
+        }
+
+        .rental-showroom-actions .primary {
+            background: #111827;
+            color: #fff;
+            border-radius: 0.5rem;
+            padding: 0.65rem 1.2rem;
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            transition: background-color 0.25s ease;
+        }
+
+        .rental-showroom-actions .primary:hover {
+            background: #0f7ff2;
+        }
+
+        .rental-showroom-actions .ghost {
+            background: #fff;
+            color: #111827;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            padding: 0.65rem 1.2rem;
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+        }
+
+        .club-highlight-shell {
+            background: #ede9e3;
+            border-radius: 2rem;
+            padding: 1.95rem 1.7rem 1.45rem;
+            overflow: hidden;
+        }
+
+        .club-highlight-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .club-highlight-intro {
+            max-width: 440px;
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: #111827;
+            font-weight: 600;
+        }
+
+        .club-filter-pill {
+            display: inline-flex;
+            border: 1px solid #cfd4dc;
+            border-radius: 999px;
+            padding: 0.22rem;
+            background: #f8fafc;
+            gap: 0.2rem;
+        }
+
+        .club-filter-pill button {
+            border-radius: 999px;
+            padding: 0.48rem 1.1rem;
+            font-size: 0.84rem;
+            font-weight: 800;
+            color: #111827;
+            transition: all 0.2s ease;
+        }
+
+        .club-filter-pill button.active {
+            background: #ffd400;
+            color: #111827;
+        }
+
+        .club-carousel-wrap {
+            position: relative;
+            margin: 0 -0.05rem;
+            overflow: hidden;
+            padding-top: 0.2rem;
+        }
+
+        .club-track {
+            display: flex;
+            gap: 2.2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 0.15rem 0.05rem 0.9rem;
+        }
+
+        .club-track::-webkit-scrollbar {
+            height: 0;
+        }
+
+        .club-slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            display: grid;
+            gap: 2.2rem;
+            grid-template-columns: 1fr;
+        }
+
+        .club-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            min-height: 180px;
+            background: #dbe3ea;
+            box-shadow: 0 8px 22px rgba(2, 6, 23, 0.14);
+        }
+
+        .club-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.45s ease;
+        }
+
+        .club-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .club-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2, 12, 28, 0.04) 28%, rgba(2, 12, 28, 0.56) 100%);
+        }
+
+        .club-card-info {
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            bottom: 1rem;
+            color: #fff;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .club-card-info h4 {
+            font-size: 1.9rem;
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-shadow: 0 1px 12px rgba(2, 6, 23, 0.42);
+        }
+
+        .club-card-info p {
+            margin-top: 0.22rem;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 10px rgba(2, 6, 23, 0.35);
+        }
+
+        .club-exclusive-tag {
+            position: absolute;
+            top: 0.95rem;
+            left: 0.95rem;
+            z-index: 1;
+            border-radius: 999px;
+            background: rgba(248, 250, 252, 0.96);
+            color: #1f2937;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+        }
+
+        .club-season-pill {
+            margin-top: 0.45rem;
+            display: inline-flex;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #111827;
+            padding: 0.24rem 0.72rem;
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .club-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 54px;
+            height: 54px;
+            border-radius: 999px;
+            background: #ffd400;
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: #111827;
+            box-shadow: 0 10px 22px rgba(2, 6, 23, 0.22);
+        }
+
+        .club-arrow.left {
+            left: 0.3rem;
+        }
+
+        .club-arrow.right {
+            right: 0.3rem;
+        }
+
+        .club-progress {
+            margin-top: 1rem;
+            height: 3px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.38);
+            overflow: hidden;
+        }
+
+        .club-progress span {
+            display: block;
+            width: 18%;
+            height: 100%;
+            background: #ffd400;
+        }
+
+        .club-peek-stack {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .rental-showroom-specs {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .club-card {
+                min-height: 190px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .rental-showroom-grid {
+                grid-template-columns: 1.1fr 1fr;
+            }
+
+            .club-slide {
+                grid-template-columns: repeat(12, minmax(0, 1fr));
+                grid-template-rows: 170px 68px 185px;
+                column-gap: 2.2rem;
+                row-gap: 3.2rem;
+            }
+
+            .club-card-a { grid-column: 1 / span 3; grid-row: 1 / span 1; }
+            .club-card-b { grid-column: 4 / span 5; grid-row: 1 / span 1; }
+            .club-card-c { grid-column: 9 / span 4; grid-row: 1 / span 1; }
+            .club-card-d { grid-column: 1 / span 4; grid-row: 2 / span 2; }
+            .club-card-e { grid-column: 5 / span 4; grid-row: 2 / span 1; }
+            .club-card-f { grid-column: 9 / span 4; grid-row: 2 / span 2; }
+
+            .club-card-info h4 {
+                font-size: 2.15rem;
+            }
+
+            .club-arrow {
+                width: 86px;
+                height: 86px;
+            }
+
+            .club-arrow.left {
+                left: -1.3rem;
+            }
+
+            .club-arrow.right {
+                right: -1.3rem;
+            }
+
+            .club-peek-stack {
+                position: absolute;
+                right: -225px;
+                top: 0.8rem;
+                display: grid;
+                gap: 2.3rem;
+                z-index: 2;
+                width: 210px;
+            }
+
+            .club-peek-stack .club-card {
+                min-height: 206px;
+            }
+
+            .club-peek-stack .club-card:last-child {
+                min-height: 330px;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .club-arrow {
+                width: 56px;
+                height: 56px;
+            }
+
+            .club-arrow.left,
+            .club-arrow.right {
+                top: unset;
+                bottom: 0.95rem;
+                transform: none;
+            }
+
+            .club-arrow.left {
+                left: 0.7rem;
+            }
+
+            .club-arrow.right {
+                right: 0.7rem;
+            }
+
+            .club-progress {
+                margin-top: 1.5rem;
+            }
+        }
+
+        .tour-hover-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 2rem;
+            height: 600px;
+            cursor: pointer;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: 0 10px 32px rgba(2, 6, 23, 0.15), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .tour-hover-card:hover {
+            border-color: rgba(148, 163, 184, 0.5);
+            box-shadow: 0 20px 50px rgba(2, 6, 23, 0.25), 0 1px 0 rgba(255, 255, 255, 0.15) inset;
+            transform: translateY(-6px);
+        }
+
+        .tour-hover-card .tour-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .tour-hover-card .tour-base {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2, 12, 28, 0) 0%, rgba(2, 12, 28, 0.3) 40%, rgba(2, 12, 28, 0.85) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem 1.75rem;
+            color: white;
+            z-index: 10;
+        }
+
+        .tour-hover-card .tour-base h3 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .tour-hover-card .tour-base p {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.02em;
+        }
+
+        .tour-hover-card .tour-details {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 2rem 1.75rem;
+            color: white;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 20;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .tour-hover-card:hover .tour-details {
+            transform: translateY(0);
+        }
+
+        .tour-hover-card:hover .tour-image {
+            transform: scale(1.06);
+        }
+
+        .tour-details h4 {
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #ff8c2a;
+            margin-top: 1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .tour-details h3 {
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.6rem;
+            color: #ffffff;
+        }
+
+        .tour-details p {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 0.8rem;
+        }
+
+        .tour-details ul {
+            font-size: 0.75rem;
+            list-style: none;
+            margin-bottom: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tour-details li {
+            margin-bottom: 0.4rem;
+            padding-left: 0.4rem;
+            line-height: 1.5;
+        }
+
+        .tour-details li:before {
+            content: "→ ";
+            color: #ff8c2a;
+            font-weight: 900;
+            margin-right: 0.5rem;
+        }
+
+        .tour-rating {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tour-rating span {
+            background: rgba(255, 140, 42, 0.2);
+            border: 1px solid rgba(255, 140, 42, 0.5);
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            color: #ff8c2a;
+        }
+
+        .tour-price-details {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #ff8c2a;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes drift {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+            }
+            50% {
+                transform: translateY(-12px) translateX(8px);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes carEntry {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white border-b border-slate-100 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/30">L</div>
+                <span class="text-2xl font-extrabold tracking-tighter uppercase">IQMAL <span class="text-blue-600">LANGKAWI</span> SERVICES</span>
+            </div>
+            <div class="hidden lg:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest">
+                <button data-link="home" onclick="showPage('home')" class="nav-link hover:text-blue-600 transition">Home</button>
+                <button data-link="about" onclick="showPage('about')" class="nav-link hover:text-blue-600 transition">About Us</button>
+                <button data-link="tours" onclick="showPage('tours')" class="nav-link hover:text-blue-600 transition">Tours</button>
+                <button data-link="rental" onclick="showPage('rental')" class="nav-link hover:text-blue-600 transition">Rental</button>
+                <button data-link="blogs" onclick="showPage('blogs')" class="nav-link hover:text-blue-600 transition">Blogs</button>
+                <button data-link="contact" onclick="showPage('contact')" class="nav-link hover:text-blue-600 transition">Contact</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="showPage('contact')" class="hidden sm:block rounded-full bg-slate-900 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-blue-600 transition">Contact Us</button>
+                <button id="menuBtn" class="lg:hidden w-10 h-10 rounded-lg border border-slate-300 font-bold" aria-label="Toggle menu">=</button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden lg:hidden max-w-7xl mx-auto mt-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-lg">
+            <div class="grid gap-1 text-sm font-bold uppercase tracking-wide">
+                <button onclick="showPage('home')" class="rounded-xl px-4 py-3 text-left hover:bg-slate-50">Home</button>
+                <button onclick="showPage('about')" class="rounded-xl px-4 py-3 text-left hover:bg-slate-50">About Us</button>
+                <button onclick="showPage('tours')" class="rounded-xl px-4 py-3 text-left hover:bg-slate-50">Tours</button>
+                <button onclick="showPage('rental')" class="rounded-xl px-4 py-3 text-left hover:bg-slate-50">Rental</button>
+                <button onclick="showPage('blogs')" class="rounded-xl px-4 py-3 text-left hover:bg-slate-50">Blogs</button>
+                <button onclick="showPage('contact')" class="rounded-xl px-4 py-3 text-left hover:bg-slate-50">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="min-h-screen pt-24">
+        <section id="home" class="page-content page-active">
+            <div class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
+                <header class="relative overflow-hidden rounded-[2rem] lg:rounded-[2.6rem] h-[70vh] min-h-[480px]">
+                    <img class="slide-image active absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=2000" alt="Langkawi island coast">
+                    <img class="slide-image absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1493558103817-58b2924bce98?q=80&w=2000" alt="Beach experience">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-900/35 to-slate-900/70"></div>
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,140,42,0.25),transparent_35%)]"></div>
+                    <div class="float-orb absolute -left-10 top-16 h-28 w-28 rounded-full bg-white/20 blur-2xl"></div>
+                    <div class="float-orb delay absolute right-8 top-20 h-24 w-24 rounded-full bg-orange-300/30 blur-2xl"></div>
+
+                    <div class="relative z-10 flex h-full min-h-[480px] flex-col justify-end p-7 text-white sm:p-10 lg:p-14">
+                        <span class="slide-in-up mb-4 inline-flex w-fit rounded-full border border-white/40 bg-white/15 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em]">Trusted Local Operator</span>
+                        <h1 class="slide-in-left delay-1 max-w-3xl text-4xl font-extrabold uppercase leading-[1.05] sm:text-5xl lg:text-7xl">Your Langkawi trip, planned in minutes.</h1>
+                        <p class="slide-in-right delay-2 mt-5 max-w-2xl text-base text-white/90 sm:text-lg">Private car rental, island hopping tours, airport transfer and same-day WhatsApp support by local team.</p>
+                        <div class="mt-8 flex flex-wrap gap-3">
+                            <button onclick="showPage('rental')" class="btn-lift rounded-2xl bg-sky-600 px-7 py-4 text-sm font-extrabold uppercase tracking-wide transition hover:bg-sky-700">Browse Cars</button>
+                            <button onclick="showPage('tours')" class="btn-lift rounded-2xl bg-white px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-slate-900 transition hover:bg-slate-100">Explore Tours</button>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+            <div class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+                <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+                    <section class="apple-card p-8 lg:p-10">
+                        <p class="pill-tag">Introduction</p>
+                        <h2 class="slide-in-up delay-1 mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl"><span class="text-shimmer">Clean travel</span> experience for every Langkawi trip.</h2>
+                        <p class="slide-in-up delay-2 mt-5 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">IQMAL LANGKAWI SERVICES helps customer browse rental, tours and support services from one simple page. Customer can slide through packages, review pictures, and contact only when ready to confirm.</p>
+                        <div class="mt-7 flex flex-wrap gap-3">
+                            <button onclick="showPage('about')" class="btn-lift rounded-full bg-slate-900 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-white">About Us</button>
+                            <button onclick="showPage('rental')" class="btn-lift rounded-full border border-slate-300 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-slate-800">View Rental</button>
+                        </div>
+                    </section>
+
+                    <section class="apple-card p-6 lg:p-8">
+                        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200" alt="Langkawi activity preview" class="package-image h-[280px]">
+                    </section>
+                </div>
+            </div>
+
+            <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+                <div class="mb-7">
+                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">What Travelers Say on Google</h2>
+                    <p class="mt-3 text-lg text-slate-600">Genuine reviews from real guests, directly from our verified Google ratings.</p>
+                </div>
+
+                <div class="grid gap-6 lg:grid-cols-[0.35fr_0.65fr]">
+                    <article class="reveal rounded-[2rem] border border-slate-200 bg-white p-8 shadow-lg shadow-slate-900/8 flex flex-col justify-center">
+                        <p class="text-4xl font-black tracking-tight text-slate-900">EXCELLENT</p>
+                        <p class="mt-6 text-5xl leading-none text-[#fbbc04]">★★★★★</p>
+                        <p class="mt-6 text-base font-semibold text-slate-600">Based on <span class="font-black text-slate-900">73 reviews</span></p>
+                        <p class="mt-8 text-4xl font-black tracking-tight">
+                            <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+                        </p>
+                    </article>
+
+                    <div id="reviewTrack" class="h-scroll carousel-shell">
+                        <article class="reveal rounded-[1.8rem] border border-slate-200 bg-white snap-card p-7 min-h-[280px] shadow-md shadow-slate-900/6 hover:shadow-lg hover:shadow-slate-900/10 transition-shadow">
+                            <div class="flex items-start justify-between gap-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Hasaan+Agha&background=065f46&color=ffffff&size=96" alt="Hasaan Agha profile" class="h-11 w-11 rounded-full object-cover ring-2 ring-slate-100">
+                                    <div>
+                                        <p class="text-base font-extrabold text-slate-900">Hasaan Agha</p>
+                                        <p class="text-xs text-slate-500 mt-0.5">2 weeks ago</p>
+                                    </div>
+                                </div>
+                                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" alt="Google" class="h-6 w-6">
+                            </div>
+                            <p class="text-2xl text-[#fbbc04] leading-none mb-4">★★★★★</p>
+                            <p class="text-sm leading-7 text-slate-700 font-medium">Booked a private driver twice with this company and received exceptional service much cheaper than hotel cars.</p>
+                        </article>
+                        </article>
+
+                        <article class="reveal rounded-[1.8rem] border border-slate-200 bg-white snap-card p-7 min-h-[280px] shadow-md shadow-slate-900/6 hover:shadow-lg hover:shadow-slate-900/10 transition-shadow">
+                            <div class="flex items-start justify-between gap-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Nermin+Karalic&background=ea580c&color=ffffff&size=96" alt="Nermin Karalic profile" class="h-11 w-11 rounded-full object-cover ring-2 ring-slate-100">
+                                    <div>
+                                        <p class="text-base font-extrabold text-slate-900">Nermin Karalic</p>
+                                        <p class="text-xs text-slate-500 mt-0.5">2 weeks ago</p>
+                                    </div>
+                                </div>
+                                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" alt="Google" class="h-6 w-6">
+                            </div>
+                            <p class="text-2xl text-[#fbbc04] leading-none mb-4">★★★★★</p>
+                            <p class="text-sm leading-7 text-slate-700 font-medium">Very organised, trustworthy, and quick to respond. Highly recommend IQMAL LANGKAWI SERVICES if you are staying at Langkawi.</p>
+                        </article>
+
+                        <article class="reveal reveal-delay-1 rounded-[1.8rem] border border-slate-200 bg-white snap-card p-7 min-h-[280px] shadow-md shadow-slate-900/6 hover:shadow-lg hover:shadow-slate-900/10 transition-shadow">
+                            <div class="flex items-start justify-between gap-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Marcus+Mortlock&background=65a30d&color=ffffff&size=96" alt="Marcus Mortlock profile" class="h-11 w-11 rounded-full object-cover ring-2 ring-slate-100">
+                                    <div>
+                                        <p class="text-base font-extrabold text-slate-900">Marcus Mortlock</p>
+                                        <p class="text-xs text-slate-500 mt-0.5">2 weeks ago</p>
+                                    </div>
+                                </div>
+                                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" alt="Google" class="h-6 w-6">
+                            </div>
+                            <p class="text-2xl text-[#fbbc04] leading-none mb-4">★★★★★</p>
+                            <p class="text-sm leading-7 text-slate-700 font-medium">Booked a 4-hour tour with a driver. Exceptional service, clean new model car, and very helpful local recommendations.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <div class="mx-auto grid max-w-7xl gap-5 px-5 pb-16 md:grid-cols-3 lg:px-8">
+                <article class="reveal mesh-card rounded-3xl border border-white/50 p-7 shadow-xl shadow-slate-900/5">
+                    <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-sky-600">01</p>
+                    <h2 class="mt-3 text-2xl font-extrabold">Flexible Car Rental</h2>
+                    <p class="mt-3 text-sm leading-relaxed text-slate-600">Daily, weekly and monthly rates. Manual, auto and MPV options with full insurance coverage.</p>
+                </article>
+                <article class="reveal reveal-delay-1 mesh-card rounded-3xl border border-white/50 p-7 shadow-xl shadow-slate-900/5">
+                    <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-orange-500">02</p>
+                    <h2 class="mt-3 text-2xl font-extrabold">Island Hopping Tours</h2>
+                    <p class="mt-3 text-sm leading-relaxed text-slate-600">Private and shared boats to Dayang Bunting, Beras Basah and eagle feeding hotspots.</p>
+                </article>
+                <article class="reveal reveal-delay-2 mesh-card rounded-3xl border border-white/50 p-7 shadow-xl shadow-slate-900/5">
+                    <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-600">03</p>
+                    <h2 class="mt-3 text-2xl font-extrabold">Fast Booking Support</h2>
+                    <p class="mt-3 text-sm leading-relaxed text-slate-600">Get confirmed in under 5 minutes via WhatsApp. Simple process with clear local pricing.</p>
+                </article>
+            </div>
+
+            <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+                <div class="mb-7 flex items-end justify-between gap-3">
+                    <h2 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight">Most Requested Packages</h2>
+                    <div class="flex items-center gap-2">
+                        <p class="text-sm text-slate-600 hidden sm:block">Slide to browse</p>
+                        <button class="scroll-btn" data-scroll-target="requestedTrack" data-scroll-dir="left" aria-label="Slide left">&larr;</button>
+                        <button class="scroll-btn" data-scroll-target="requestedTrack" data-scroll-dir="right" aria-label="Slide right">&rarr;</button>
+                    </div>
+                </div>
+                <div id="requestedTrack" class="h-scroll carousel-shell">
+                    <article class="reveal apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200" alt="Economy car rental package" class="package-image">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Car Rental</p>
+                        <h3 class="mt-3 text-2xl font-extrabold">Economy Saver Plan</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Perodua Bezza / Axia</li>
+                            <li>- Insurance included</li>
+                            <li>- Airport pickup available</li>
+                            <li>- RM 130/day from</li>
+                        </ul>
+                        <button onclick="showPage('cars')" class="mt-5 w-full rounded-xl bg-slate-900 py-3 text-xs font-extrabold uppercase tracking-wider text-white hover:bg-blue-600 transition">View Full Car Details</button>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=1200" alt="Island hopping package" class="package-image">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">Tours</p>
+                        <h3 class="mt-3 text-2xl font-extrabold">Private Island Hopping</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Dayang Bunting + Beras Basah</li>
+                            <li>- Eagle feeding stop</li>
+                            <li>- Up to 8 pax private boat</li>
+                            <li>- RM 350/boat from</li>
+                        </ul>
+                        <button onclick="showPage('tours')" class="mt-5 w-full rounded-xl bg-slate-900 py-3 text-xs font-extrabold uppercase tracking-wider text-white hover:bg-orange-500 transition">View Tour Details</button>
+                    </article>
+
+                    <article class="reveal reveal-delay-2 apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1605281317010-fe5ffe798166?q=80&w=1200" alt="Airport transfer package" class="package-image">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">Transfer</p>
+                        <h3 class="mt-3 text-2xl font-extrabold">Airport Transfer Add-on</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Airport to hotel direct</li>
+                            <li>- Driver standby option</li>
+                            <li>- Family MPV available</li>
+                            <li>- RM 80/trip from</li>
+                        </ul>
+                        <button onclick="showPage('contact')" class="mt-5 w-full rounded-xl border border-slate-300 py-3 text-xs font-extrabold uppercase tracking-wider text-slate-700 hover:bg-slate-50 transition">Ask Transfer Details</button>
+                    </article>
+                </div>
+            </section>
+
+            <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+                <div class="mb-7 flex items-end justify-between gap-3">
+                    <h2 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight">Official Package Details</h2>
+                    <div class="flex items-center gap-2">
+                        <p class="text-sm text-slate-600 hidden sm:block">Slide to browse</p>
+                        <button class="scroll-btn" data-scroll-target="officialTrack" data-scroll-dir="left" aria-label="Slide left">&larr;</button>
+                        <button class="scroll-btn" data-scroll-target="officialTrack" data-scroll-dir="right" aria-label="Slide right">&rarr;</button>
+                    </div>
+                </div>
+
+                <div id="officialTrack" class="h-scroll carousel-shell">
+                    <article class="reveal apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?q=80&w=1200" alt="3 in 1 activities package" class="package-image">
+                        <p class="pill-tag">Featured Combo</p>
+                        <h3 class="mt-2 text-2xl font-extrabold uppercase">3 In 1 Activities Game Package</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Jet Car</li>
+                            <li>- Parasailing on Boat</li>
+                            <li>- Banana Boat</li>
+                            <li>- Minimum 4 pax</li>
+                            <li>- Price: RM350 (1 pax)</li>
+                        </ul>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1200" alt="Private tour package" class="package-image">
+                        <p class="pill-tag">Private Tour</p>
+                        <h3 class="mt-2 text-2xl font-extrabold uppercase">Langkawi Private Tour</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Around Langkawi with nature feeling</li>
+                            <li>- Max 4 people</li>
+                            <li>- Include petrol</li>
+                        </ul>
+                    </article>
+
+                    <article class="reveal apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1565967511849-76a60a516170?q=80&w=1200" alt="Mangrove tour package" class="package-image">
+                        <p class="pill-tag">Nature Tour</p>
+                        <h3 class="mt-2 text-2xl font-extrabold uppercase">Mangrove Tour Langkawi</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Start from RM100 per person</li>
+                            <li>- Crocodile Cave and Bat Cave stop</li>
+                            <li>- Scenic limestone rock formations</li>
+                            <li>- Fish farm visit and floating lunch experience</li>
+                        </ul>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200" alt="Jetski tour package" class="package-image">
+                        <p class="pill-tag">Adventure</p>
+                        <h3 class="mt-2 text-2xl font-extrabold uppercase">Jetski Tour</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Guided jetski experience for all levels</li>
+                            <li>- Explore islands, beaches and iconic landmarks</li>
+                            <li>- Suitable for beginner and experienced rider</li>
+                        </ul>
+                    </article>
+
+                    <article class="reveal apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1200" alt="Sunset cruise package" class="package-image">
+                        <p class="pill-tag">Cruise</p>
+                        <h3 class="mt-2 text-2xl font-extrabold uppercase">Sunset Cruise</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Package options: Economy, Halal, Standard, Premium</li>
+                            <li>- Includes sunset viewing on open sea</li>
+                            <li>- Selected packages include buffet and beverages</li>
+                            <li>- Premium package includes salt water jacuzzi</li>
+                        </ul>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 apple-card p-6 snap-card">
+                        <img src="https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?q=80&w=1200" alt="Chauffeur service package" class="package-image">
+                        <p class="pill-tag">Transport</p>
+                        <h3 class="mt-2 text-2xl font-extrabold uppercase">Chauffeur Service & Tour</h3>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li>- Pickup from airport to hotel</li>
+                            <li>- Continue city tour around Langkawi</li>
+                            <li>- Custom route based on your itinerary</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+                <div class="mb-7">
+                    <h2 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight">Langkawi Photo Highlights</h2>
+                    <p class="mt-2 text-sm text-slate-600">Mosaic collection style for featured island destinations and scenic views.</p>
+                </div>
+
+                <div class="reveal club-highlight-shell">
+                    <div class="club-highlight-top">
+                        <p class="club-highlight-intro">Sun or sea, near or far, you will always find dream destination vibes for your next Langkawi-style vacation.</p>
+                        <div class="club-filter-pill">
+                            <button data-club-filter="all" class="active">All products</button>
+                            <button data-club-filter="exclusive">◆ Exclusive Collection</button>
+                        </div>
+                    </div>
+
+                    <div class="club-carousel-wrap">
+                        <button class="club-arrow left" data-scroll-target="clubHighlightTrack" data-scroll-dir="left" aria-label="Previous highlights">&lsaquo;</button>
+                        <div id="clubHighlightTrack" class="club-track">
+                            <div class="club-slide">
+                                <article class="club-card club-card-a" data-exclusive="false">
+                                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1200" alt="Pantai Cenang, Malaysia">
+                                    <div class="club-card-info">
+                                        <h4>Pantai Cenang</h4>
+                                        <p>Malaysia</p>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-b" data-exclusive="false">
+                                    <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=1200" alt="Island Hop, Thailand">
+                                    <div class="club-card-info">
+                                        <h4>Island Hop</h4>
+                                        <p>Thailand</p>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-c" data-exclusive="true">
+                                    <span class="club-exclusive-tag">◆ With Exclusive Collection Space</span>
+                                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1200" alt="SkyCab Ridge, Langkawi">
+                                    <div class="club-card-info">
+                                        <h4>SkyCab Ridge</h4>
+                                        <p>Langkawi</p>
+                                        <span class="club-season-pill">Winter</span>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-d" data-exclusive="true">
+                                    <span class="club-exclusive-tag">◆ With Exclusive Collection Space</span>
+                                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200" alt="Beras Basah, Malaysia">
+                                    <div class="club-card-info">
+                                        <h4>Beras Basah</h4>
+                                        <p>Malaysia</p>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-e" data-exclusive="true">
+                                    <span class="club-exclusive-tag">◆ With Exclusive Collection Space</span>
+                                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200" alt="Dayang Bunting, Malaysia">
+                                    <div class="club-card-info">
+                                        <h4>Dayang Bunting</h4>
+                                        <p>Malaysia</p>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-f" data-exclusive="false">
+                                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200" alt="Machinchang Peak, Malaysia">
+                                    <div class="club-card-info">
+                                        <h4>Machinchang</h4>
+                                        <p>Malaysia</p>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <div class="club-slide">
+                                <article class="club-card club-card-a" data-exclusive="false">
+                                    <img src="https://images.unsplash.com/photo-1514896856000-91cb9f8a2a25?q=80&w=1200" alt="Tanjung Rhu, Malaysia">
+                                    <div class="club-card-info">
+                                        <h4>Tanjung Rhu</h4>
+                                        <p>Malaysia</p>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-b" data-exclusive="true">
+                                    <span class="club-exclusive-tag">◆ With Exclusive Collection Space</span>
+                                    <img src="https://images.unsplash.com/photo-1493558103817-58b2924bce98?q=80&w=1200" alt="Sunset Deck, Langkawi">
+                                    <div class="club-card-info">
+                                        <h4>Sunset Deck</h4>
+                                        <p>Langkawi</p>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-c" data-exclusive="false">
+                                    <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200" alt="Beachline Coast, Malaysia">
+                                    <div class="club-card-info">
+                                        <h4>Beachline</h4>
+                                        <p>Malaysia</p>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-d" data-exclusive="false">
+                                    <img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?q=80&w=1200" alt="Rainforest Route, Langkawi">
+                                    <div class="club-card-info">
+                                        <h4>Rainforest</h4>
+                                        <p>Langkawi</p>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-e" data-exclusive="true">
+                                    <span class="club-exclusive-tag">◆ With Exclusive Collection Space</span>
+                                    <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1200" alt="Kilim Geoforest, Malaysia">
+                                    <div class="club-card-info">
+                                        <h4>Kilim Geo</h4>
+                                        <p>Malaysia</p>
+                                        <span class="club-season-pill">Winter</span>
+                                    </div>
+                                </article>
+                                <article class="club-card club-card-f" data-exclusive="false">
+                                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1200" alt="Cenang Walk, Malaysia">
+                                    <div class="club-card-info">
+                                        <h4>Cenang Walk</h4>
+                                        <p>Malaysia</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                        <div class="club-peek-stack">
+                            <article class="club-card" data-exclusive="false">
+                                <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=1200" alt="Phuket style resort view">
+                                <div class="club-card-info">
+                                    <h4>Phuket</h4>
+                                    <p>Thailand</p>
+                                </div>
+                            </article>
+                            <article class="club-card" data-exclusive="true">
+                                <span class="club-exclusive-tag">◆ With Exclusive Collection Space</span>
+                                <img src="https://images.unsplash.com/photo-1621259182978-fbf93132d53d?q=80&w=1200" alt="Kiroro style snowy mountain">
+                                <div class="club-card-info">
+                                    <h4>Kiroro Grand</h4>
+                                    <p>Japan</p>
+                                    <span class="club-season-pill">Winter</span>
+                                </div>
+                            </article>
+                        </div>
+                        <button class="club-arrow right" data-scroll-target="clubHighlightTrack" data-scroll-dir="right" aria-label="Next highlights">&rsaquo;</button>
+                    </div>
+
+                    <div class="club-progress"><span></span></div>
+                </div>
+            </section>
+
+            <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight">How Booking Works</h2>
+                <div class="mt-6 grid gap-4 md:grid-cols-3">
+                    <article class="reveal rounded-2xl bg-white border border-slate-200 p-6">
+                        <p class="text-4xl font-extrabold text-blue-600">1</p>
+                        <h3 class="mt-3 text-xl font-extrabold">Check Package Details</h3>
+                        <p class="mt-2 text-sm text-slate-600">Review car types, inclusions, timings and pricing first.</p>
+                    </article>
+                    <article class="reveal reveal-delay-1 rounded-2xl bg-white border border-slate-200 p-6">
+                        <p class="text-4xl font-extrabold text-blue-600">2</p>
+                        <h3 class="mt-3 text-xl font-extrabold">Choose Best Option</h3>
+                        <p class="mt-2 text-sm text-slate-600">Pick the package based on your date, pax and budget.</p>
+                    </article>
+                    <article class="reveal reveal-delay-2 rounded-2xl bg-white border border-slate-200 p-6">
+                        <p class="text-4xl font-extrabold text-blue-600">3</p>
+                        <h3 class="mt-3 text-xl font-extrabold">Contact Us to Confirm</h3>
+                        <p class="mt-2 text-sm text-slate-600">Only after confirm details, proceed to Contact Us for slot confirmation.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight">Quick FAQ</h2>
+                <div class="mt-6 grid gap-4 md:grid-cols-2">
+                    <article class="reveal rounded-2xl border border-slate-200 bg-white p-5">
+                        <h3 class="font-extrabold">Is fuel included in rental?</h3>
+                        <p class="mt-2 text-sm text-slate-600">Fuel is not included. Car will be handed over with fuel level reference and returned same level.</p>
+                    </article>
+                    <article class="reveal reveal-delay-1 rounded-2xl border border-slate-200 bg-white p-5">
+                        <h3 class="font-extrabold">Can I get child seat?</h3>
+                        <p class="mt-2 text-sm text-slate-600">Yes, child seat add-on available with early request, subject to stock.</p>
+                    </article>
+                    <article class="reveal reveal-delay-2 rounded-2xl border border-slate-200 bg-white p-5">
+                        <h3 class="font-extrabold">How to secure booking?</h3>
+                        <p class="mt-2 text-sm text-slate-600">After reviewing package details, contact team to confirm date and availability slot.</p>
+                    </article>
+                    <article class="reveal reveal-delay-3 rounded-2xl border border-slate-200 bg-white p-5">
+                        <h3 class="font-extrabold">Can I combine tour + transport?</h3>
+                        <p class="mt-2 text-sm text-slate-600">Yes, combo itinerary available for couples, families and groups.</p>
+                    </article>
+                </div>
+            </section>
+        </section>
+
+        <section id="about" class="page-content">
+            <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+                <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
+                <div class="grid gap-7 lg:grid-cols-[0.95fr_1.05fr]">
+                    <article class="apple-card p-8 lg:p-10">
+                        <p class="pill-tag">About Us</p>
+                        <h1 class="slide-in-left delay-1 mt-4 text-4xl font-extrabold uppercase tracking-tight lg:text-5xl">Built for smooth Langkawi travel.</h1>
+                        <p class="slide-in-up delay-2 mt-5 text-sm leading-7 text-slate-600">We focus on clean booking flow, fast WhatsApp response and clear package information. Customer can review everything first, then contact us when ready.</p>
+                        <div class="mt-8 grid gap-4 sm:grid-cols-3">
+                            <div class="rounded-2xl bg-slate-50 p-4">
+                                <p class="text-2xl font-extrabold text-sky-600">10+</p>
+                                <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Packages</p>
+                            </div>
+                            <div class="rounded-2xl bg-slate-50 p-4">
+                                <p class="text-2xl font-extrabold text-sky-600">4.9</p>
+                                <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Review</p>
+                            </div>
+                            <div class="rounded-2xl bg-slate-50 p-4">
+                                <p class="text-2xl font-extrabold text-sky-600">Fast</p>
+                                <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Reply</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="apple-card overflow-hidden p-4 lg:p-5">
+                        <img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?q=80&w=1600" alt="About Langkawi travel" class="package-image h-full min-h-[360px]">
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="rental" class="page-content">
+            <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+                <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
+                <div class="mb-9 flex flex-wrap items-end justify-between gap-3">
+                    <h1 class="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl">Rental</h1>
+                    <p class="max-w-2xl text-sm text-slate-600">Showroom preview layout with clean performance stats and quick booking actions.</p>
+                </div>
+                <div class="reveal rental-showroom" id="rentalTrack">
+                    <div class="rental-strip">
+                        <span id="rentalTopLabel">Perodua Axia</span>
+                        <div class="rental-strip-meta">
+                            <span>Same Day Confirm</span>
+                            <span>Langkawi Ready</span>
+                        </div>
+                        <button onclick="showPage('contact')">Order Now</button>
+                    </div>
+
+                    <div class="rental-hero-area">
+                        <div class="rental-model-switch">
+                            <button data-rental-model="axia" class="active">Axia</button>
+                            <button data-rental-model="myvi">Myvi</button>
+                        </div>
+                        <div class="rental-hero-media">
+                            <img id="rentalHeroImage" src="image/axia.png" alt="Perodua Axia">
+                        </div>
+                    </div>
+
+                    <div class="rental-showroom-footer">
+                        <div class="rental-showroom-grid">
+                            <div>
+                                <h3 id="rentalHeroName" class="rental-showroom-name">Perodua Axia</h3>
+                                <p id="rentalHeroNote" class="rental-showroom-note">Compact daily drive with low fuel use</p>
+                                <div class="rental-showroom-actions">
+                                    <button onclick="showPage('contact')" class="primary">Book Now</button>
+                                    <button onclick="showPage('cars')" class="ghost">View Details</button>
+                                </div>
+                            </div>
+                            <div class="rental-showroom-specs">
+                                <div class="rental-showroom-spec">
+                                    <strong id="rentalSpec1">RM 90</strong>
+                                    <span>Per Day</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong id="rentalSpec2">Auto</strong>
+                                    <span>Transmission</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong id="rentalSpec3">4 Pax</strong>
+                                    <span>Capacity</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong id="rentalSpec4">2 Bags</strong>
+                                    <span>Luggage</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="blogs" class="page-content">
+            <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+                <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
+                <div class="mb-9 flex flex-wrap items-end justify-between gap-3">
+                    <h1 class="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl">Blogs</h1>
+                    <p class="max-w-2xl text-sm text-slate-600">Short travel stories and useful tips for customers before booking.</p>
+                </div>
+                <div class="grid gap-7 lg:grid-cols-3">
+                    <article class="apple-card overflow-hidden p-4">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200" alt="Best time to visit Langkawi" class="package-image">
+                        <p class="pill-tag">Travel Tips</p>
+                        <h3 class="mt-3 text-2xl font-extrabold">Best Time to Visit Langkawi</h3>
+                        <p class="mt-2 text-sm text-slate-600">Know when to book for the best weather, less crowd and better price.</p>
+                    </article>
+                    <article class="apple-card overflow-hidden p-4">
+                        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200" alt="Adventure activities blog" class="package-image">
+                        <p class="pill-tag">Activities</p>
+                        <h3 class="mt-3 text-2xl font-extrabold">Top Activities for Families</h3>
+                        <p class="mt-2 text-sm text-slate-600">A simple guide on which tour package fits couples, kids and larger groups.</p>
+                    </article>
+                    <article class="apple-card overflow-hidden p-4">
+                        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200" alt="Renting car in Langkawi" class="package-image">
+                        <p class="pill-tag">Rental Guide</p>
+                        <h3 class="mt-3 text-2xl font-extrabold">How to Choose the Right Car</h3>
+                        <p class="mt-2 text-sm text-slate-600">Match your car size with your itinerary, luggage and budget before booking.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="cars" class="page-content">
+            <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+                <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
+                <div class="mb-9 flex flex-wrap items-end justify-between gap-3">
+                    <h1 class="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl">Car Rental Fleet</h1>
+                    <p class="max-w-2xl text-sm text-slate-600">Transparent price, no hidden fee. Pickup at airport, hotel or jetty.</p>
+                </div>
+
+                <div class="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
+                    <article class="reveal card-hover overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md shadow-slate-900/5">
+                        <img src="https://images.unsplash.com/photo-1542362567-b054cc426950?q=80&w=1000" alt="Mustang GT" class="h-52 w-full object-cover">
+                        <div class="p-6">
+                            <h2 class="text-xl font-extrabold uppercase">Mustang GT</h2>
+                            <p class="mt-1 text-sm text-slate-500">Self-drive, premium coupe, 2-door</p>
+                            <p class="mt-4 text-3xl font-extrabold text-sky-600">RM 800 <span class="text-xs font-semibold text-slate-500">/ day</span></p>
+                            <button onclick="showPage('contact')" class="mt-5 w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Contact For Availability</button>
+                        </div>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 card-hover overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md shadow-slate-900/5">
+                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1000" alt="Toyota Vellfire" class="h-52 w-full object-cover">
+                        <div class="p-6">
+                            <h2 class="text-xl font-extrabold uppercase">Toyota Vellfire</h2>
+                            <p class="mt-1 text-sm text-slate-500">Family MPV, 7 seats, airport-friendly</p>
+                            <p class="mt-4 text-3xl font-extrabold text-sky-600">RM 450 <span class="text-xs font-semibold text-slate-500">/ day</span></p>
+                            <button onclick="showPage('contact')" class="mt-5 w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Contact For Availability</button>
+                        </div>
+                    </article>
+
+                    <article class="reveal reveal-delay-2 card-hover overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md shadow-slate-900/5">
+                        <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?q=80&w=1000" alt="Perodua Bezza" class="h-52 w-full object-cover">
+                        <div class="p-6">
+                            <h2 class="text-xl font-extrabold uppercase">Perodua Bezza</h2>
+                            <p class="mt-1 text-sm text-slate-500">Economy sedan, fuel saver, easy park</p>
+                            <p class="mt-4 text-3xl font-extrabold text-sky-600">RM 130 <span class="text-xs font-semibold text-slate-500">/ day</span></p>
+                            <button onclick="showPage('contact')" class="mt-5 w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Contact For Availability</button>
+                        </div>
+                    </article>
+
+                    <article class="reveal card-hover overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md shadow-slate-900/5">
+                        <img src="image/myvi.png" alt="Myvi Full Spec SE" class="h-52 w-full object-cover">
+                        <div class="p-6">
+                            <h2 class="text-xl font-extrabold uppercase">Myvi Full Spec (SE)</h2>
+                            <p class="mt-1 text-sm text-slate-500">Comfort daily city drive</p>
+                            <p class="mt-4 text-3xl font-extrabold text-sky-600">RM 100 <span class="text-xs font-semibold text-slate-500">/ day</span></p>
+                            <button onclick="showPage('contact')" class="mt-5 w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Contact For Availability</button>
+                        </div>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 card-hover overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md shadow-slate-900/5">
+                        <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=1000" alt="Axia New Variant" class="h-52 w-full object-cover">
+                        <div class="p-6">
+                            <h2 class="text-xl font-extrabold uppercase">Axia New Variant</h2>
+                            <p class="mt-1 text-sm text-slate-500">Budget package for easy island travel</p>
+                            <p class="mt-4 text-3xl font-extrabold text-sky-600">RM 90 <span class="text-xs font-semibold text-slate-500">/ day</span></p>
+                            <button onclick="showPage('contact')" class="mt-5 w-full rounded-2xl bg-slate-900 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Contact For Availability</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="tours" class="page-content">
+            <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+                <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
+                <div class="mb-9 flex flex-wrap items-end justify-between gap-3">
+                    <h1 class="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl">Popular Tours</h1>
+                    <div class="flex items-center gap-2">
+                        <p class="text-sm text-slate-600 hidden sm:block">Slide to browse</p>
+                        <button class="scroll-btn" data-scroll-target="toursTrack" data-scroll-dir="left" aria-label="Slide left">&larr;</button>
+                        <button class="scroll-btn" data-scroll-target="toursTrack" data-scroll-dir="right" aria-label="Slide right">&rarr;</button>
+                    </div>
+                </div>
+                <div id="toursTrack" class="h-scroll carousel-shell">
+                    <article class="reveal tour-hover-card snap-card">
+                        <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=1200" alt="Island hopping tour" class="tour-image">
+                        <div class="tour-base">
+                            <h3 class="text-xl font-extrabold uppercase">Island Hopping</h3>
+                            <p class="text-xs text-white/80">Private boat for up to 8 pax with eagle feeding & scenic stops.</p>
+                        </div>
+                        <div class="tour-details">
+                            <h4>Adventure Tour</h4>
+                            <h3>Private Island Hopping</h3>
+                            <p>Visit iconic islands with multiple stops, perfect for families and groups.</p>
+                            
+                            <h4 style="margin-top: 0.8rem;">Package Details</h4>
+                            <div class="tour-rating">
+                                <span>5-6 Hours</span>
+                                <span>Up to 8 Pax</span>
+                                <span>Multiple Islands</span>
+                            </div>
+                            <div class="tour-price-details">RM 350 / Boat</div>
+
+                            <h4>Tour Highlights</h4>
+                            <ul>
+                                <li>Dayang Bunting Island</li>
+                                <li>Beras Basah Island</li>
+                                <li>Eagle Feeding Stop</li>
+                                <li>Swimming & Snorkeling</li>
+                                <li>Photo Sessions</li>
+                            </ul>
+
+                            <h4>Start Time</h4>
+                            <p style="margin-bottom: 0.6rem;">8:00 AM or 1:00 PM</p>
+
+                            <h4>Includes</h4>
+                            <p style="margin-bottom: 0.6rem;">Private boat | Life jacket | Snorkel gear | Refreshments</p>
+
+                            <h4>Bonus</h4>
+                            <p>Free photo service + Hotel pickup & return included</p>
+                        </div>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 tour-hover-card snap-card">
+                        <img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?q=80&w=1200" alt="Cable car and mountain" class="tour-image">
+                        <div class="tour-base">
+                            <h3 class="text-xl font-extrabold uppercase">Cable Car Combo</h3>
+                            <p class="text-xs text-white/80">Panoramic cable car + mangrove cruise with cave exploration.</p>
+                        </div>
+                        <div class="tour-details">
+                            <h4>Scenic Adventure</h4>
+                            <h3>SkyCab + Mangrove Combo</h3>
+                            <p>Experience aerial views and nature exploration in one package.</p>
+                            
+                            <h4 style="margin-top: 0.8rem;">Package Details</h4>
+                            <div class="tour-rating">
+                                <span>5 Hours</span>
+                                <span>2 Activities</span>
+                                <span>Expert Guide</span>
+                            </div>
+                            <div class="tour-price-details">RM 290 / Person</div>
+
+                            <h4>Tour Highlights</h4>
+                            <ul>
+                                <li>Langkawi SkyCab Panoramic Ride</li>
+                                <li>Mountain Top Views</li>
+                                <li>Kilim Mangrove Cruise</li>
+                                <li>Bat & Crocodile Cave</li>
+                                <li>Eagle Feeding Station</li>
+                                <li>Floating Fish Farm Visit</li>
+                            </ul>
+
+                            <h4>Start Time</h4>
+                            <p style="margin-bottom: 0.6rem;">8:30 AM or 2:00 PM</p>
+
+                            <h4>Includes</h4>
+                            <p style="margin-bottom: 0.6rem;">SkyCab ticket | Cruise boat | Guide | Safety equipment</p>
+
+                            <h4>Bonus</h4>
+                            <p>Free mineral water + Scenic photo opportunities at viewpoint</p>
+                        </div>
+                    </article>
+
+                    <article class="reveal reveal-delay-2 tour-hover-card snap-card">
+                        <img src="https://images.unsplash.com/photo-1621259182978-fbf93132d53d?q=80&w=1200" alt="JetSki Silver Package" class="tour-image">
+                        <div class="tour-base">
+                            <h3 class="text-xl font-extrabold uppercase">Silver Package</h3>
+                            <p class="text-xs text-white/80">Book our Silver JetSki tour package & get versatile benefits with it.</p>
+                        </div>
+                        <div class="tour-details">
+                            <h4>JetSki Tour</h4>
+                            <h3>Silver Package</h3>
+                            <p>Book our Silver JetSki tour package & get versatile benefits with it.</p>
+                            
+                            <h4 style="margin-top: 0.8rem;">Package Details</h4>
+                            <div class="tour-rating">
+                                <span>4 Hours</span>
+                                <span>50 KM</span>
+                                <span>7 Checkpoints</span>
+                            </div>
+                            <div class="tour-price-details">RM 650 / Jet Ski</div>
+
+                            <h4>Tour Highlights</h4>
+                            <ul>
+                                <li>Private Beach</li>
+                                <li>Pregnant Maiden Lake View</li>
+                                <li>Limestone Cliff</li>
+                                <li>Beras Basah Island</li>
+                                <li>Rock Formation</li>
+                                <li>Fjord Eco Marine Park</li>
+                                <li>Eagle Feeding & Watching</li>
+                            </ul>
+
+                            <h4>Start Time</h4>
+                            <p style="margin-bottom: 0.6rem;">9:30 AM or 2:00 PM</p>
+
+                            <h4>Includes</h4>
+                            <p style="margin-bottom: 0.6rem;">License & Insurance | Waterproof Bag | Life jacket | Beach Shoes</p>
+
+                            <h4>Bonus</h4>
+                            <p>Free photo drone video + Free pickup & Return Cenang area</p>
+                        </div>
+                    </article>
+
+                    <article class="reveal tour-hover-card snap-card">
+                        <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1200" alt="Gold Combo package" class="tour-image">
+                        <div class="tour-base">
+                            <h3 class="text-xl font-extrabold uppercase">Gold Combo</h3>
+                            <p class="text-xs text-white/80">Cable car + Mangrove cruise with cave exploration adventure.</p>
+                        </div>
+                        <div class="tour-details">
+                            <h4>Adventure Combo</h4>
+                            <h3>Gold Combo</h3>
+                            <p>Cable car + Mangrove cruise with cave exploration adventure.</p>
+                            
+                            <h4 style="margin-top: 0.8rem;">Package Details</h4>
+                            <div class="tour-rating">
+                                <span>5 Hours</span>
+                                <span>Scenic Route</span>
+                                <span>5 Stops</span>
+                            </div>
+                            <div class="tour-price-details">RM 290 / Person</div>
+
+                            <h4>Tour Highlights</h4>
+                            <ul>
+                                <li>Langkawi SkyCab Ride</li>
+                                <li>Panoramic Mountain Views</li>
+                                <li>Kilim Mangrove Cruise</li>
+                                <li>Bat & Crocodile Cave</li>
+                                <li>Eagle Feeding Stop</li>
+                                <li>Scenic Sunrise Points</li>
+                            </ul>
+
+                            <h4>Start Time</h4>
+                            <p style="margin-bottom: 0.6rem;">8:00 AM or 1:30 PM</p>
+
+                            <h4>Includes</h4>
+                            <p style="margin-bottom: 0.6rem;">Cable car ticket | Cruise boat | Safety equipment | Tour guide</p>
+
+                            <h4>Bonus</h4>
+                            <p>Free photo session + Complimentary mineral water</p>
+                        </div>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 tour-hover-card snap-card">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200" alt="Platinum Island Hopping" class="tour-image">
+                        <div class="tour-base">
+                            <h3 class="text-xl font-extrabold uppercase">Platinum Hopping</h3>
+                            <p class="text-xs text-white/80">Full-day private island exploration with premium perks included.</p>
+                        </div>
+                        <div class="tour-details">
+                            <h4>Island Adventure</h4>
+                            <h3>Platinum Hopping</h3>
+                            <p>Full-day private island exploration with premium perks included.</p>
+                            
+                            <h4 style="margin-top: 0.8rem;">Package Details</h4>
+                            <div class="tour-rating">
+                                <span>6-8 Hours</span>
+                                <span>4-6 Islands</span>
+                                <span>Up to 8 Pax</span>
+                            </div>
+                            <div class="tour-price-details">RM 350 / Boat (Not Per Person)</div>
+
+                            <h4>Tour Highlights</h4>
+                            <ul>
+                                <li>Dayang Bunting Island</li>
+                                <li>Beras Basah Island</li>
+                                <li>Eagle Feeding Stop</li>
+                                <li>Pregnant Maiden Lake</li>
+                                <li>Beach Lunch Break</li>
+                                <li>Snorkeling Spots</li>
+                                <li>Sunset Photo Session</li>
+                            </ul>
+
+                            <h4>Start Time</h4>
+                            <p style="margin-bottom: 0.6rem;">7:00 AM or 12:00 PM</p>
+
+                            <h4>Includes</h4>
+                            <p style="margin-bottom: 0.6rem;">Private boat | Life jacket | Lunch | Drinks | Photography</p>
+
+                            <h4>Bonus</h4>
+                            <p>Free drone video + Hotel pickup & return + Waterproof camera rental</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="page-content">
+            <div class="mx-auto max-w-6xl px-5 py-8 lg:px-8">
+                <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
+                <div class="grid gap-7 lg:grid-cols-2">
+                    <article class="reveal rounded-[2rem] border border-slate-200 bg-white p-8 shadow-md shadow-slate-900/5">
+                        <h1 class="text-4xl font-extrabold uppercase">Talk to our team</h1>
+                        <p class="mt-4 text-sm leading-relaxed text-slate-600">Need a custom package for honeymoon, family trip or company group? Share date and pax, we suggest best plan.</p>
+
+                        <div class="mt-8 grid gap-4 text-sm">
+                            <p><span class="font-extrabold">WhatsApp:</span> +60 14-949 5457</p>
+                            <p><span class="font-extrabold">Email:</span> iqmallangkawiservice@gmail.com</p>
+                            <p><span class="font-extrabold">Office:</span> Kuah, Langkawi, Kedah</p>
+                            <p><span class="font-extrabold">Hours:</span> Daily 8:00 AM - 10:00 PM</p>
+                            <p><span class="font-extrabold">Brand:</span> IQMAL LANGKAWI SERVICE</p>
+                        </div>
+
+                        <a href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="inline-block mt-8 rounded-2xl bg-slate-900 px-8 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Contact Us on WhatsApp</a>
+                    </article>
+
+                    <article class="reveal reveal-delay-1 rounded-[2rem] border border-slate-200 bg-gradient-to-br from-sky-50 to-orange-50 p-8 shadow-md shadow-slate-900/5">
+                        <h2 class="text-2xl font-extrabold uppercase">Quick enquiry form</h2>
+                        <form class="mt-6 grid gap-4" onsubmit="submitEnquiry(event)">
+                            <input required type="text" name="name" placeholder="Your name" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-sky-500 focus:ring-2">
+                            <input required type="tel" name="phone" placeholder="WhatsApp number" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-sky-500 focus:ring-2">
+                            <select required name="service" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-sky-500 focus:ring-2">
+                                <option value="">Service required</option>
+                                <option>Car Rental</option>
+                                <option>Tour Package</option>
+                                <option>Airport Transfer</option>
+                            </select>
+                            <textarea required name="details" rows="4" placeholder="Travel date, total pax, request details" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-sky-500 focus:ring-2"></textarea>
+                            <button type="submit" class="rounded-xl bg-orange-500 px-5 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white">Send Enquiry</button>
+                        </form>
+                        <p id="formStatus" class="mt-3 hidden rounded-lg bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">Enquiry captured. Replace this form with Google Form, Formspree or backend endpoint before launch.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="booking" class="page-content">
+            <div class="mx-auto max-w-3xl px-5 py-16 text-center lg:px-8">
+                <div class="reveal rounded-[2.2rem] border border-slate-200 bg-white p-10 shadow-2xl shadow-slate-900/10">
+                    <div class="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-full bg-emerald-100 text-3xl">WA</div>
+                    <h1 class="text-3xl font-extrabold uppercase">Booking Checklist</h1>
+                    <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate-600">Before contacting us, prepare your travel date, pickup point, pax count and chosen package from Cars or Tours page.</p>
+
+                    <div class="mt-8 space-y-3">
+                        <button onclick="showPage('cars')" class="block w-full rounded-2xl bg-slate-900 py-4 text-sm font-extrabold uppercase tracking-wider text-white transition hover:bg-slate-800">Review Car Packages</button>
+                        <button onclick="showPage('tours')" class="block w-full rounded-2xl border border-slate-300 py-4 text-sm font-extrabold uppercase tracking-wider text-slate-700 transition hover:bg-slate-50">Review Tour Packages</button>
+                        <button onclick="showPage('contact')" class="block w-full rounded-2xl bg-emerald-500 py-4 text-sm font-extrabold uppercase tracking-wider text-white transition hover:bg-emerald-600">Proceed to Contact Us</button>
+                        <button onclick="showPage('home')" class="block w-full py-2 text-sm font-bold text-slate-500 underline-offset-4 hover:underline">Back to Home</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-200 bg-slate-950 px-6 py-14 text-center text-white/70">
+        <div class="mx-auto max-w-7xl">
+            <p class="font-display text-2xl font-extrabold uppercase tracking-tight text-white">IQMAL <span class="text-sky-400">LANGKAWI</span> SERVICES</p>
+            <p class="mt-2 text-sm">Car Rental | Tours | Airport Transfer</p>
+            <p class="mt-6 text-xs">&copy; 2026 IQMAL LANGKAWI SERVICES. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function updateActiveLink(pageId) {
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach((link) => {
+                if (link.dataset.link === pageId) {
+                    link.classList.add('active-link');
+                } else {
+                    link.classList.remove('active-link');
+                }
+            });
+        }
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach((page) => page.classList.remove('page-active'));
+
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                activePage.classList.add('page-active');
+                updateActiveLink(pageId);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                history.replaceState(null, '', '#' + pageId);
+            }
+
+            mobileMenu.classList.add('hidden');
+        }
+
+        function submitEnquiry(event) {
+            event.preventDefault();
+            const status = document.getElementById('formStatus');
+            status.classList.remove('hidden');
+            event.target.reset();
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.18 });
+
+        revealElements.forEach((element) => {
+            revealObserver.observe(element);
+        });
+
+        // Hero header carousel
+        const headerSlides = document.querySelectorAll('header .slide-image');
+        if (headerSlides.length > 0) {
+            let headerActiveIndex = 0;
+            setInterval(() => {
+                headerSlides[headerActiveIndex].classList.remove('active');
+                headerActiveIndex = (headerActiveIndex + 1) % headerSlides.length;
+                headerSlides[headerActiveIndex].classList.add('active');
+            }, 3400);
+        }
+
+        const startPage = location.hash.replace('#', '') || 'home';
+        showPage(startPage);
+
+        const scrollButtons = document.querySelectorAll('[data-scroll-target]');
+        scrollButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const trackId = button.dataset.scrollTarget;
+                const direction = button.dataset.scrollDir;
+                const track = document.getElementById(trackId);
+
+                if (!track) {
+                    return;
+                }
+
+                const moveBy = track.clientWidth * 0.9;
+                track.scrollBy({
+                    left: direction === 'left' ? -moveBy : moveBy,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const reviewTrack = document.getElementById('reviewTrack');
+        let reviewAutoScrollTimer = null;
+        if (reviewTrack && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const startReviewAutoScroll = () => {
+                if (reviewAutoScrollTimer) {
+                    clearInterval(reviewAutoScrollTimer);
+                }
+
+                reviewAutoScrollTimer = setInterval(() => {
+                    const maxLeft = reviewTrack.scrollWidth - reviewTrack.clientWidth;
+                    const step = reviewTrack.clientWidth * 0.72;
+                    const nextLeft = reviewTrack.scrollLeft + step;
+
+                    if (nextLeft >= maxLeft - 8) {
+                        reviewTrack.scrollTo({ left: 0, behavior: 'smooth' });
+                        return;
+                    }
+
+                    reviewTrack.scrollBy({ left: step, behavior: 'smooth' });
+                }, 3200);
+            };
+
+            startReviewAutoScroll();
+        }
+
+        const rentalModels = {
+            axia: {
+                name: 'Perodua Axia',
+                image: 'image/axia.png',
+                note: 'Compact daily drive with low fuel use',
+                price: 'RM 90',
+                transmission: 'Auto',
+                capacity: '4 Pax',
+                luggage: '2 Bags'
+            },
+            myvi: {
+                name: 'Perodua Myvi',
+                image: 'image/myvi.png',
+                note: 'Comfort city cruising with extra cabin space',
+                price: 'RM 100',
+                transmission: 'Auto',
+                capacity: '4 Pax',
+                luggage: '3 Bags'
+            }
+        };
+
+        const rentalTopLabel = document.getElementById('rentalTopLabel');
+        const rentalHeroImage = document.getElementById('rentalHeroImage');
+        const rentalHeroName = document.getElementById('rentalHeroName');
+        const rentalHeroNote = document.getElementById('rentalHeroNote');
+        const rentalSpec1 = document.getElementById('rentalSpec1');
+        const rentalSpec2 = document.getElementById('rentalSpec2');
+        const rentalSpec3 = document.getElementById('rentalSpec3');
+        const rentalSpec4 = document.getElementById('rentalSpec4');
+        const rentalModelButtons = document.querySelectorAll('[data-rental-model]');
+
+        function setRentalModel(modelKey) {
+            const model = rentalModels[modelKey];
+            if (!model || !rentalHeroImage) {
+                return;
+            }
+
+            rentalTopLabel.textContent = model.name;
+            rentalHeroName.textContent = model.name;
+            rentalHeroNote.textContent = model.note;
+            rentalHeroImage.src = model.image;
+            rentalHeroImage.alt = model.name;
+            rentalSpec1.textContent = model.price;
+            rentalSpec2.textContent = model.transmission;
+            rentalSpec3.textContent = model.capacity;
+            rentalSpec4.textContent = model.luggage;
+
+            rentalModelButtons.forEach((button) => {
+                button.classList.toggle('active', button.dataset.rentalModel === modelKey);
+            });
+        }
+
+        rentalModelButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                setRentalModel(button.dataset.rentalModel);
+            });
+        });
+
+        const clubFilterButtons = document.querySelectorAll('[data-club-filter]');
+        const clubCards = document.querySelectorAll('.club-card');
+
+        function setClubFilter(mode) {
+            clubFilterButtons.forEach((button) => {
+                button.classList.toggle('active', button.dataset.clubFilter === mode);
+            });
+
+            clubCards.forEach((card) => {
+                const isExclusive = card.dataset.exclusive === 'true';
+                card.style.display = mode === 'exclusive' && !isExclusive ? 'none' : 'block';
+            });
+        }
+
+        clubFilterButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                setClubFilter(button.dataset.clubFilter);
+            });
+        });
+
+        const accentWords = document.querySelectorAll('.text-shimmer, .pill-tag');
+        accentWords.forEach((element, index) => {
+            element.classList.add(index % 2 === 0 ? 'slide-in-left' : 'slide-in-right');
+        });
+
+        // Fallback so every image still appears if any external URL fails.
+        const fallbackImage = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200';
+        const allImages = document.querySelectorAll('img');
+        allImages.forEach((img) => {
+            img.addEventListener('error', () => {
+                if (img.dataset.fallbackApplied === 'true') {
+                    return;
+                }
+                img.dataset.fallbackApplied = 'true';
+                img.src = fallbackImage;
+            });
+        });
+    </script>
+</body>
+</html>
