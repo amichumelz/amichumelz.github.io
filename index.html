@@ -24,10 +24,52 @@
 
         .page-content.page-active {
             display: block;
+            animation: pageEnter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.75s ease, transform 0.75s ease, box-shadow 0.35s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .nav-link.active-link {
             color: #0f7ff2;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -0.25rem;
+            height: 2px;
+            border-radius: 999px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.25s ease;
+            opacity: 0.8;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-1px);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active-link::after {
+            transform: scaleX(1);
         }
 
         .glass-nav {
@@ -178,12 +220,12 @@
         }
 
         .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
         }
 
         .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 16px 30px rgba(15, 35, 64, 0.11);
+            transform: translateY(-7px);
+            box-shadow: 0 20px 36px rgba(15, 35, 64, 0.14);
         }
 
         .apple-card {
@@ -192,12 +234,13 @@
             background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(14px);
             box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease;
         }
 
         .apple-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 46px rgba(2, 6, 23, 0.12);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 24px 56px rgba(2, 6, 23, 0.14);
+            border-color: rgba(148, 163, 184, 0.45);
         }
 
         .package-image {
@@ -206,6 +249,7 @@
             border-radius: 1.2rem;
             object-fit: cover;
             margin-bottom: 1rem;
+            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
         }
 
         .pill-tag {
@@ -283,7 +327,26 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: shimmer 5s ease-in-out infinite;
+            animation: shimmer 4.5s ease-in-out infinite;
+        }
+
+        .btn-lift {
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+        }
+
+        .btn-lift:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16);
+        }
+
+        .float-orb {
+            animation: drift 8s ease-in-out infinite;
+        }
+
+        .float-orb.delay {
+            animation-duration: 10s;
+            animation-delay: -2s;
         }
 
         .slide-in-left,
@@ -365,6 +428,13 @@
             background: rgba(255, 255, 255, 0.92);
             font-weight: 800;
             color: #0f172a;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+        }
+
+        .scroll-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+            background: #ffffff;
         }
 
         .rental-grid {
@@ -391,6 +461,13 @@
             background: #f8fafc;
             padding: 1rem;
             box-shadow: 0 10px 24px rgba(15, 35, 64, 0.08);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+
+        .rental-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 36px rgba(15, 35, 64, 0.12);
+            border-color: rgba(15, 127, 242, 0.22);
         }
 
         .rental-card-image-wrap {
@@ -525,11 +602,13 @@
             font-size: 0.7rem;
             font-weight: 800;
             line-height: 1;
-            transition: background-color 0.25s ease;
+            transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .rental-strip button:hover {
             background: #0f7ff2;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(15, 127, 242, 0.18);
         }
 
         .rental-hero-area {
@@ -556,7 +635,7 @@
             text-transform: uppercase;
             color: #334155;
             background: rgba(255, 255, 255, 0.9);
-            transition: all 0.25s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
 
         .rental-model-switch button.active {
@@ -564,6 +643,10 @@
             color: #0f7ff2;
             background: #e8f2ff;
             box-shadow: 0 8px 16px rgba(15, 127, 242, 0.18);
+        }
+
+        .rental-model-switch button:hover {
+            transform: translateY(-2px);
         }
 
         .rental-hero-media {
@@ -589,7 +672,7 @@
             height: clamp(220px, 38vw, 380px);
             object-fit: contain;
             filter: drop-shadow(0 26px 20px rgba(15, 23, 42, 0.22));
-            animation: carEntry 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+            animation: carEntry 0.65s cubic-bezier(0.22, 1, 0.36, 1), carFloat 5.5s ease-in-out infinite;
         }
 
         .rental-showroom-footer {
@@ -666,11 +749,13 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.09em;
-            transition: background-color 0.25s ease;
+            transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .rental-showroom-actions .primary:hover {
             background: #0f7ff2;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(15, 127, 242, 0.18);
         }
 
         .rental-showroom-actions .ghost {
@@ -992,6 +1077,7 @@
             border: 1px solid rgba(148, 163, 184, 0.4);
             box-shadow: 0 12px 28px rgba(2, 6, 23, 0.18);
             isolation: isolate;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease;
         }
 
         .activity-card img {
@@ -1058,7 +1144,7 @@
             font-size: 0.88rem;
             font-weight: 800;
             letter-spacing: 0.01em;
-            transition: transform 0.22s ease, background-color 0.22s ease;
+            transition: transform 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease;
         }
 
         .review-wrap {
@@ -1174,12 +1260,19 @@
         }
 
         .activity-card:hover img {
-            transform: scale(1.06);
+            transform: scale(1.08);
         }
 
         .activity-card:hover .cta {
             transform: translateY(-2px);
             background: #0b6aa8;
+            box-shadow: 0 10px 18px rgba(15, 127, 242, 0.18);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(15, 127, 242, 0.28);
+            box-shadow: 0 20px 40px rgba(2, 6, 23, 0.22);
         }
 
         .activity-chip {
@@ -1383,7 +1476,7 @@
             background: #f8fafc;
             width: 100%;
             text-align: left;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
         }
 
         .package-variant-card:hover {
@@ -1553,6 +1646,12 @@
             color: #0f8b73;
             font-weight: 900;
             font-size: 0.92rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .package-slot-btn:hover:not(.disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(15, 139, 115, 0.14);
         }
 
         .package-slot-btn.active {
@@ -1915,6 +2014,26 @@
             }
             to {
                 opacity: 1;
+            }
+        }
+
+        @keyframes pageEnter {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.992);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes carFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
             }
         }
 
