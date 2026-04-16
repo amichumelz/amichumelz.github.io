@@ -649,6 +649,96 @@
             transform: translateY(-2px);
         }
 
+        .rental-mode-toggle {
+            display: inline-flex;
+            gap: 0.45rem;
+            padding: 0.35rem;
+            border-radius: 999px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .rental-mode-btn {
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #334155;
+            font-size: 0.74rem;
+            font-weight: 900;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            padding: 0.5rem 0.95rem;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .rental-mode-btn.active {
+            background: #111827;
+            color: #ffffff;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.22);
+        }
+
+        .rental-mode-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .driver-rental-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .driver-rental-card {
+            border-radius: 1.25rem;
+            border: 1px solid #dbe2ea;
+            background: #ffffff;
+            padding: 0.9rem;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        .driver-rental-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            border-radius: 0.95rem;
+        }
+
+        .driver-rental-card h3 {
+            margin-top: 0.75rem;
+            font-size: 1.22rem;
+            line-height: 1.15;
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -0.01em;
+        }
+
+        .driver-rental-card p {
+            margin-top: 0.35rem;
+            font-size: 0.88rem;
+            color: #334155;
+            line-height: 1.45;
+        }
+
+        .driver-rental-card button {
+            margin-top: 0.85rem;
+            width: 100%;
+            border-radius: 0.75rem;
+            background: #0f7ff2;
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 900;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 0.72rem 0.9rem;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .driver-rental-card button:hover {
+            background: #0b6aa8;
+            transform: translateY(-2px);
+        }
+
         .rental-hero-media {
             min-height: 300px;
             display: grid;
@@ -882,6 +972,10 @@
         @media (min-width: 768px) {
             .rental-showroom-specs {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .driver-rental-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .club-card-info h4 {
@@ -1723,6 +1817,34 @@
             font-weight: 600;
         }
 
+        .floating-whatsapp {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 70;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.6rem;
+            height: 3.6rem;
+            border-radius: 999px;
+            background: linear-gradient(140deg, #25d366, #1aa54f);
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            box-shadow: 0 12px 28px rgba(17, 24, 39, 0.22);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .floating-whatsapp i {
+            font-size: 1.55rem;
+            line-height: 1;
+        }
+
+        .floating-whatsapp:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 16px 32px rgba(17, 24, 39, 0.28);
+        }
+
         .brand-title {
             font-size: 1.35rem;
             line-height: 1;
@@ -1753,6 +1875,17 @@
                 font-size: 0.75rem;
                 line-height: 1.05;
                 letter-spacing: -0.02em;
+            }
+
+            .floating-whatsapp {
+                width: 3.3rem;
+                height: 3.3rem;
+                right: 0.85rem;
+                bottom: 0.85rem;
+            }
+
+            .floating-whatsapp i {
+                font-size: 1.4rem;
             }
 
             /* Hero Section */
@@ -2614,11 +2747,11 @@
 
                 <div class="activity-grid">
                     <article class="activity-card reveal reveal-delay-1">
-                        <img src="https://media.cnn.com/api/v1/images/stellar/prod/170502125641-langkawi-malaysia-jet-ski.jpg?q=w_4208,h_3086,x_0,y_0,c_fill" alt="JetSki Tour Packages">
+                        <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1400" alt="Private Tour Langkawi">
                         <div class="activity-card-content">
-                            <h3>JetSki Tour Packages</h3>
-                            <p>Mangrove JetSki Tour 3-4 jam, 9 checkpoint, RM750 per JetSki (2 pax).</p>
-                            <button onclick="openPackageDetails('jetski-silver')" class="cta">Discover Deals</button>
+                            <h3>Private Tour Langkawi</h3>
+                            <p>Fully private & customizable itinerary</p>
+                            <button onclick="openPackageDetails('private-tour')" class="cta">Discover Deals</button>
                         </div>
                     </article>
 
@@ -2650,11 +2783,11 @@
                     </article>
 
                     <article class="activity-card reveal reveal-delay-2">
-                        <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1400" alt="Private Tour Langkawi">
+                        <img src="https://media.cnn.com/api/v1/images/stellar/prod/170502125641-langkawi-malaysia-jet-ski.jpg?q=w_4208,h_3086,x_0,y_0,c_fill" alt="JetSki Tour Packages">
                         <div class="activity-card-content">
-                            <h3>Private Tour Langkawi</h3>
-                            <p>Pilih Private Tour 4 jam atau 8 jam ikut itinerary anda.</p>
-                            <button onclick="openPackageDetails('private-tour')" class="cta">Discover Deals</button>
+                            <h3>JetSki Tour Packages</h3>
+                            <p>Mangrove JetSki Tour 3-4 jam, 9 checkpoint, RM750 per JetSki (2 pax).</p>
+                            <button onclick="openPackageDetails('jetski-silver')" class="cta">Discover Deals</button>
                         </div>
                     </article>
 
@@ -2821,7 +2954,13 @@
                     <h1 class="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl">Rental</h1>
                     <p class="max-w-2xl text-sm text-slate-600">Showroom preview layout with clean performance stats and quick booking actions.</p>
                 </div>
-                <div class="reveal rental-showroom" id="rentalTrack">
+
+                <div class="rental-mode-toggle" role="tablist" aria-label="Rental mode switch">
+                    <button type="button" class="rental-mode-btn active" data-rental-mode-tab="self" aria-selected="true">Self Drive</button>
+                    <button type="button" class="rental-mode-btn" data-rental-mode-tab="driver" aria-selected="false">With Driver</button>
+                </div>
+
+                <div id="rentalSelfDriveSection" class="reveal rental-showroom">
                     <div class="rental-strip">
                         <span id="rentalTopLabel">Perodua Axia</span>
                         <div class="rental-strip-meta">
@@ -2872,6 +3011,23 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div id="rentalWithDriverSection" class="hidden">
+                    <div class="driver-rental-grid">
+                        <article class="driver-rental-card">
+                            <img src="image/luxury.jpeg" alt="Luxury Tour With Driver">
+                            <h3>Luxury Tour with Driver</h3>
+                            <p>4 jam RM 700 | 8 jam RM 1200</p>
+                            <button type="button" onclick="openPackageDetails('luxury-tour')">View Package</button>
+                        </article>
+                        <article class="driver-rental-card">
+                            <img src="image/van.jpeg" alt="Transport Van Tour With Driver">
+                            <h3>Transport Van Tour With Driver</h3>
+                            <p>4 jam RM 650 | 8 jam RM 750</p>
+                            <button type="button" onclick="openPackageDetails('van-tour')">View Package</button>
+                        </article>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2962,6 +3118,14 @@
             </div>
         </section>
     </main>
+
+    <a href="https://wa.me/60149495457"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="floating-whatsapp"
+       aria-label="Chat on WhatsApp">
+        <i class="bi bi-whatsapp" aria-hidden="true"></i>
+    </a>
 
     <div id="packageModalBackdrop" class="package-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="packageModalTitle">
         <article class="package-modal">
@@ -3196,6 +3360,98 @@
                     reserveText: 'Reserve now and confirm payment after slot confirmation.',
                     displayPrice: 'RM750',
                     unitText: 'per JetSki (2 pax)'
+                }
+            },
+            'luxury-tour': {
+                tag: 'Luxury Tour',
+                title: 'LUXURY TOUR WITH DRIVER',
+                description: 'Tour mewah with driver untuk itinerary yang lebih selesa dan premium.',
+                stats: '4 or 8 Hours | Driver Included | Premium Vehicle',
+                price: '4 Hours RM700 | 8 Hours RM1200',
+                highlights: [
+                    'Luxury vehicle with driver',
+                    'Flexible private itinerary',
+                    'Comfortable premium travel',
+                    'Suitable for family or VIP guests'
+                ],
+                variants: [
+                    {
+                        name: '4 Hours',
+                        price: 'RM 700',
+                        items: [
+                            'Luxury tour 4 jam',
+                            'Driver included',
+                            'Custom route'
+                        ]
+                    },
+                    {
+                        name: '8 Hours',
+                        price: 'RM 1200',
+                        items: [
+                            'Luxury tour 8 jam',
+                            'Driver included',
+                            'Full day itinerary'
+                        ]
+                    }
+                ],
+                start: 'Flexible (Morning or Afternoon)',
+                includes: 'Vehicle | Driver',
+                bonus: 'Premium comfort for private touring',
+                booking: {
+                    label: 'Luxury Tour Booking',
+                    times: ['9:00 AM', '12:00 PM', '3:00 PM'],
+                    disabledTimes: [],
+                    deadlineHours: 20,
+                    cancellationText: 'Free cancellation up to 24 hours before departure.',
+                    reserveText: 'Reserve now, pay later option available.',
+                    displayPrice: 'RM700',
+                    unitText: '4 hours (8 hours RM1200)'
+                }
+            },
+            'van-tour': {
+                tag: 'Van Tour',
+                title: 'Transport Van Tour With Driver',
+                description: 'Comfortable van tour with driver for group travel around Langkawi.',
+                stats: '4 or 8 Hours | Driver Included | Van Transport',
+                price: '4 Hours RM650 | 8 Hours RM750',
+                highlights: [
+                    'Transport van with driver',
+                    'Group friendly seating',
+                    'Flexible route arrangement',
+                    'Good for family or small group trips'
+                ],
+                variants: [
+                    {
+                        name: '4 Hours',
+                        price: 'RM 650',
+                        items: [
+                            'Van tour 4 jam',
+                            'Driver included',
+                            'Custom route'
+                        ]
+                    },
+                    {
+                        name: '8 Hours',
+                        price: 'RM 750',
+                        items: [
+                            'Van tour 8 jam',
+                            'Driver included',
+                            'Full day itinerary'
+                        ]
+                    }
+                ],
+                start: 'Flexible (Morning or Afternoon)',
+                includes: 'Van | Driver',
+                bonus: 'Best for families and group touring',
+                booking: {
+                    label: 'Van Tour Booking',
+                    times: ['9:00 AM', '12:00 PM', '3:00 PM'],
+                    disabledTimes: [],
+                    deadlineHours: 20,
+                    cancellationText: 'Free cancellation up to 24 hours before departure.',
+                    reserveText: 'Reserve now, pay later option available.',
+                    displayPrice: 'RM650',
+                    unitText: '4 hours (8 hours RM750)'
                 }
             },
             'land-tour': {
@@ -3854,7 +4110,11 @@
         const rentalSpec3 = document.getElementById('rentalSpec3');
         const rentalSpec4 = document.getElementById('rentalSpec4');
         const rentalModelButtons = document.querySelectorAll('[data-rental-model]');
+        const rentalModeTabs = document.querySelectorAll('[data-rental-mode-tab]');
+        const rentalSelfDriveSection = document.getElementById('rentalSelfDriveSection');
+        const rentalWithDriverSection = document.getElementById('rentalWithDriverSection');
         const clubHighlightTrack = document.getElementById('clubHighlightTrack');
+
         function initClubGalleryLoop() {
             if (!clubHighlightTrack || clubHighlightTrack.dataset.autoScrollReady === 'true') {
                 return;
@@ -3900,6 +4160,30 @@
                 setRentalModel(button.dataset.rentalModel);
             });
         });
+
+        function setRentalMode(mode) {
+            if (!rentalSelfDriveSection || !rentalWithDriverSection) {
+                return;
+            }
+
+            const isDriverMode = mode === 'driver';
+            rentalSelfDriveSection.classList.toggle('hidden', isDriverMode);
+            rentalWithDriverSection.classList.toggle('hidden', !isDriverMode);
+
+            rentalModeTabs.forEach((button) => {
+                const isActive = button.dataset.rentalModeTab === mode;
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-selected', String(isActive));
+            });
+        }
+
+        rentalModeTabs.forEach((button) => {
+            button.addEventListener('click', () => {
+                setRentalMode(button.dataset.rentalModeTab);
+            });
+        });
+
+        setRentalMode('self');
 
         const clubFilterButtons = document.querySelectorAll('[data-club-filter]');
 
