@@ -10,6 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         :root {
             --bg-soft: #fff8ef;
             --ink: #10243f;
@@ -1075,6 +1081,46 @@
             .club-card-info h4 {
                 font-size: 1rem;
             }
+
+            .intro-merge-image {
+                height: 220px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .intro-merge-image {
+                height: 340px;
+            }
+        }
+
+        @media (max-width: 991px) and (orientation: landscape) {
+            #home header {
+                min-height: 320px;
+                height: 90svh;
+            }
+
+            #home header .relative.z-10 {
+                padding: 1rem 1.25rem;
+            }
+
+            #home header h1 {
+                font-size: clamp(1.7rem, 4.2vw, 2.45rem);
+                max-width: 42rem;
+            }
+
+            #home header p {
+                font-size: 0.9rem;
+                max-width: 38rem;
+            }
+
+            #home header .btn-lift {
+                width: auto;
+                max-width: none;
+            }
+
+            .intro-merge-image {
+                height: 210px;
+            }
         }
 
         .tour-hover-card {
@@ -1925,9 +1971,24 @@
 
         .hero-full-bleed {
             width: 100vw;
+            max-width: 100vw;
             margin-left: calc(50% - 50vw);
             margin-right: calc(50% - 50vw);
             border-radius: 0;
+        }
+
+        @supports (width: 100dvw) {
+            .hero-full-bleed {
+                width: 100dvw;
+                max-width: 100dvw;
+                margin-left: calc(50% - 50dvw);
+                margin-right: calc(50% - 50dvw);
+            }
+        }
+
+        .intro-merge-image {
+            margin-bottom: 0;
+            height: 280px;
         }
 
         .font-display {
@@ -1993,6 +2054,23 @@
                 border-radius: 1.25rem;
                 width: 100%;
                 max-width: 180px;
+            }
+
+            .rental-model-switch {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 0.35rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .rental-model-switch::-webkit-scrollbar {
+                display: none;
+            }
+
+            .rental-model-switch button {
+                flex: 0 0 auto;
+                white-space: nowrap;
             }
 
             .mobileMenu.mobile-menu-panel button {
@@ -2705,7 +2783,7 @@
                         </div>
 
                         <div>
-                            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200" alt="Langkawi activity preview" class="package-image mb-0 h-[280px] lg:h-[340px]">
+                            <img src="https://lillagreen.com/wp-content/uploads/2023/04/Langkawi-140.jpg" alt="Langkawi activity preview" class="package-image intro-merge-image">
                         </div>
                     </div>
                 </section>
@@ -3065,7 +3143,7 @@
                                 </div>
                                 <p id="rentalSeasonHint" class="rental-season-note">Low Season from RM 80/day. Peak Season from RM 100/day.</p>
                                 <div class="rental-showroom-actions">
-                                    <button onclick="showPage('contact')" class="primary">Book Now</button>
+                                    <button id="rentalBookNowBtn" type="button" class="primary">Book Now</button>
                                 </div>
                             </div>
                             <div class="rental-showroom-specs">
@@ -3810,27 +3888,40 @@
             const timeText = selectedBookingTime || activePackageDetail.start;
             const selectedVariant = getSelectedVariant(activePackageDetail);
             const selectedVariantText = selectedVariant ? `${selectedVariant.name} - ${selectedVariant.price}` : '';
-            const selectedPackageText = selectedVariantText || activePackageDetail.price;
 
-            const reserveMessage = [
+            const reserveLines = [
                 'Hi IQMAL LANGKAWI SERVICES,',
                 'I want to reserve now and pay later for:',
-                activePackageDetail.title,
-                selectedVariantText,
-                selectedPackageText,
-                `Preferred time: ${timeText}`,
-                'Please share reserve-now details. Thank you.'
-            ].join('\n');
+                activePackageDetail.title
+            ];
 
-            const bookMessage = [
+            if (selectedVariantText) {
+                reserveLines.push(`Selected option: ${selectedVariantText}`);
+            } else {
+                reserveLines.push(activePackageDetail.price);
+            }
+
+            reserveLines.push(`Preferred time: ${timeText}`);
+            reserveLines.push('Please share reserve-now details. Thank you.');
+
+            const reserveMessage = reserveLines.join('\n');
+
+            const bookLines = [
                 'Hi IQMAL LANGKAWI SERVICES,',
                 'I want to book now:',
-                activePackageDetail.title,
-                selectedVariantText,
-                selectedPackageText,
-                `Preferred time: ${timeText}`,
-                'Please confirm availability. Thank you.'
-            ].join('\n');
+                activePackageDetail.title
+            ];
+
+            if (selectedVariantText) {
+                bookLines.push(`Selected option: ${selectedVariantText}`);
+            } else {
+                bookLines.push(activePackageDetail.price);
+            }
+
+            bookLines.push(`Preferred time: ${timeText}`);
+            bookLines.push('Please confirm availability. Thank you.');
+
+            const bookMessage = bookLines.join('\n');
 
             packageModalReserveLink.href = `https://wa.me/60149495457?text=${encodeURIComponent(reserveMessage)}`;
             packageModalWhatsApp.href = `https://wa.me/60149495457?text=${encodeURIComponent(bookMessage)}`;
@@ -4319,6 +4410,7 @@
         const rentalDateInput = document.getElementById('rentalDateInput');
         const rentalSeasonBadge = document.getElementById('rentalSeasonBadge');
         const rentalSeasonHint = document.getElementById('rentalSeasonHint');
+        const rentalBookNowBtn = document.getElementById('rentalBookNowBtn');
         const rentalModelButtons = document.querySelectorAll('[data-rental-model]');
         const driverModelButtons = document.querySelectorAll('[data-driver-model]');
         const rentalModeTabs = document.querySelectorAll('[data-rental-mode-tab]');
@@ -4404,6 +4496,32 @@
             }
         }
 
+        function openSelfDriveWhatsAppBooking() {
+            const model = rentalModels[activeRentalModelKey];
+            if (!model) {
+                return;
+            }
+
+            const pickupDate = rentalDateInput && rentalDateInput.value ? rentalDateInput.value : 'Not selected';
+            const season = getSeasonByDate(rentalDateInput ? rentalDateInput.value : '');
+            const isPeakSeason = season === 'peak';
+            const seasonLabel = isPeakSeason ? 'Peak Season' : 'Low Season';
+            const dailyRate = isPeakSeason ? model.peakPrice : model.lowPrice;
+
+            const message = [
+                'Hi IQMAL LANGKAWI SERVICES,',
+                'I want to book a Self Drive car:',
+                model.name,
+                `Pickup date: ${pickupDate}`,
+                `Rate (24 Hour / Unit): ${dailyRate} (${seasonLabel})`,
+                `Transmission: ${model.transmission}`,
+                `Capacity: ${model.capacity}`,
+                'Please confirm availability. Thank you.'
+            ].join('\n');
+
+            window.open(`https://wa.me/60149495457?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
         function initClubGalleryLoop() {
             if (!clubHighlightTrack || clubHighlightTrack.dataset.autoScrollReady === 'true') {
                 return;
@@ -4453,6 +4571,10 @@
                 setRentalModel(button.dataset.rentalModel);
             });
         });
+
+        if (rentalBookNowBtn) {
+            rentalBookNowBtn.addEventListener('click', openSelfDriveWhatsAppBooking);
+        }
 
         if (rentalDateInput) {
             const today = new Date();
