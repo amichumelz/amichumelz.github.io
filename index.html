@@ -794,6 +794,65 @@
             text-transform: uppercase;
         }
 
+        .rental-season-panel {
+            margin-top: 0.9rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        .rental-season-panel label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: #334155;
+        }
+
+        .rental-season-panel input[type="date"] {
+            border: 1px solid #cbd5e1;
+            border-radius: 0.6rem;
+            background: #ffffff;
+            color: #0f172a;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.46rem 0.65rem;
+        }
+
+        .rental-season-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 0.28rem 0.68rem;
+            font-size: 0.64rem;
+            font-weight: 900;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            border: 1px solid transparent;
+        }
+
+        .rental-season-badge.low {
+            color: #166534;
+            background: #dcfce7;
+            border-color: #86efac;
+        }
+
+        .rental-season-badge.peak {
+            color: #9a3412;
+            background: #ffedd5;
+            border-color: #fdba74;
+        }
+
+        .rental-season-note {
+            margin-top: 0.52rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            color: #475569;
+        }
+
         .rental-showroom-specs {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1846,19 +1905,34 @@
         }
 
         .brand-title {
-            font-size: 1.35rem;
-            line-height: 1;
-            font-weight: 900;
-            letter-spacing: -0.04em;
+            font-family: 'Sora', 'Manrope', sans-serif;
+            font-size: 1.2rem;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -0.01em;
             text-transform: uppercase;
             background: linear-gradient(180deg, #1e3a8a 0%, #0f7ff2 58%, #d4a017 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 2px 18px rgba(15, 127, 242, 0.16);
         }
 
         .brand-title-accent {
             color: #d4a017;
+            letter-spacing: 0.03em;
+        }
+
+        .hero-full-bleed {
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            border-radius: 0;
+        }
+
+        .font-display {
+            font-family: 'Sora', 'Manrope', sans-serif;
+            letter-spacing: -0.01em;
         }
 
         @media (max-width: 767px) {
@@ -1872,9 +1946,9 @@
             }
 
             .brand-title {
-                font-size: 0.75rem;
+                font-size: 0.82rem;
                 line-height: 1.05;
-                letter-spacing: -0.02em;
+                letter-spacing: 0.01em;
             }
 
             .floating-whatsapp {
@@ -1892,7 +1966,7 @@
             #home header {
                 min-height: 380px;
                 height: 64vh;
-                border-radius: 1.5rem;
+                border-radius: 0;
             }
 
             #home header .relative.z-10 {
@@ -2356,7 +2430,7 @@
             }
 
             .brand-title {
-                font-size: 0.65rem;
+                font-size: 0.72rem;
             }
 
             #home header h1 {
@@ -2596,7 +2670,7 @@
     <main class="min-h-screen pt-24">
         <section id="home" class="page-content page-active">
             <div class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
-                <header class="relative overflow-hidden rounded-[2rem] lg:rounded-[2.6rem] h-[70vh] min-h-[480px]">
+                <header class="hero-full-bleed relative overflow-hidden h-[70vh] min-h-[480px]">
                     <img class="slide-image active absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=2000" alt="Langkawi island coast">
                     <img class="slide-image absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1493558103817-58b2924bce98?q=80&w=2000" alt="Beach experience">
                     
@@ -2618,21 +2692,23 @@
             </div>
 
             <div class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
-                <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-                    <section class="apple-card p-8 lg:p-10">
-                        <p class="pill-tag">Introduction</p>
-                        <h2 class="slide-in-up delay-1 mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl"><span class="text-shimmer">Clean travel</span> experience for every Langkawi trip.</h2>
-                        <p class="slide-in-up delay-2 mt-5 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">IQMAL LANGKAWI SERVICES helps customer browse rental, tours and support services from one simple page. Customer can slide through packages, review pictures, and contact only when ready to confirm.</p>
-                        <div class="mt-7 flex flex-wrap gap-3">
-                            <button onclick="showPage('about')" class="btn-lift rounded-full bg-slate-900 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-white">About Us</button>
-                            <button onclick="showPage('rental')" class="btn-lift rounded-full border border-slate-300 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-slate-800">View Rental</button>
+                <section class="apple-card p-6 lg:p-8">
+                    <div class="grid items-center gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8">
+                        <div>
+                            <p class="pill-tag">Introduction</p>
+                            <h2 class="slide-in-up delay-1 mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl"><span class="text-shimmer">Clean travel</span> experience for every Langkawi trip.</h2>
+                            <p class="slide-in-up delay-2 mt-5 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">IQMAL LANGKAWI SERVICES helps customer browse rental, tours and support services from one simple page. Customer can slide through packages, review pictures, and contact only when ready to confirm.</p>
+                            <div class="mt-7 flex flex-wrap gap-3">
+                                <button onclick="showPage('about')" class="btn-lift rounded-full bg-slate-900 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-white">About Us</button>
+                                <button onclick="showPage('rental')" class="btn-lift rounded-full border border-slate-300 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-slate-800">View Rental</button>
+                            </div>
                         </div>
-                    </section>
 
-                    <section class="apple-card p-6 lg:p-8">
-                        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200" alt="Langkawi activity preview" class="package-image h-[280px]">
-                    </section>
-                </div>
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200" alt="Langkawi activity preview" class="package-image mb-0 h-[280px] lg:h-[340px]">
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
@@ -2961,20 +3037,16 @@
                 </div>
 
                 <div id="rentalSelfDriveSection" class="reveal rental-showroom">
-                    <div class="rental-strip">
-                        <span id="rentalTopLabel">Perodua Axia</span>
-                        <div class="rental-strip-meta">
-                            <span>Same Day Confirm</span>
-                            <span>Langkawi Ready</span>
-                        </div>
-                        <button onclick="showPage('contact')">Order Now</button>
-                    </div>
-
                     <div class="rental-hero-area">
                         <div class="rental-model-switch">
                             <button data-rental-model="axia" class="active">Axia</button>
                             <button data-rental-model="myvi">Myvi</button>
-                            <button data-rental-model="vios">Vios</button>
+                            <button data-rental-model="veloz">Veloz</button>
+                            <button data-rental-model="serena">Sarena New</button>
+                            <button data-rental-model="camry">Camry</button>
+                            <button data-rental-model="vellfire">Vellfire</button>
+                            <button data-rental-model="van">Van Hiace Auto</button>
+                            <button data-rental-model="minicooper">Mini Cooper</button>
                         </div>
                         <div class="rental-hero-media">
                             <img id="rentalHeroImage" src="image/axia.png" alt="Perodua Axia">
@@ -2986,14 +3058,20 @@
                             <div>
                                 <h3 id="rentalHeroName" class="rental-showroom-name">Perodua Axia</h3>
                                 <p id="rentalHeroNote" class="rental-showroom-note">Compact daily drive with low fuel use</p>
+                                <div class="rental-season-panel">
+                                    <label for="rentalDateInput">Pickup Date</label>
+                                    <input id="rentalDateInput" type="date" aria-label="Select pickup date for seasonal price">
+                                    <span id="rentalSeasonBadge" class="rental-season-badge low">Low Season</span>
+                                </div>
+                                <p id="rentalSeasonHint" class="rental-season-note">Low Season from RM 80/day. Peak Season from RM 100/day.</p>
                                 <div class="rental-showroom-actions">
                                     <button onclick="showPage('contact')" class="primary">Book Now</button>
                                 </div>
                             </div>
                             <div class="rental-showroom-specs">
                                 <div class="rental-showroom-spec">
-                                    <strong id="rentalSpec1">RM 90</strong>
-                                    <span>Per Day</span>
+                                    <strong id="rentalSpec1">RM 80</strong>
+                                    <span id="rentalSpec1Label">Per Day</span>
                                 </div>
                                 <div class="rental-showroom-spec">
                                     <strong id="rentalSpec2">Auto</strong>
@@ -3013,20 +3091,47 @@
 
                 </div>
 
-                <div id="rentalWithDriverSection" class="hidden">
-                    <div class="driver-rental-grid">
-                        <article class="driver-rental-card">
-                            <img src="image/luxury.jpeg" alt="Luxury Tour With Driver">
-                            <h3>Luxury Tour with Driver</h3>
-                            <p>4 jam RM 700 | 8 jam RM 1200</p>
-                            <button type="button" onclick="openPackageDetails('luxury-tour')">View Package</button>
-                        </article>
-                        <article class="driver-rental-card">
-                            <img src="image/van.jpeg" alt="Transport Van Tour With Driver">
-                            <h3>Transport Van Tour With Driver</h3>
-                            <p>4 jam RM 650 | 8 jam RM 750</p>
-                            <button type="button" onclick="openPackageDetails('van-tour')">View Package</button>
-                        </article>
+                <div id="rentalWithDriverSection" class="reveal rental-showroom hidden">
+                    <div class="rental-hero-area">
+                        <div class="rental-model-switch">
+                            <button data-driver-model="vios" class="active">Sedan Vios</button>
+                            <button data-driver-model="zenix">MPV Zenix</button>
+                            <button data-driver-model="van">Van</button>
+                            <button data-driver-model="vellfire">Vellfire AGH40</button>
+                        </div>
+                        <div class="rental-hero-media">
+                            <img id="driverHeroImage" src="image/vios.png" alt="Sedan Toyota Vios with Driver">
+                        </div>
+                    </div>
+
+                    <div class="rental-showroom-footer">
+                        <div class="rental-showroom-grid">
+                            <div>
+                                <h3 id="driverHeroName" class="rental-showroom-name">Sedan Toyota Vios with Driver</h3>
+                                <p id="driverHeroNote" class="rental-showroom-note">Comfortable private transfer for small groups</p>
+                                <div class="rental-showroom-actions">
+                                    <button id="driverBookNowBtn" type="button" class="primary">View Package</button>
+                                </div>
+                            </div>
+                            <div class="rental-showroom-specs">
+                                <div class="rental-showroom-spec">
+                                    <strong id="driverSpec1">RM 350</strong>
+                                    <span>From</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong id="driverSpec2">4-8 Hours</strong>
+                                    <span>Duration</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong id="driverSpec3">Driver</strong>
+                                    <span>Service</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong id="driverSpec4">Private</strong>
+                                    <span>Trip Type</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3577,12 +3682,12 @@
                     'Music and leisure deck',
                     'Photo spot with sunset horizon'
                 ],
-                start: '5:00 PM',
+                start: '4:00 PM',
                 includes: 'Cruise ticket | Safety briefing | Selected package meals',
                 bonus: 'Premium plan includes special deck seating',
                 booking: {
                     label: 'Sunset Cruise Booking',
-                    times: ['5:00 PM', '5:30 PM', '6:00 PM'],
+                    times: ['4:00 PM'],
                     disabledTimes: [],
                     deadlineHours: 28,
                     cancellationText: 'Free cancellation up to 24 hours before departure.',
@@ -3705,13 +3810,14 @@
             const timeText = selectedBookingTime || activePackageDetail.start;
             const selectedVariant = getSelectedVariant(activePackageDetail);
             const selectedVariantText = selectedVariant ? `${selectedVariant.name} - ${selectedVariant.price}` : '';
+            const selectedPackageText = selectedVariantText || activePackageDetail.price;
 
             const reserveMessage = [
                 'Hi IQMAL LANGKAWI SERVICES,',
                 'I want to reserve now and pay later for:',
                 activePackageDetail.title,
                 selectedVariantText,
-                activePackageDetail.price,
+                selectedPackageText,
                 `Preferred time: ${timeText}`,
                 'Please share reserve-now details. Thank you.'
             ].join('\n');
@@ -3721,7 +3827,7 @@
                 'I want to book now:',
                 activePackageDetail.title,
                 selectedVariantText,
-                activePackageDetail.price,
+                selectedPackageText,
                 `Preferred time: ${timeText}`,
                 'Please confirm availability. Thank you.'
             ].join('\n');
@@ -4076,7 +4182,8 @@
                 name: 'Perodua Axia',
                 image: 'image/axia.png',
                 note: 'Compact daily drive with low fuel use',
-                price: 'RM 90',
+                lowPrice: 'RM 80',
+                peakPrice: 'RM 100',
                 transmission: 'Auto',
                 capacity: '4 Pax',
                 luggage: '2 Bags'
@@ -4085,19 +4192,118 @@
                 name: 'Perodua Myvi',
                 image: 'image/myvi.png',
                 note: 'Comfort city cruising with extra cabin space',
-                price: 'RM 100',
+                lowPrice: 'RM 100',
+                peakPrice: 'RM 120',
                 transmission: 'Auto',
                 capacity: '4 Pax',
                 luggage: '3 Bags'
             },
-            vios: {
-                name: 'Toyota Vios',
-                image: 'image/vios.png',
-                note: 'Comfortable sedan, suitable for island family trips',
-                price: 'RM 160',
+            veloz: {
+                name: 'Toyota Veloz',
+                image: 'image/veloz.png',
+                note: 'Flexible MPV cabin for family travel and shopping trips',
+                lowPrice: 'RM 150',
+                peakPrice: 'RM 180',
+                transmission: 'Auto',
+                capacity: '5 Pax',
+                luggage: '4 Bags'
+            },
+            serena: {
+                name: 'Sarena New',
+                image: 'image/serena.png',
+                note: 'Spacious people mover with smooth highway comfort',
+                lowPrice: 'RM 200',
+                peakPrice: 'RM 250',
+                transmission: 'Auto',
+                capacity: '7 Pax',
+                luggage: '4 Bags'
+            },
+            camry: {
+                name: 'Toyota Camry',
+                image: 'image/camry.png',
+                note: 'Premium sedan feel for a quiet and stable ride',
+                lowPrice: 'RM 350',
+                peakPrice: 'RM 400',
                 transmission: 'Auto',
                 capacity: '5 Pax',
                 luggage: '3 Bags'
+            },
+            vellfire: {
+                name: 'Toyota Vellfire',
+                image: 'image/vellfire.png',
+                note: 'Luxury MPV comfort with generous legroom',
+                lowPrice: 'RM 400',
+                peakPrice: 'RM 450',
+                transmission: 'Auto',
+                capacity: '7 Pax',
+                luggage: '4 Bags'
+            },
+            van: {
+                name: 'Van Hiace Auto',
+                image: 'image/van.png',
+                note: 'Large group transport with practical luggage space',
+                lowPrice: 'RM 350',
+                peakPrice: 'RM 450',
+                transmission: 'Auto',
+                capacity: '10 Pax',
+                luggage: '7 Bags'
+            },
+            minicooper: {
+                name: 'Mini Cooper',
+                image: 'image/minicooper.png',
+                note: 'Fun compact premium drive for couples or solo trips',
+                lowPrice: 'RM 600',
+                peakPrice: 'RM 650',
+                transmission: 'Auto',
+                capacity: '4 Pax',
+                luggage: '2 Bags'
+            }
+        };
+
+        const driverModels = {
+            vios: {
+                name: 'Sedan Toyota Vios',
+                title: 'Sedan Toyota Vios with Driver',
+                image: 'image/vios.png',
+                note: 'Comfortable private transfer for small groups',
+                price: 'RM 350',
+                duration: '4-8 Hours',
+                service: 'Driver',
+                tripType: 'Private',
+                packageKey: 'luxury-tour'
+            },
+            zenix: {
+                name: 'MPV Toyota Zenix',
+                title: 'MPV Toyota Zenix with Driver',
+                image: 'image/mpv.png',
+                note: 'Spacious premium MPV for families and small teams',
+                price: 'RM 650',
+                duration: '4-8 Hours',
+                service: 'Driver',
+                tripType: 'Family',
+                packageKey: 'luxury-tour'
+            },
+            van: {
+                name: 'Tour Van',
+                title: 'Tour Van with Driver',
+                image: 'image/van.png',
+                note: 'Comfortable group tour with flexible route planning',
+                price: 'RM 650',
+                duration: '4-8 Hours',
+                service: 'Driver',
+                tripType: 'Group',
+                packageKey: 'van-tour'
+            },
+            vellfire: {
+                name: 'Vellfire AGH40',
+                title: 'Vellfire AGH40 with Driver',
+                image: 'image/vellfire.png',
+                note: 'Executive ride for premium comfort and style',
+                price: 'RM 900',
+                duration: '4-8 Hours',
+                service: 'Driver',
+                tripType: 'Premium',
+                packageKey: 'luxury-tour'
             }
         };
 
@@ -4106,14 +4312,97 @@
         const rentalHeroName = document.getElementById('rentalHeroName');
         const rentalHeroNote = document.getElementById('rentalHeroNote');
         const rentalSpec1 = document.getElementById('rentalSpec1');
+        const rentalSpec1Label = document.getElementById('rentalSpec1Label');
         const rentalSpec2 = document.getElementById('rentalSpec2');
         const rentalSpec3 = document.getElementById('rentalSpec3');
         const rentalSpec4 = document.getElementById('rentalSpec4');
+        const rentalDateInput = document.getElementById('rentalDateInput');
+        const rentalSeasonBadge = document.getElementById('rentalSeasonBadge');
+        const rentalSeasonHint = document.getElementById('rentalSeasonHint');
         const rentalModelButtons = document.querySelectorAll('[data-rental-model]');
+        const driverModelButtons = document.querySelectorAll('[data-driver-model]');
         const rentalModeTabs = document.querySelectorAll('[data-rental-mode-tab]');
         const rentalSelfDriveSection = document.getElementById('rentalSelfDriveSection');
         const rentalWithDriverSection = document.getElementById('rentalWithDriverSection');
+        const driverTopLabel = document.getElementById('driverTopLabel');
+        const driverHeroImage = document.getElementById('driverHeroImage');
+        const driverHeroName = document.getElementById('driverHeroName');
+        const driverHeroNote = document.getElementById('driverHeroNote');
+        const driverSpec1 = document.getElementById('driverSpec1');
+        const driverSpec2 = document.getElementById('driverSpec2');
+        const driverSpec3 = document.getElementById('driverSpec3');
+        const driverSpec4 = document.getElementById('driverSpec4');
+        const driverOrderNowBtn = document.getElementById('driverOrderNowBtn');
+        const driverBookNowBtn = document.getElementById('driverBookNowBtn');
         const clubHighlightTrack = document.getElementById('clubHighlightTrack');
+        const malaysiaPeakRangeBuilders = [
+            (year) => [`${year}-01-25`, `${year}-02-10`],
+            (year) => [`${year}-03-25`, `${year}-04-15`],
+            (year) => [`${year}-05-25`, `${year}-06-10`],
+            (year) => [`${year}-08-24`, `${year}-09-08`],
+            (year) => [`${year}-11-20`, `${year + 1}-01-05`]
+        ];
+        let activeRentalModelKey = 'axia';
+
+        function buildMalaysiaPeakRanges(baseYear) {
+            const years = [baseYear - 1, baseYear, baseYear + 1];
+            const ranges = [];
+            years.forEach((year) => {
+                malaysiaPeakRangeBuilders.forEach((builder) => {
+                    const [start, end] = builder(year);
+                    ranges.push({ start, end });
+                });
+            });
+            return ranges;
+        }
+
+        function isDateWithinRanges(dateValue, ranges) {
+            return ranges.some((range) => dateValue >= range.start && dateValue <= range.end);
+        }
+
+        function getSeasonByDate(dateValue) {
+            if (!dateValue) {
+                return 'low';
+            }
+
+            const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+            if (!datePattern.test(dateValue)) {
+                return 'low';
+            }
+
+            const baseYear = Number(dateValue.slice(0, 4));
+            if (Number.isNaN(baseYear)) {
+                return 'low';
+            }
+
+            const malaysiaPeakRanges = buildMalaysiaPeakRanges(baseYear);
+            return isDateWithinRanges(dateValue, malaysiaPeakRanges) ? 'peak' : 'low';
+        }
+
+        function updateRentalSeasonPrice(modelKey) {
+            const model = rentalModels[modelKey];
+            if (!model || !rentalSpec1) {
+                return;
+            }
+
+            const season = getSeasonByDate(rentalDateInput ? rentalDateInput.value : '');
+            const isPeakSeason = season === 'peak';
+            rentalSpec1.textContent = isPeakSeason ? model.peakPrice : model.lowPrice;
+
+            if (rentalSpec1Label) {
+                rentalSpec1Label.textContent = isPeakSeason ? 'Peak Season / Day' : 'Low Season / Day';
+            }
+
+            if (rentalSeasonBadge) {
+                rentalSeasonBadge.textContent = isPeakSeason ? 'Peak Season' : 'Low Season';
+                rentalSeasonBadge.classList.toggle('peak', isPeakSeason);
+                rentalSeasonBadge.classList.toggle('low', !isPeakSeason);
+            }
+
+            if (rentalSeasonHint) {
+                rentalSeasonHint.textContent = `Harga ikut date range cuti Malaysia. Low Season from ${model.lowPrice}/day. Peak Season from ${model.peakPrice}/day.`;
+            }
+        }
 
         function initClubGalleryLoop() {
             if (!clubHighlightTrack || clubHighlightTrack.dataset.autoScrollReady === 'true') {
@@ -4140,15 +4429,19 @@
                 return;
             }
 
-            rentalTopLabel.textContent = model.name;
+            activeRentalModelKey = modelKey;
+
+            if (rentalTopLabel) {
+                rentalTopLabel.textContent = model.name;
+            }
             rentalHeroName.textContent = model.name;
             rentalHeroNote.textContent = model.note;
             rentalHeroImage.src = model.image;
             rentalHeroImage.alt = model.name;
-            rentalSpec1.textContent = model.price;
             rentalSpec2.textContent = model.transmission;
             rentalSpec3.textContent = model.capacity;
             rentalSpec4.textContent = model.luggage;
+            updateRentalSeasonPrice(modelKey);
 
             rentalModelButtons.forEach((button) => {
                 button.classList.toggle('active', button.dataset.rentalModel === modelKey);
@@ -4158,6 +4451,53 @@
         rentalModelButtons.forEach((button) => {
             button.addEventListener('click', () => {
                 setRentalModel(button.dataset.rentalModel);
+            });
+        });
+
+        if (rentalDateInput) {
+            const today = new Date();
+            const todayValue = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            rentalDateInput.value = todayValue;
+            rentalDateInput.min = todayValue;
+            rentalDateInput.addEventListener('change', () => {
+                updateRentalSeasonPrice(activeRentalModelKey);
+            });
+        }
+
+        function setDriverModel(modelKey) {
+            const model = driverModels[modelKey];
+            if (!model || !driverHeroImage) {
+                return;
+            }
+
+            if (driverTopLabel) {
+                driverTopLabel.textContent = model.name;
+            }
+            driverHeroName.textContent = model.title;
+            driverHeroNote.textContent = model.note;
+            driverHeroImage.src = model.image;
+            driverHeroImage.alt = model.title;
+            driverSpec1.textContent = model.price;
+            driverSpec2.textContent = model.duration;
+            driverSpec3.textContent = model.service;
+            driverSpec4.textContent = model.tripType;
+
+            if (driverOrderNowBtn) {
+                driverOrderNowBtn.onclick = () => openPackageDetails(model.packageKey);
+            }
+
+            if (driverBookNowBtn) {
+                driverBookNowBtn.onclick = () => openPackageDetails(model.packageKey);
+            }
+
+            driverModelButtons.forEach((button) => {
+                button.classList.toggle('active', button.dataset.driverModel === modelKey);
+            });
+        }
+
+        driverModelButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                setDriverModel(button.dataset.driverModel);
             });
         });
 
@@ -4183,7 +4523,9 @@
             });
         });
 
+        setRentalModel('axia');
         setRentalMode('self');
+        setDriverModel('vios');
 
         const clubFilterButtons = document.querySelectorAll('[data-club-filter]');
 
