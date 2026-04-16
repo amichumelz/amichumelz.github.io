@@ -649,6 +649,40 @@
             margin-bottom: 1rem;
         }
 
+        .rental-model-switch-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: #334155;
+        }
+
+        .rental-model-switch select {
+            width: min(100%, 320px);
+            min-height: 2.65rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.9rem;
+            padding: 0.6rem 0.85rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #0f172a;
+            background: rgba(255, 255, 255, 0.95);
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .rental-model-switch select:focus {
+            border-color: #0f7ff2;
+            box-shadow: 0 0 0 3px rgba(15, 127, 242, 0.18);
+        }
+
+        #rentalSelfDriveSection .rental-model-switch {
+            align-items: flex-start;
+        }
+
         .rental-model-switch button {
             border: 1px solid #cbd5e1;
             border-radius: 999px;
@@ -671,6 +705,17 @@
 
         .rental-model-switch button:hover {
             transform: translateY(-2px);
+        }
+
+        #rentalWithDriverSection .rental-model-switch {
+            gap: 0.4rem;
+            margin-bottom: 0.85rem;
+        }
+
+        #rentalWithDriverSection .rental-model-switch button {
+            padding: 0.36rem 0.72rem;
+            font-size: 0.64rem;
+            letter-spacing: 0.06em;
         }
 
         .rental-mode-toggle {
@@ -2091,6 +2136,16 @@
                 white-space: nowrap;
             }
 
+            #rentalSelfDriveSection .rental-model-switch {
+                flex-wrap: wrap;
+                overflow-x: visible;
+                padding-bottom: 0;
+            }
+
+            #rentalSelfDriveSection .rental-model-switch select {
+                width: min(100%, 300px);
+            }
+
             .mobileMenu.mobile-menu-panel button {
                 min-height: 3rem;
                 padding: 0.75rem 1rem;
@@ -3137,14 +3192,17 @@
                 <div id="rentalSelfDriveSection" class="reveal rental-showroom">
                     <div class="rental-hero-area">
                         <div class="rental-model-switch">
-                            <button data-rental-model="axia" class="active">Axia</button>
-                            <button data-rental-model="myvi">Myvi</button>
-                            <button data-rental-model="veloz">Veloz</button>
-                            <button data-rental-model="serena">Sarena New</button>
-                            <button data-rental-model="camry">Camry</button>
-                            <button data-rental-model="vellfire">Vellfire</button>
-                            <button data-rental-model="van">Van Hiace Auto</button>
-                            <button data-rental-model="minicooper">Mini Cooper</button>
+                            <label class="rental-model-switch-label" for="rentalModelSelect">Choose Self Drive Car</label>
+                            <select id="rentalModelSelect" aria-label="Choose self drive car model">
+                                <option value="axia">Axia</option>
+                                <option value="myvi">Myvi</option>
+                                <option value="veloz">Veloz</option>
+                                <option value="serena">Sarena New</option>
+                                <option value="camry">Camry</option>
+                                <option value="vellfire">Vellfire</option>
+                                <option value="van">Van Hiace Auto</option>
+                                <option value="minicooper">Mini Cooper</option>
+                            </select>
                         </div>
                         <div class="rental-hero-media">
                             <img id="rentalHeroImage" src="image/axia.png" alt="Perodua Axia">
@@ -4431,6 +4489,7 @@
         const rentalSeasonBadge = document.getElementById('rentalSeasonBadge');
         const rentalSeasonHint = document.getElementById('rentalSeasonHint');
         const rentalBookNowBtn = document.getElementById('rentalBookNowBtn');
+        const rentalModelSelect = document.getElementById('rentalModelSelect');
         const rentalModelButtons = document.querySelectorAll('[data-rental-model]');
         const driverModelButtons = document.querySelectorAll('[data-driver-model]');
         const rentalModeTabs = document.querySelectorAll('[data-rental-mode-tab]');
@@ -4584,6 +4643,10 @@
             rentalModelButtons.forEach((button) => {
                 button.classList.toggle('active', button.dataset.rentalModel === modelKey);
             });
+
+            if (rentalModelSelect) {
+                rentalModelSelect.value = modelKey;
+            }
         }
 
         rentalModelButtons.forEach((button) => {
@@ -4591,6 +4654,12 @@
                 setRentalModel(button.dataset.rentalModel);
             });
         });
+
+        if (rentalModelSelect) {
+            rentalModelSelect.addEventListener('change', (event) => {
+                setRentalModel(event.target.value);
+            });
+        }
 
         if (rentalBookNowBtn) {
             rentalBookNowBtn.addEventListener('click', openSelfDriveWhatsAppBooking);
