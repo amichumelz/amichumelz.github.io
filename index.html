@@ -388,6 +388,10 @@
                 column-count: 1;
             }
 
+            .atv-detail-card .mt-5.grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
             .atv-detail-card > .relative.z-10 {
                 padding: 1.25rem;
             }
@@ -417,6 +421,21 @@
 
             .atv-detail-card .mt-5.grid > div {
                 min-width: 0;
+            }
+
+            .atv-detail-card #atvDateInput.atv-booking-field {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+            }
+
+            .atv-detail-card #atvDateInput::-webkit-date-and-time-value {
+                text-align: left;
+            }
+
+            .atv-detail-card #atvDateInput::-webkit-calendar-picker-indicator {
+                margin: 0;
             }
         }
 
