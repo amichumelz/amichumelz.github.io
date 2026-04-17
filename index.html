@@ -1586,7 +1586,7 @@
             top: 0;
             z-index: 2;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
             gap: 1rem;
             border-bottom: 1px solid rgba(148, 163, 184, 0.3);
@@ -1610,8 +1610,12 @@
         }
 
         .package-modal-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: 2rem;
             height: 2rem;
+            padding: 0;
             border-radius: 999px;
             border: 1px solid rgba(148, 163, 184, 0.42);
             background: rgba(255, 255, 255, 0.16);
@@ -1619,6 +1623,7 @@
             font-size: 1.1rem;
             line-height: 1;
             font-weight: 800;
+            text-align: center;
         }
 
         .package-modal-body {
@@ -3181,7 +3186,6 @@
                 <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
                 <div class="mb-9 flex flex-wrap items-end justify-between gap-3">
                     <h1 class="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl">Rental</h1>
-                    <p class="max-w-2xl text-sm text-slate-600">Showroom preview layout with clean performance stats and quick booking actions.</p>
                 </div>
 
                 <div class="rental-mode-toggle" role="tablist" aria-label="Rental mode switch">
@@ -3499,6 +3503,7 @@
         let activePackageDetail = null;
         let selectedBookingTime = '';
         let selectedPackageVariantName = '';
+        let selectedPackageTitleOverride = '';
 
         const packageDetails = {
             'mangrove': {
@@ -3878,12 +3883,104 @@
                     unitText: 'per person'
                 }
             },
+            'sedan-tour': {
+                tag: 'Private Tour Sedan',
+                title: 'Tour Langkawi With Sedan Car',
+                description: 'Private tour dengan Sedan untuk itinerary 4 jam atau 8 jam.',
+                stats: '4 or 8 Hours | Sedan | Private Route',
+                price: '4 Hours RM160 | 8 Hours RM250',
+                highlights: [
+                    'Sedan with driver',
+                    'Flexible landmark route',
+                    'Comfortable city and island transfer',
+                    'Suitable for couples and small family'
+                ],
+                variants: [
+                    {
+                        name: '4 Hours',
+                        price: 'RM 160',
+                        items: [
+                            'Sedan private tour 4 jam',
+                            'Flexible landmark stops',
+                            'Driver included'
+                        ]
+                    },
+                    {
+                        name: '8 Hours',
+                        price: 'RM 250',
+                        items: [
+                            'Sedan private tour 8 jam',
+                            'Full-day itinerary',
+                            'Driver included'
+                        ]
+                    }
+                ],
+                start: 'Flexible (Morning or Afternoon)',
+                includes: 'Sedan | Driver | Petrol',
+                bonus: 'Pickup from airport or hotel',
+                booking: {
+                    label: 'Sedan Tour Booking',
+                    times: ['9:00 AM', '12:00 PM', '3:00 PM'],
+                    disabledTimes: [],
+                    deadlineHours: 20,
+                    cancellationText: 'Free cancellation up to 24 hours before departure.',
+                    reserveText: 'Reserve now, pay later option available.',
+                    displayPrice: 'RM160',
+                    unitText: '4 hours (8 hours RM250)'
+                }
+            },
+            'mpv-tour': {
+                tag: 'Private Tour MPV',
+                title: 'Tour Langkawi With MPV Car',
+                description: 'Private tour dengan MPV untuk itinerary 4 jam atau 8 jam.',
+                stats: '4 or 8 Hours | MPV | Private Route',
+                price: '4 Hours RM200 | 8 Hours RM350',
+                highlights: [
+                    'MPV with driver',
+                    'Spacious seating for family/group',
+                    'Flexible landmark route',
+                    'Comfort ride for longer itinerary'
+                ],
+                variants: [
+                    {
+                        name: '4 Hours',
+                        price: 'RM 200',
+                        items: [
+                            'MPV private tour 4 jam',
+                            'Flexible landmark stops',
+                            'Driver included'
+                        ]
+                    },
+                    {
+                        name: '8 Hours',
+                        price: 'RM 350',
+                        items: [
+                            'MPV private tour 8 jam',
+                            'Full-day itinerary',
+                            'Driver included'
+                        ]
+                    }
+                ],
+                start: 'Flexible (Morning or Afternoon)',
+                includes: 'MPV | Driver | Petrol',
+                bonus: 'Pickup from airport or hotel',
+                booking: {
+                    label: 'MPV Tour Booking',
+                    times: ['9:00 AM', '12:00 PM', '3:00 PM'],
+                    disabledTimes: [],
+                    deadlineHours: 20,
+                    cancellationText: 'Free cancellation up to 24 hours before departure.',
+                    reserveText: 'Reserve now, pay later option available.',
+                    displayPrice: 'RM200',
+                    unitText: '4 hours (8 hours RM350)'
+                }
+            },
             'private-tour': {
                 tag: 'Private Tour',
                 title: 'Langkawi Private Tour',
-                description: 'Customer boleh pilih tour 4 jam atau 8 jam ikut itinerary.',
-                stats: '4 or 8 Hours | Custom Route',
-                price: '4 Hours RM160 | 8 Hours RM250',
+                description: 'Customer boleh pilih Sedan atau MPV, dengan durasi 4 jam atau 8 jam ikut itinerary.',
+                stats: '4 or 8 Hours | Sedan or MPV | Custom Route',
+                price: 'Sedan: 4 Hours RM160 | 8 Hours RM250 | MPV: 4 Hours RM200 | 8 Hours RM350',
                 highlights: [
                     'Custom itinerary planning',
                     'Nature and landmark route',
@@ -3892,19 +3989,41 @@
                 ],
                 variants: [
                     {
-                        name: '4 Hours Tour',
+                        name: 'Sedan - 4 Hours',
                         price: 'RM 160',
+                        titleOverride: 'Tour Langkawi With Sedan Car',
                         items: [
-                            'Private tour 4 jam',
+                            'Sedan private tour 4 jam',
                             'Flexible landmark stops',
                             'Driver included'
                         ]
                     },
                     {
-                        name: '8 Hours Tour (Per Day)',
+                        name: 'Sedan - 8 Hours',
                         price: 'RM 250',
+                        titleOverride: 'Tour Langkawi With Sedan Car',
                         items: [
-                            'Private tour 8 jam',
+                            'Sedan private tour 8 jam',
+                            'Full-day itinerary',
+                            'Driver included'
+                        ]
+                    },
+                    {
+                        name: 'MPV - 4 Hours',
+                        price: 'RM 200',
+                        titleOverride: 'Tour Langkawi With MPV Car',
+                        items: [
+                            'MPV private tour 4 jam',
+                            'Flexible landmark stops',
+                            'Driver included'
+                        ]
+                    },
+                    {
+                        name: 'MPV - 8 Hours',
+                        price: 'RM 350',
+                        titleOverride: 'Tour Langkawi With MPV Car',
+                        items: [
+                            'MPV private tour 8 jam',
                             'Full-day itinerary',
                             'Driver included'
                         ]
@@ -3921,7 +4040,7 @@
                     cancellationText: 'Free cancellation up to 24 hours before departure.',
                     reserveText: 'Reserve now, pay later option available.',
                     displayPrice: 'RM160',
-                    unitText: '4 hours (8 hours RM250)'
+                    unitText: 'Sedan 4H RM160 | Sedan 8H RM250 | MPV 4H RM200 | MPV 8H RM350'
                 }
             }
         };
@@ -3958,6 +4077,19 @@
             return detail.variants.find((variant) => variant.name === selectedPackageVariantName) || detail.variants[0];
         }
 
+        function getSelectedPackageTitle(detail) {
+            if (selectedPackageTitleOverride) {
+                return selectedPackageTitleOverride;
+            }
+
+            const selectedVariant = getSelectedVariant(detail);
+            if (selectedVariant && selectedVariant.titleOverride) {
+                return selectedVariant.titleOverride;
+            }
+
+            return detail.title;
+        }
+
         function updateBookingLinks() {
             if (!activePackageDetail) {
                 return;
@@ -3966,11 +4098,12 @@
             const timeText = selectedBookingTime || activePackageDetail.start;
             const selectedVariant = getSelectedVariant(activePackageDetail);
             const selectedVariantText = selectedVariant ? `${selectedVariant.name} - ${selectedVariant.price}` : '';
+            const selectedPackageTitle = getSelectedPackageTitle(activePackageDetail);
 
             const reserveLines = [
                 'Hi IQMAL LANGKAWI SERVICES,',
                 'I want to reserve now and pay later for:',
-                activePackageDetail.title
+                selectedPackageTitle
             ];
 
             if (selectedVariantText) {
@@ -3987,7 +4120,7 @@
             const bookLines = [
                 'Hi IQMAL LANGKAWI SERVICES,',
                 'I want to book now:',
-                activePackageDetail.title
+                selectedPackageTitle
             ];
 
             if (selectedVariantText) {
@@ -4112,6 +4245,7 @@
                     selectedPackageVariantName = variant.name;
                     renderVariantSelection(detail);
                     updateBookingLinks();
+                    packageModalTitle.textContent = getSelectedPackageTitle(detail);
 
                     const selectedPrice = parsePriceValue(variant.price);
                     packageModalPrice.textContent = `${selectedPrice} selected`;
@@ -4123,19 +4257,25 @@
             });
         }
 
-        function openPackageDetails(packageKey) {
+        function openPackageDetails(packageKey, initialVariantName = '', initialTitleOverride = '') {
             const detail = packageDetails[packageKey] || packageDetails.mangrove;
             if (!detail) {
                 return;
             }
 
             activePackageDetail = detail;
-            selectedPackageVariantName = Array.isArray(detail.variants) && detail.variants.length > 0
-                ? detail.variants[0].name
-                : '';
+            selectedPackageTitleOverride = initialTitleOverride;
+            if (Array.isArray(detail.variants) && detail.variants.length > 0) {
+                const hasInitialVariant = initialVariantName
+                    ? detail.variants.some((variant) => variant.name === initialVariantName)
+                    : false;
+                selectedPackageVariantName = hasInitialVariant ? initialVariantName : detail.variants[0].name;
+            } else {
+                selectedPackageVariantName = '';
+            }
 
             packageModalTag.textContent = detail.tag;
-            packageModalTitle.textContent = detail.title;
+            packageModalTitle.textContent = getSelectedPackageTitle(detail);
             packageModalDescription.textContent = detail.description;
             packageModalStats.textContent = detail.stats;
             packageModalPrice.textContent = detail.price;
@@ -4180,6 +4320,7 @@
             activePackageDetail = null;
             selectedBookingTime = '';
             selectedPackageVariantName = '';
+            selectedPackageTitleOverride = '';
         }
 
         packageModalClose.addEventListener('click', closePackageDetails);
@@ -4435,22 +4576,26 @@
                 title: 'Sedan Toyota Vios with Driver',
                 image: 'image/vios.png',
                 note: 'Comfortable private transfer for small groups',
-                price: 'RM 350',
+                price: 'RM 160',
                 duration: '4-8 Hours',
                 service: 'Driver',
                 tripType: 'Private',
-                packageKey: 'luxury-tour'
+                packageKey: 'sedan-tour',
+                packageVariantName: '4 Hours',
+                packageTitleOverride: 'Tour Langkawi With Sedan Car'
             },
             zenix: {
                 name: 'MPV Toyota Zenix',
                 title: 'MPV Toyota Zenix with Driver',
                 image: 'image/mpv.png',
                 note: 'Spacious premium MPV for families and small teams',
-                price: 'RM 650',
+                price: 'RM 200',
                 duration: '4-8 Hours',
                 service: 'Driver',
                 tripType: 'Family',
-                packageKey: 'luxury-tour'
+                packageKey: 'mpv-tour',
+                packageVariantName: '4 Hours',
+                packageTitleOverride: 'Tour Langkawi With MPV Car'
             },
             van: {
                 name: 'Tour Van',
@@ -4461,7 +4606,8 @@
                 duration: '4-8 Hours',
                 service: 'Driver',
                 tripType: 'Group',
-                packageKey: 'van-tour'
+                packageKey: 'van-tour',
+                packageTitleOverride: 'Tour Langkawi With Van'
             },
             vellfire: {
                 name: 'Vellfire AGH40',
@@ -4472,7 +4618,8 @@
                 duration: '4-8 Hours',
                 service: 'Driver',
                 tripType: 'Premium',
-                packageKey: 'luxury-tour'
+                packageKey: 'luxury-tour',
+                packageTitleOverride: 'Tour Langkawi With Vellfire Car'
             }
         };
 
@@ -4694,11 +4841,11 @@
             driverSpec4.textContent = model.tripType;
 
             if (driverOrderNowBtn) {
-                driverOrderNowBtn.onclick = () => openPackageDetails(model.packageKey);
+                driverOrderNowBtn.onclick = () => openPackageDetails(model.packageKey, model.packageVariantName, model.packageTitleOverride);
             }
 
             if (driverBookNowBtn) {
-                driverBookNowBtn.onclick = () => openPackageDetails(model.packageKey);
+                driverBookNowBtn.onclick = () => openPackageDetails(model.packageKey, model.packageVariantName, model.packageTitleOverride);
             }
 
             driverModelButtons.forEach((button) => {
