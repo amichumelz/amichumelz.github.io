@@ -1154,7 +1154,8 @@
             color: #334155;
         }
 
-        .rental-season-panel input[type="date"] {
+        .rental-season-panel input[type="date"],
+        .rental-season-panel select {
             border: 1px solid #cbd5e1;
             border-radius: 0.6rem;
             background: #ffffff;
@@ -3667,8 +3668,12 @@
                                 <div class="rental-season-panel">
                                     <label for="rentalDateInput">Pickup Date</label>
                                     <input id="rentalDateInput" type="date" aria-label="Select pickup date for seasonal price">
+                                    <label for="rentalPickupTimeSelect">Pickup Time</label>
+                                    <select id="rentalPickupTimeSelect" aria-label="Select pickup time"></select>
                                     <label for="rentalReturnDateInput">Return Date</label>
                                     <input id="rentalReturnDateInput" type="date" aria-label="Select return date for rental period">
+                                    <label for="rentalReturnTimeSelect">Return Time</label>
+                                    <select id="rentalReturnTimeSelect" aria-label="Select return time"></select>
                                     <span id="rentalSeasonBadge" class="rental-season-badge low">Low Season</span>
                                 </div>
                                 <p id="rentalSeasonHint" class="rental-season-note">Low Season from RM 80/day. Peak Season from RM 100/day.</p>
@@ -5098,6 +5103,8 @@
         const rentalBookNowBtn = document.getElementById('rentalBookNowBtn');
         const rentalModelSelect = document.getElementById('rentalModelSelect');
         const rentalReturnDateInput = document.getElementById('rentalReturnDateInput');
+        const rentalPickupTimeSelect = document.getElementById('rentalPickupTimeSelect');
+        const rentalReturnTimeSelect = document.getElementById('rentalReturnTimeSelect');
         const atvDateInput = document.getElementById('atvDateInput');
         const atvTimeSelect = document.getElementById('atvTimeSelect');
         const atvPaxInput = document.getElementById('atvPaxInput');
@@ -5216,36 +5223,153 @@
             return Math.max(1, dayDifference);
         }
 
+        function formatHourLabel(hourValue) {
+            const period = hourValue >= 12 ? 'PM' : 'AM';
+            const normalizedHour = hourValue % 12 || 12;
+            return `${normalizedHour}:00 ${period}`;
+        }
+
+        function populateRentalTimeOptions() {
+            const timeOptions = Array.from({ length: 24 }, (_, hourValue) => ({
+                value: `${String(hourValue).padStart(2, '0')}:00`,
+                label: formatHourLabel(hourValue)
+            }));
+
+            const fillTimeOptions = (selectElement, defaultValue) => {
+                if (!selectElement) {
+                    return;
+                }
+
+                selectElement.innerHTML = '';
+                timeOptions.forEach((timeOption) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = timeOption.value;
+                    optionElement.textContent = timeOption.label;
+                    selectElement.appendChild(optionElement);
+                });
+                selectElement.value = defaultValue;
+            };
+
+            fillTimeOptions(rentalPickupTimeSelect, '09:00');
+            fillTimeOptions(rentalReturnTimeSelect, '09:00');
+        }
+
+        function getSelectedTimeLabel(selectElement) {
+            if (!selectElement || !selectElement.value) {
+                return 'Not selected';
+            }
+
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            return selectedOption ? selectedOption.textContent : selectElement.value;
+        }
+
+        function getSelectedTimeValue(selectElement) {
+            if (!selectElement || !selectElement.value) {
+                return '';
+            }
+
+            return selectElement.value;
+        }
+
+        function buildDateTimeValue(dateValue, timeValue, fallbackTimeValue = '09:00') {
+            const resolvedDate = dateValue || '';
+            const resolvedTime = timeValue || fallbackTimeValue;
+            if (!resolvedDate) {
+                return null;
+            }
+
+            const parsedDateTime = new Date(`${resolvedDate}T${resolvedTime}:00`);
+            return Number.isNaN(parsedDateTime.getTime()) ? null : parsedDateTime;
+        }
+
+        function calculateSelfDriveDurationAndPrice({ pickupDate, pickupTimeValue, returnDate, returnTimeValue, dailyRateValue, extraHourRateValue }) {
+            const pickupDateTime = buildDateTimeValue(pickupDate, pickupTimeValue);
+            const returnDateTime = buildDateTimeValue(returnDate, returnTimeValue);
+
+            if (!pickupDateTime || !returnDateTime || returnDateTime <= pickupDateTime) {
+                return {
+                    rentalDays: 1,
+                    extraHours: 0,
+                    extraHourCharge: 0,
+                    totalHours: 24,
+                    totalPriceValue: dailyRateValue
+                };
+            }
+
+            const totalHoursRaw = (returnDateTime - pickupDateTime) / (1000 * 60 * 60);
+            const totalHours = Math.max(1, Math.ceil(totalHoursRaw));
+            let rentalDays = Math.max(1, Math.floor(totalHours / 24));
+            let extraHours = totalHours % 24;
+
+            if (extraHours > 5) {
+                rentalDays += 1;
+                extraHours = 0;
+            }
+
+            const extraHourCharge = extraHours * extraHourRateValue;
+            const totalPriceValue = (rentalDays * dailyRateValue) + extraHourCharge;
+
+            return {
+                rentalDays,
+                extraHours,
+                extraHourCharge,
+                totalHours,
+                totalPriceValue
+            };
+        }
+
         function getSelfDriveBookingSummary(model) {
             if (!model) {
                 return {
                     pickupDate: rentalDateInput && rentalDateInput.value ? rentalDateInput.value : 'Not selected',
+                    pickupTime: getSelectedTimeLabel(rentalPickupTimeSelect),
                     returnDate: rentalReturnDateInput && rentalReturnDateInput.value ? rentalReturnDateInput.value : 'Not selected',
+                    returnTime: getSelectedTimeLabel(rentalReturnTimeSelect),
                     seasonLabel: 'Low Season',
                     dailyRateLabel: 'RM 0',
                     dailyRateValue: 0,
                     rentalDays: 1,
+                    extraHours: 0,
+                    extraHourCharge: 0,
+                    totalHours: 24,
                     totalPriceValue: 0
                 };
             }
 
             const pickupDate = rentalDateInput && rentalDateInput.value ? rentalDateInput.value : '';
             const returnDate = rentalReturnDateInput && rentalReturnDateInput.value ? rentalReturnDateInput.value : pickupDate;
+            const pickupTime = getSelectedTimeLabel(rentalPickupTimeSelect);
+            const returnTime = getSelectedTimeLabel(rentalReturnTimeSelect);
+            const pickupTimeValue = getSelectedTimeValue(rentalPickupTimeSelect);
+            const returnTimeValue = getSelectedTimeValue(rentalReturnTimeSelect);
             const season = getSeasonByDate(pickupDate);
             const isPeakSeason = season === 'peak';
             const dailyRateLabel = isPeakSeason ? model.peakPrice : model.lowPrice;
             const dailyRateValue = parseRinggitToNumber(dailyRateLabel);
-            const rentalDays = calculateRentalDays(pickupDate, returnDate);
-            const totalPriceValue = dailyRateValue * rentalDays;
+            const extraHourRateValue = parseRinggitToNumber(model.extraHourRate);
+            const durationSummary = calculateSelfDriveDurationAndPrice({
+                pickupDate,
+                pickupTimeValue,
+                returnDate,
+                returnTimeValue,
+                dailyRateValue,
+                extraHourRateValue
+            });
 
             return {
                 pickupDate: pickupDate || 'Not selected',
+                pickupTime,
                 returnDate: returnDate || 'Not selected',
+                returnTime,
                 seasonLabel: isPeakSeason ? 'Peak Season' : 'Low Season',
                 dailyRateLabel,
                 dailyRateValue,
-                rentalDays,
-                totalPriceValue
+                extraHourRateValue,
+                rentalDays: durationSummary.rentalDays,
+                extraHours: durationSummary.extraHours,
+                extraHourCharge: durationSummary.extraHourCharge,
+                totalHours: durationSummary.totalHours,
+                totalPriceValue: durationSummary.totalPriceValue
             };
         }
 
@@ -5260,7 +5384,10 @@
             }
 
             const summary = getSelfDriveBookingSummary(model);
-            rentalTotalHint.textContent = `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}. Estimated total: RM ${summary.totalPriceValue.toLocaleString('en-MY')}.`;
+            const extraHourLine = summary.extraHours > 0
+                ? ` + ${summary.extraHours} extra hour${summary.extraHours > 1 ? 's' : ''}`
+                : '';
+            rentalTotalHint.textContent = `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${extraHourLine}. Estimated total: RM ${summary.totalPriceValue.toLocaleString('en-MY')}.`;
         }
 
         function openSelfDriveWhatsAppBooking() {
@@ -5276,10 +5403,12 @@
                 'I want to book a Self Drive car:',
                 model.name,
                 `Pickup date: ${summary.pickupDate}`,
+                `Pickup time: ${summary.pickupTime}`,
                 `Return date: ${summary.returnDate}`,
-                `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}`,
+                `Return time: ${summary.returnTime}`,
+                `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${summary.extraHours > 0 ? ` + ${summary.extraHours} hour${summary.extraHours > 1 ? 's' : ''}` : ''}`,
                 `Rate (24 Hour / Unit): ${summary.dailyRateLabel} (${summary.seasonLabel})`,
-                `Additional hour: ${model.extraHourRate} (up to 5 hours; beyond 5 hours = full day rate)`,
+                `Additional hour charge: RM ${summary.extraHourCharge.toLocaleString('en-MY')}`,
                 `Total price: RM ${summary.totalPriceValue.toLocaleString('en-MY')}`,
                 `Transmission: ${model.transmission}`,
                 `Capacity: ${model.capacity}`,
@@ -5388,6 +5517,20 @@
 
         if (rentalBookNowBtn) {
             rentalBookNowBtn.addEventListener('click', openSelfDriveWhatsAppBooking);
+        }
+
+        populateRentalTimeOptions();
+
+        if (rentalPickupTimeSelect) {
+            rentalPickupTimeSelect.addEventListener('change', () => {
+                updateRentalTotalSummary();
+            });
+        }
+
+        if (rentalReturnTimeSelect) {
+            rentalReturnTimeSelect.addEventListener('change', () => {
+                updateRentalTotalSummary();
+            });
         }
 
         if (rentalDateInput) {
