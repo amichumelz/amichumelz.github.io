@@ -352,19 +352,6 @@
             background: linear-gradient(180deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.62) 100%);
         }
 
-        .atv-gallery-caption {
-            position: absolute;
-            left: 1rem;
-            right: 1rem;
-            bottom: 1rem;
-            z-index: 1;
-            color: #ffffff;
-            font-size: 0.82rem;
-            font-weight: 800;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-
         .atv-gallery-nav {
             position: absolute;
             left: 50%;
@@ -451,21 +438,47 @@
                 column-count: 1;
             }
 
+            .atv-detail-card > .relative.z-10 {
+                padding: 1.25rem;
+            }
+
+            .atv-detail-card h1 {
+                font-size: clamp(1.85rem, 8vw, 2.35rem);
+                line-height: 1.05;
+            }
+
+            .atv-detail-card .btn-lift {
+                width: 100%;
+                justify-content: center;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
             .atv-gallery-slider {
-                width: min(100%, 22rem);
+                width: 100%;
                 margin-left: auto;
                 margin-right: auto;
             }
 
             .atv-gallery-viewport {
-                min-height: 23rem;
-                height: 70vh;
+                min-height: 19rem;
+                height: min(70vh, 24rem);
             }
 
             .atv-gallery-nav {
                 width: 2rem;
                 height: 2rem;
                 font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .atv-split-grid {
+                gap: 1rem;
+            }
+
+            .atv-gallery-card {
+                padding: 1rem;
             }
         }
 
@@ -3570,19 +3583,15 @@
                             <div class="atv-gallery-viewport">
                                 <figure class="atv-gallery-slide is-active">
                                     <img src="image/atv1.jpeg" alt="ATV customer photo 1">
-                                    <figcaption class="atv-gallery-caption">Adventure Shot 01</figcaption>
                                 </figure>
                                 <figure class="atv-gallery-slide">
                                     <img src="image/atv2.jpeg" alt="ATV customer photo 2">
-                                    <figcaption class="atv-gallery-caption">Adventure Shot 02</figcaption>
                                 </figure>
                                 <figure class="atv-gallery-slide">
                                     <img src="image/atv3.jpeg" alt="ATV customer photo 3">
-                                    <figcaption class="atv-gallery-caption">Adventure Shot 03</figcaption>
                                 </figure>
                                 <figure class="atv-gallery-slide">
                                     <img src="image/atv4.jpeg" alt="ATV customer photo 4">
-                                    <figcaption class="atv-gallery-caption">Adventure Shot 04</figcaption>
                                 </figure>
                             </div>
                             <button type="button" class="atv-gallery-nav prev" id="atvGalleryPrev" aria-label="Previous ATV photo">&#9650;</button>
