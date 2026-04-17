@@ -276,6 +276,272 @@
             transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
         }
 
+        .atv-hero-media {
+            position: relative;
+            overflow: hidden;
+            min-height: 100%;
+            border-radius: 1.75rem;
+            background: #020617;
+        }
+
+        .atv-video-banner {
+            min-height: 15rem;
+            height: clamp(15rem, 38vw, 24rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .atv-hero-media video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.02);
+        }
+
+        .atv-hero-media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.1) 0%, rgba(2, 6, 23, 0.45) 55%, rgba(2, 6, 23, 0.8) 100%);
+        }
+
+        .atv-polaroid-wall {
+            column-count: 2;
+            column-gap: 1rem;
+        }
+
+        .atv-gallery-slider {
+            position: relative;
+            margin-top: 1.5rem;
+            width: 100%;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: #0f172a;
+        }
+
+        .atv-gallery-viewport {
+            position: relative;
+            min-height: 28rem;
+            height: clamp(28rem, 68vh, 42rem);
+        }
+
+        .atv-gallery-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.55s ease;
+            pointer-events: none;
+        }
+
+        .atv-gallery-slide.is-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .atv-gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .atv-gallery-slide::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.62) 100%);
+        }
+
+        .atv-gallery-caption {
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 1;
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .atv-gallery-nav {
+            position: absolute;
+            left: 50%;
+            z-index: 2;
+            width: 2.3rem;
+            height: 2.3rem;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.88);
+            color: #0f172a;
+            font-size: 1.2rem;
+            font-weight: 900;
+            line-height: 1;
+            transform: translateX(-50%);
+            cursor: pointer;
+            transition: transform 0.25s ease, background-color 0.25s ease;
+        }
+
+        .atv-gallery-nav:hover {
+            transform: translateX(-50%) scale(1.08);
+            background: #ffffff;
+        }
+
+        .atv-gallery-nav.prev {
+            top: 0.8rem;
+        }
+
+        .atv-gallery-nav.next {
+            bottom: 0.8rem;
+        }
+
+        .atv-gallery-dots {
+            position: absolute;
+            right: 0.8rem;
+            top: 50%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            transform: translateY(-50%);
+        }
+
+        .atv-gallery-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.45);
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .atv-gallery-dot.active {
+            background: #ffffff;
+            transform: scale(1.15);
+        }
+
+        .atv-booking-field {
+            width: 100%;
+            min-height: 3.125rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: #0f172a;
+            outline: none;
+        }
+
+        select.atv-booking-field {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: linear-gradient(45deg, transparent 50%, #334155 50%), linear-gradient(135deg, #334155 50%, transparent 50%);
+            background-position: calc(100% - 1.05rem) calc(50% - 0.16rem), calc(100% - 0.75rem) calc(50% - 0.16rem);
+            background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+            background-repeat: no-repeat;
+            padding-right: 2.1rem;
+        }
+
+        @media (max-width: 639px) {
+            .atv-polaroid-wall {
+                column-count: 1;
+            }
+
+            .atv-gallery-slider {
+                width: min(100%, 22rem);
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .atv-gallery-viewport {
+                min-height: 23rem;
+                height: 70vh;
+            }
+
+            .atv-gallery-nav {
+                width: 2rem;
+                height: 2rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .atv-split-grid {
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 1.75rem;
+                align-items: stretch;
+            }
+
+            .atv-split-grid > .atv-detail-card,
+            .atv-split-grid > .atv-gallery-card {
+                height: 100%;
+            }
+
+            .atv-gallery-card {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .atv-gallery-card .atv-gallery-slider {
+                flex: 1;
+                min-height: 0;
+            }
+
+            .atv-gallery-card .atv-gallery-viewport {
+                height: 100%;
+                min-height: 0;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .atv-polaroid-wall {
+                column-count: 3;
+            }
+        }
+
+        .atv-polaroid {
+            display: inline-flex;
+            width: 100%;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin: 0 0 1rem;
+            padding: 0.9rem 0.9rem 1.15rem;
+            border-radius: 1.45rem;
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            background: linear-gradient(180deg, #ffffff 0%, #fffdf7 100%);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+            transform: rotate(var(--atv-rotate, 0deg));
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            break-inside: avoid;
+        }
+
+        .atv-polaroid:hover {
+            transform: translateY(-6px) rotate(var(--atv-rotate, 0deg)) scale(1.02);
+            box-shadow: 0 22px 42px rgba(15, 23, 42, 0.16);
+        }
+
+        .atv-polaroid img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 1rem;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
+
+        .atv-polaroid figcaption {
+            text-align: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #64748b;
+        }
+
         .pill-tag {
             display: inline-flex;
             border-radius: 999px;
@@ -1343,6 +1609,52 @@
             box-shadow: 0 12px 28px rgba(2, 6, 23, 0.18);
             isolation: isolate;
             transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease;
+        }
+
+        .activity-card-ribbon {
+            position: absolute;
+            top: 1.1rem;
+            right: -3.35rem;
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            width: 12.2rem;
+            justify-content: center;
+            padding: 0.56rem 0;
+            background: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            box-shadow: 0 14px 26px rgba(15, 23, 42, 0.22);
+            transform: rotate(38deg);
+            transform-origin: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.45);
+            border-bottom: 1px solid rgba(127, 29, 29, 0.18);
+        }
+
+        .activity-card-ribbon::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 100%;
+            border-width: 0.55rem 0.55rem 0 0;
+            border-style: solid;
+            border-color: rgba(127, 29, 29, 0.38) transparent transparent transparent;
+            filter: blur(0.1px);
+        }
+
+        .activity-card-ribbon::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 100%;
+            border-width: 0 0.55rem 0.55rem 0;
+            border-style: solid;
+            border-color: transparent transparent rgba(127, 29, 29, 0.38) transparent;
+            filter: blur(0.1px);
         }
 
         .activity-card img {
@@ -3026,6 +3338,16 @@
                         </div>
                     </article>
 
+                    <article class="activity-card reveal reveal-delay-3">
+                        <span class="activity-card-ribbon">HOT SELLING</span>
+                        <img src="image/atvride.jpg" alt="ATV Ride Langkawi">
+                        <div class="activity-card-content">
+                            <h3>ATV Ride</h3>
+                            <p>Off-road adventure with scenic stops, customer gallery and video highlights.</p>
+                            <button onclick="showPage('atv')" class="cta">View Details</button>
+                        </div>
+                    </article>
+
                 </div>
             </section>
 
@@ -3152,6 +3474,127 @@
             </section>
         </section>
 
+        <section id="atv" class="page-content">
+            <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+                <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
+
+                <div class="atv-split-grid grid gap-7 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch">
+                    <article class="atv-detail-card relative h-full overflow-hidden rounded-[2rem] border border-slate-200 text-white shadow-[0_18px_50px_rgba(2,6,23,0.28)]">
+                        <video autoplay muted loop playsinline poster="image/atv1.jpeg" aria-label="ATV detail card background video" class="absolute inset-0 h-full w-full object-cover">
+                            <source src="image/vid.mp4" type="video/mp4">
+                            <source src="image/vid.mov" type="video/quicktime">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="absolute inset-0 bg-slate-900/60"></div>
+
+                        <div class="relative z-10 p-8">
+                            <p class="pill-tag border-white/15 bg-white/10 text-white">ATV Ride</p>
+                            <h1 class="slide-in-left delay-1 mt-4 text-4xl font-extrabold uppercase tracking-tight lg:text-6xl">Langkawi ATV Adventure</h1>
+                            <p class="slide-in-up delay-2 mt-5 max-w-2xl text-sm leading-7 text-white/85 sm:text-base">Off-road ATV experience through scenic Langkawi trails with beach-side views, forest turns and photo stops. Book for a fun ride with your family, friends or small group.</p>
+
+                            <div class="mt-8 grid gap-3 sm:grid-cols-2">
+                                <div class="rounded-2xl border border-white/10 bg-white/8 p-4">
+                                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-sky-200">Price</p>
+                                    <p class="mt-2 text-lg font-extrabold">RM250 / 1 ATV</p>
+                                    <p class="mt-1 text-xs font-semibold text-white/80">For 2 People</p>
+                                </div>
+                                <div class="rounded-2xl border border-white/10 bg-white/8 p-4">
+                                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-sky-200">Duration</p>
+                                    <p class="mt-2 text-lg font-extrabold">50 - 70 Min</p>
+                                </div>
+                                <div class="rounded-2xl border border-white/10 bg-white/8 p-4">
+                                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-sky-200">Best For</p>
+                                    <p class="mt-2 text-lg font-extrabold">Family & Group</p>
+                                </div>
+                                <div class="rounded-2xl border border-white/10 bg-white/8 p-4">
+                                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-sky-200">Booking</p>
+                                    <p class="mt-2 text-lg font-extrabold">WhatsApp Confirm</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 rounded-2xl border border-white/10 bg-white/8 p-5">
+                                <p class="text-xs font-bold uppercase tracking-[0.2em] text-sky-200">Route</p>
+                                <ul class="mt-3 grid gap-2 text-sm font-semibold uppercase tracking-wide text-white/90 sm:grid-cols-2">
+                                    <li>Paddy Field</li>
+                                    <li>Water Dam</li>
+                                    <li>Rubber Tree Plantation</li>
+                                    <li>Pine Tree Plantation</li>
+                                    <li>Hidden Waterfall</li>
+                                    <li>Village Tour</li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-8 rounded-2xl border border-white/10 bg-white/8 p-5">
+                                <h2 class="text-lg font-extrabold uppercase tracking-[0.14em] text-white">Booking Details</h2>
+                                <p class="mt-2 text-sm leading-6 text-white/80">Select your date, preferred time and pax before sending to WhatsApp.</p>
+
+                                <div class="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                                    <div>
+                                        <label for="atvDateInput" class="mb-2 block text-xs font-extrabold uppercase tracking-[0.2em] text-sky-200">Date</label>
+                                        <input id="atvDateInput" type="date" class="atv-booking-field ring-sky-300 focus:ring-2">
+                                    </div>
+                                    <div>
+                                        <label for="atvTimeSelect" class="mb-2 block text-xs font-extrabold uppercase tracking-[0.2em] text-sky-200">Preferred Time</label>
+                                        <select id="atvTimeSelect" class="atv-booking-field ring-sky-300 focus:ring-2">
+                                            <option value="9:00 AM">9:00 AM</option>
+                                            <option value="10:00 AM">10:00 AM</option>
+                                            <option value="2:00 PM">2:00 PM</option>
+                                            <option value="3:00 PM">3:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="atvPaxInput" class="mb-2 block text-xs font-extrabold uppercase tracking-[0.2em] text-sky-200">Number of Pax</label>
+                                        <input id="atvPaxInput" type="number" min="1" step="1" value="2" class="atv-booking-field ring-sky-300 focus:ring-2">
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 rounded-2xl border border-white/15 bg-white/10 p-4">
+                                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-sky-200">Estimated Total Price</p>
+                                    <p id="atvTotalPrice" class="mt-2 text-2xl font-extrabold text-white">RM 250</p>
+                                    <p id="atvUnitsNeeded" class="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">1 ATV (for 2 pax)</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 flex flex-wrap gap-3">
+                                <button type="button" onclick="bookAtvRide()" class="btn-lift rounded-2xl bg-sky-500 px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Book ATV Ride</button>
+                                <button type="button" onclick="showPage('contact')" class="btn-lift rounded-2xl bg-white px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-slate-900 transition hover:bg-slate-100">Chat on WhatsApp</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <section class="atv-gallery-card apple-card flex h-full flex-col p-6 lg:p-8">
+                        <h2 class="text-2xl font-extrabold uppercase tracking-tight">Customer Gallery</h2>
+                        <p class="mt-3 text-sm leading-7 text-slate-600">Ride moments and customer pictures from ATV trips.</p>
+
+                        <div class="atv-gallery-slider" id="atvGallerySlider" aria-label="ATV customer gallery slideshow">
+                            <div class="atv-gallery-viewport">
+                                <figure class="atv-gallery-slide is-active">
+                                    <img src="image/atv1.jpeg" alt="ATV customer photo 1">
+                                    <figcaption class="atv-gallery-caption">Adventure Shot 01</figcaption>
+                                </figure>
+                                <figure class="atv-gallery-slide">
+                                    <img src="image/atv2.jpeg" alt="ATV customer photo 2">
+                                    <figcaption class="atv-gallery-caption">Adventure Shot 02</figcaption>
+                                </figure>
+                                <figure class="atv-gallery-slide">
+                                    <img src="image/atv3.jpeg" alt="ATV customer photo 3">
+                                    <figcaption class="atv-gallery-caption">Adventure Shot 03</figcaption>
+                                </figure>
+                                <figure class="atv-gallery-slide">
+                                    <img src="image/atv4.jpeg" alt="ATV customer photo 4">
+                                    <figcaption class="atv-gallery-caption">Adventure Shot 04</figcaption>
+                                </figure>
+                            </div>
+                            <button type="button" class="atv-gallery-nav prev" id="atvGalleryPrev" aria-label="Previous ATV photo">&#9650;</button>
+                            <button type="button" class="atv-gallery-nav next" id="atvGalleryNext" aria-label="Next ATV photo">&#9660;</button>
+                            <div class="atv-gallery-dots" id="atvGalleryDots" aria-label="ATV gallery slide indicators"></div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </section>
+
         <section id="about" class="page-content">
             <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
                 <button onclick="showPage('home')" class="mb-6 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-bold transition hover:-translate-x-1">&larr; Back to Home</button>
@@ -3222,9 +3665,13 @@
                                 <div class="rental-season-panel">
                                     <label for="rentalDateInput">Pickup Date</label>
                                     <input id="rentalDateInput" type="date" aria-label="Select pickup date for seasonal price">
+                                    <label for="rentalReturnDateInput">Return Date</label>
+                                    <input id="rentalReturnDateInput" type="date" aria-label="Select return date for rental period">
                                     <span id="rentalSeasonBadge" class="rental-season-badge low">Low Season</span>
                                 </div>
                                 <p id="rentalSeasonHint" class="rental-season-note">Low Season from RM 80/day. Peak Season from RM 100/day.</p>
+                                <p id="rentalExtraHourHint" class="rental-season-note">Additional hour: RM10/hour. If rental exceeds 5 hours, it will be charged as a full day.</p>
+                                <p id="rentalTotalHint" class="rental-season-note">Rental period: 1 day. Estimated total: RM 80.</p>
                                 <div class="rental-showroom-actions">
                                     <button id="rentalBookNowBtn" type="button" class="primary">Book Now</button>
                                 </div>
@@ -3601,7 +4048,7 @@
             'jetski-silver': {
                 tag: 'Langkawi Jet Ski Mangrove Tour',
                 title: 'Mangrove Package',
-                description: 'Group tour Jetski Mangrove dengan 9 checkpoint menarik sekitar Kilim Geoforest dan Andaman Sea.',
+                description: 'Group JetSki Mangrove tour with 9 exciting checkpoints around Kilim Geoforest and the Andaman Sea.',
                 stats: '3-4 Hours | 9 Checkpoints | Group Tour',
                 price: 'RM 750 / Jet Ski (2 Pax)',
                 highlights: [
@@ -3617,7 +4064,7 @@
                 ],
                 start: '10:00 AM or 2:00 PM',
                 includes: 'Pickup/Drop Off (2-way) | Waterproof Bag | Life Jacket | Beach Shoes',
-                bonus: '2 pax untuk setiap tempahan JetSki.',
+                bonus: '2 pax included for each JetSki booking.',
                 booking: {
                     label: 'JetSki Mangrove Tour Booking',
                     times: ['10:00 AM', '2:00 PM'],
@@ -3632,7 +4079,7 @@
             'luxury-tour': {
                 tag: 'Luxury Tour',
                 title: 'LUXURY TOUR WITH DRIVER',
-                description: 'Tour mewah with driver untuk itinerary yang lebih selesa dan premium.',
+                description: 'Luxury tour with driver for a more comfortable and premium itinerary.',
                 stats: '4 or 8 Hours | Driver Included | Premium Vehicle',
                 price: '4 Hours RM700 | 8 Hours RM1200',
                 highlights: [
@@ -3887,7 +4334,7 @@
             'sedan-tour': {
                 tag: 'Private Tour Sedan',
                 title: 'Tour Langkawi With Sedan Car',
-                description: 'Private tour dengan Sedan untuk itinerary 4 jam atau 8 jam.',
+                description: 'Private tour with Sedan for a 4-hour or 8-hour itinerary.',
                 stats: '4 or 8 Hours | Sedan | Private Route',
                 price: '4 Hours RM160 | 8 Hours RM250',
                 highlights: [
@@ -3933,7 +4380,7 @@
             'mpv-tour': {
                 tag: 'Private Tour MPV',
                 title: 'Tour Langkawi With MPV Car',
-                description: 'Private tour dengan MPV untuk itinerary 4 jam atau 8 jam.',
+                description: 'Private tour with MPV for a 4-hour or 8-hour itinerary.',
                 stats: '4 or 8 Hours | MPV | Private Route',
                 price: '4 Hours RM200 | 8 Hours RM350',
                 highlights: [
@@ -3979,7 +4426,7 @@
             'private-tour': {
                 tag: 'Private Tour',
                 title: 'Langkawi Private Tour',
-                description: 'Customer boleh pilih Sedan atau MPV, dengan durasi 4 jam atau 8 jam ikut itinerary.',
+                description: 'Customer can choose Sedan or MPV, with a 4-hour or 8-hour duration based on the itinerary.',
                 stats: '4 or 8 Hours | Sedan or MPV | Custom Route',
                 price: 'Sedan: 4 Hours RM160 | 8 Hours RM250 | MPV: 4 Hours RM200 | 8 Hours RM350',
                 highlights: [
@@ -4495,6 +4942,7 @@
                 note: 'Compact daily drive with low fuel use',
                 lowPrice: 'RM 80',
                 peakPrice: 'RM 100',
+                extraHourRate: 'RM10/hour',
                 transmission: 'Auto',
                 capacity: '4 Pax',
                 luggage: '2 Bags'
@@ -4505,6 +4953,7 @@
                 note: 'Comfort city cruising with extra cabin space',
                 lowPrice: 'RM 100',
                 peakPrice: 'RM 120',
+                extraHourRate: 'RM10/hour',
                 transmission: 'Auto',
                 capacity: '4 Pax',
                 luggage: '3 Bags'
@@ -4515,6 +4964,7 @@
                 note: 'Flexible MPV cabin for family travel and shopping trips',
                 lowPrice: 'RM 150',
                 peakPrice: 'RM 180',
+                extraHourRate: 'RM50/hour',
                 transmission: 'Auto',
                 capacity: '5 Pax',
                 luggage: '4 Bags'
@@ -4525,6 +4975,7 @@
                 note: 'Spacious people mover with smooth highway comfort',
                 lowPrice: 'RM 200',
                 peakPrice: 'RM 250',
+                extraHourRate: 'RM50/hour',
                 transmission: 'Auto',
                 capacity: '7 Pax',
                 luggage: '4 Bags'
@@ -4535,6 +4986,7 @@
                 note: 'Premium sedan feel for a quiet and stable ride',
                 lowPrice: 'RM 350',
                 peakPrice: 'RM 400',
+                extraHourRate: 'RM50/hour',
                 transmission: 'Auto',
                 capacity: '5 Pax',
                 luggage: '3 Bags'
@@ -4545,6 +4997,7 @@
                 note: 'Luxury MPV comfort with generous legroom',
                 lowPrice: 'RM 400',
                 peakPrice: 'RM 450',
+                extraHourRate: 'RM50/hour',
                 transmission: 'Auto',
                 capacity: '7 Pax',
                 luggage: '4 Bags'
@@ -4555,6 +5008,7 @@
                 note: 'Large group transport with practical luggage space',
                 lowPrice: 'RM 350',
                 peakPrice: 'RM 450',
+                extraHourRate: 'RM50/hour',
                 transmission: 'Auto',
                 capacity: '10 Pax',
                 luggage: '7 Bags'
@@ -4565,6 +5019,7 @@
                 note: 'Fun compact premium drive for couples or solo trips',
                 lowPrice: 'RM 600',
                 peakPrice: 'RM 650',
+                extraHourRate: 'RM10/hour',
                 transmission: 'Auto',
                 capacity: '4 Pax',
                 luggage: '2 Bags'
@@ -4636,8 +5091,20 @@
         const rentalDateInput = document.getElementById('rentalDateInput');
         const rentalSeasonBadge = document.getElementById('rentalSeasonBadge');
         const rentalSeasonHint = document.getElementById('rentalSeasonHint');
+        const rentalExtraHourHint = document.getElementById('rentalExtraHourHint');
+        const rentalTotalHint = document.getElementById('rentalTotalHint');
         const rentalBookNowBtn = document.getElementById('rentalBookNowBtn');
         const rentalModelSelect = document.getElementById('rentalModelSelect');
+        const rentalReturnDateInput = document.getElementById('rentalReturnDateInput');
+        const atvDateInput = document.getElementById('atvDateInput');
+        const atvTimeSelect = document.getElementById('atvTimeSelect');
+        const atvPaxInput = document.getElementById('atvPaxInput');
+        const atvTotalPrice = document.getElementById('atvTotalPrice');
+        const atvUnitsNeeded = document.getElementById('atvUnitsNeeded');
+        const atvGallerySlider = document.getElementById('atvGallerySlider');
+        const atvGalleryPrev = document.getElementById('atvGalleryPrev');
+        const atvGalleryNext = document.getElementById('atvGalleryNext');
+        const atvGalleryDots = document.getElementById('atvGalleryDots');
         const rentalModelButtons = document.querySelectorAll('[data-rental-model]');
         const driverModelButtons = document.querySelectorAll('[data-driver-model]');
         const rentalModeTabs = document.querySelectorAll('[data-rental-mode-tab]');
@@ -4719,8 +5186,82 @@
             }
 
             if (rentalSeasonHint) {
-                rentalSeasonHint.textContent = `Harga ikut date range cuti Malaysia. Low Season from ${model.lowPrice}/day. Peak Season from ${model.peakPrice}/day.`;
+                rentalSeasonHint.textContent = `Pricing follows Malaysia holiday date ranges. Low Season from ${model.lowPrice}/day. Peak Season from ${model.peakPrice}/day.`;
             }
+
+            if (rentalExtraHourHint) {
+                rentalExtraHourHint.textContent = `Additional hour: ${model.extraHourRate}. If rental exceeds 5 hours, it will be charged as a full day.`;
+            }
+
+            updateRentalTotalSummary(model);
+        }
+
+        function parseRinggitToNumber(priceText) {
+            const numericText = String(priceText || '').replace(/[^\d.]/g, '');
+            const parsedValue = Number.parseFloat(numericText);
+            return Number.isFinite(parsedValue) ? parsedValue : 0;
+        }
+
+        function calculateRentalDays(pickupDate, returnDate) {
+            if (!pickupDate || !returnDate) {
+                return 1;
+            }
+
+            const startDate = new Date(`${pickupDate}T00:00:00`);
+            const endDate = new Date(`${returnDate}T00:00:00`);
+            if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+                return 1;
+            }
+
+            const dayDifference = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+            return Math.max(1, dayDifference);
+        }
+
+        function getSelfDriveBookingSummary(model) {
+            if (!model) {
+                return {
+                    pickupDate: rentalDateInput && rentalDateInput.value ? rentalDateInput.value : 'Not selected',
+                    returnDate: rentalReturnDateInput && rentalReturnDateInput.value ? rentalReturnDateInput.value : 'Not selected',
+                    seasonLabel: 'Low Season',
+                    dailyRateLabel: 'RM 0',
+                    dailyRateValue: 0,
+                    rentalDays: 1,
+                    totalPriceValue: 0
+                };
+            }
+
+            const pickupDate = rentalDateInput && rentalDateInput.value ? rentalDateInput.value : '';
+            const returnDate = rentalReturnDateInput && rentalReturnDateInput.value ? rentalReturnDateInput.value : pickupDate;
+            const season = getSeasonByDate(pickupDate);
+            const isPeakSeason = season === 'peak';
+            const dailyRateLabel = isPeakSeason ? model.peakPrice : model.lowPrice;
+            const dailyRateValue = parseRinggitToNumber(dailyRateLabel);
+            const rentalDays = calculateRentalDays(pickupDate, returnDate);
+            const totalPriceValue = dailyRateValue * rentalDays;
+
+            return {
+                pickupDate: pickupDate || 'Not selected',
+                returnDate: returnDate || 'Not selected',
+                seasonLabel: isPeakSeason ? 'Peak Season' : 'Low Season',
+                dailyRateLabel,
+                dailyRateValue,
+                rentalDays,
+                totalPriceValue
+            };
+        }
+
+        function updateRentalTotalSummary(modelOverride) {
+            if (!rentalTotalHint) {
+                return;
+            }
+
+            const model = modelOverride || rentalModels[activeRentalModelKey];
+            if (!model) {
+                return;
+            }
+
+            const summary = getSelfDriveBookingSummary(model);
+            rentalTotalHint.textContent = `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}. Estimated total: RM ${summary.totalPriceValue.toLocaleString('en-MY')}.`;
         }
 
         function openSelfDriveWhatsAppBooking() {
@@ -4729,24 +5270,61 @@
                 return;
             }
 
-            const pickupDate = rentalDateInput && rentalDateInput.value ? rentalDateInput.value : 'Not selected';
-            const season = getSeasonByDate(rentalDateInput ? rentalDateInput.value : '');
-            const isPeakSeason = season === 'peak';
-            const seasonLabel = isPeakSeason ? 'Peak Season' : 'Low Season';
-            const dailyRate = isPeakSeason ? model.peakPrice : model.lowPrice;
+            const summary = getSelfDriveBookingSummary(model);
 
             const message = [
                 'Hi IQMAL LANGKAWI SERVICES,',
                 'I want to book a Self Drive car:',
                 model.name,
-                `Pickup date: ${pickupDate}`,
-                `Rate (24 Hour / Unit): ${dailyRate} (${seasonLabel})`,
+                `Pickup date: ${summary.pickupDate}`,
+                `Return date: ${summary.returnDate}`,
+                `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}`,
+                `Rate (24 Hour / Unit): ${summary.dailyRateLabel} (${summary.seasonLabel})`,
+                `Additional hour: ${model.extraHourRate} (up to 5 hours; beyond 5 hours = full day rate)`,
+                `Total price: RM ${summary.totalPriceValue.toLocaleString('en-MY')}`,
                 `Transmission: ${model.transmission}`,
                 `Capacity: ${model.capacity}`,
                 'Please confirm availability. Thank you.'
             ].join('\n');
 
             window.open(`https://wa.me/60149495457?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function bookAtvRide() {
+            const pickupDate = atvDateInput && atvDateInput.value ? atvDateInput.value : 'Not selected';
+            const pickupTime = atvTimeSelect && atvTimeSelect.value ? atvTimeSelect.value : 'Not selected';
+            const atvPricing = calculateAtvPricing(atvPaxInput ? atvPaxInput.value : '');
+            const paxCount = atvPricing.paxCount;
+
+            const message = [
+                'Hi IQMAL LANGKAWI SERVICES,',
+                'I want to book ATV Ride:',
+                `Preferred date: ${pickupDate}`,
+                `Preferred time: ${pickupTime}`,
+                `Number of pax: ${paxCount}`,
+                `ATV required: ${atvPricing.unitsNeeded}`,
+                `Total price: RM ${atvPricing.totalPrice.toLocaleString('en-MY')}`,
+                'Please confirm availability. Thank you.'
+            ].join('\n');
+
+            window.open(`https://wa.me/60149495457?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function calculateAtvPricing(rawPaxValue) {
+            const paxCount = Math.max(1, Number.parseInt(rawPaxValue, 10) || 1);
+            const unitsNeeded = Math.ceil(paxCount / 2);
+            const totalPrice = unitsNeeded * 250;
+            return { paxCount, unitsNeeded, totalPrice };
+        }
+
+        function updateAtvPricingSummary() {
+            if (!atvTotalPrice || !atvUnitsNeeded) {
+                return;
+            }
+
+            const pricing = calculateAtvPricing(atvPaxInput ? atvPaxInput.value : '');
+            atvTotalPrice.textContent = `RM ${pricing.totalPrice.toLocaleString('en-MY')}`;
+            atvUnitsNeeded.textContent = `${pricing.unitsNeeded} ATV${pricing.unitsNeeded > 1 ? 's' : ''} (for ${pricing.paxCount} pax)`;
         }
 
         function initClubGalleryLoop() {
@@ -4818,10 +5396,124 @@
             const todayValue = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
             rentalDateInput.value = todayValue;
             rentalDateInput.min = todayValue;
+            if (rentalReturnDateInput) {
+                rentalReturnDateInput.min = todayValue;
+                rentalReturnDateInput.value = todayValue;
+            }
             rentalDateInput.addEventListener('change', () => {
+                if (rentalReturnDateInput) {
+                    rentalReturnDateInput.min = rentalDateInput.value || todayValue;
+                    if (!rentalReturnDateInput.value || rentalReturnDateInput.value < rentalReturnDateInput.min) {
+                        rentalReturnDateInput.value = rentalReturnDateInput.min;
+                    }
+                }
                 updateRentalSeasonPrice(activeRentalModelKey);
             });
         }
+
+        if (rentalReturnDateInput) {
+            rentalReturnDateInput.addEventListener('change', () => {
+                if (rentalDateInput && rentalReturnDateInput.value < rentalDateInput.value) {
+                    rentalReturnDateInput.value = rentalDateInput.value;
+                }
+                updateRentalTotalSummary();
+            });
+        }
+
+        if (atvDateInput) {
+            const today = new Date();
+            const todayValue = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            atvDateInput.min = todayValue;
+            atvDateInput.value = todayValue;
+        }
+
+        if (atvPaxInput) {
+            atvPaxInput.min = '1';
+            atvPaxInput.value = atvPaxInput.value || '2';
+            atvPaxInput.addEventListener('input', updateAtvPricingSummary);
+            atvPaxInput.addEventListener('change', updateAtvPricingSummary);
+        }
+
+        updateAtvPricingSummary();
+
+        function initAtvGallerySlideshow() {
+            const slides = atvGallerySlider ? atvGallerySlider.querySelectorAll('.atv-gallery-slide') : [];
+            if (!slides.length || !atvGalleryDots) {
+                return;
+            }
+
+            let activeIndex = 0;
+            let autoPlayTimer = null;
+
+            atvGalleryDots.innerHTML = '';
+
+            const dots = Array.from(slides).map((_, index) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'atv-gallery-dot';
+                dot.setAttribute('aria-label', `Show ATV photo ${index + 1}`);
+                dot.addEventListener('click', () => {
+                    setActiveSlide(index);
+                    restartAutoPlay();
+                });
+                atvGalleryDots.appendChild(dot);
+                return dot;
+            });
+
+            function setActiveSlide(index) {
+                activeIndex = (index + slides.length) % slides.length;
+                slides.forEach((slide, slideIndex) => {
+                    slide.classList.toggle('is-active', slideIndex === activeIndex);
+                });
+                dots.forEach((dot, dotIndex) => {
+                    dot.classList.toggle('active', dotIndex === activeIndex);
+                });
+            }
+
+            function goToNextSlide() {
+                setActiveSlide(activeIndex + 1);
+            }
+
+            function stopAutoPlay() {
+                if (autoPlayTimer) {
+                    window.clearInterval(autoPlayTimer);
+                    autoPlayTimer = null;
+                }
+            }
+
+            function startAutoPlay() {
+                stopAutoPlay();
+                autoPlayTimer = window.setInterval(goToNextSlide, 3200);
+            }
+
+            function restartAutoPlay() {
+                startAutoPlay();
+            }
+
+            if (atvGalleryPrev) {
+                atvGalleryPrev.addEventListener('click', () => {
+                    setActiveSlide(activeIndex - 1);
+                    restartAutoPlay();
+                });
+            }
+
+            if (atvGalleryNext) {
+                atvGalleryNext.addEventListener('click', () => {
+                    setActiveSlide(activeIndex + 1);
+                    restartAutoPlay();
+                });
+            }
+
+            if (atvGallerySlider) {
+                atvGallerySlider.addEventListener('mouseenter', stopAutoPlay);
+                atvGallerySlider.addEventListener('mouseleave', startAutoPlay);
+            }
+
+            setActiveSlide(0);
+            startAutoPlay();
+        }
+
+        initAtvGallerySlideshow();
 
         function setDriverModel(modelKey) {
             const model = driverModels[modelKey];
