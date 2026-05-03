@@ -4337,7 +4337,10 @@
         const CART_KEY = 'alif-langkawi-cart-v1';
         const PENDING_BILLPLZ_KEY = 'alif-billplz-pending-order';
         const WA_NUMBER = '60149495457';
-        /** Billplz collection ID (boleh di paparkan); rahsia hanya dalam Cloudflare Worker */
+        /**
+         * Billplz PRODUCTION sahaja — salin Collection ID dari https://www.billplz.com → Collections.
+         * Mesti sama akaun dengan BILLPLZ_SECRET_KEY dalam Cloudflare (tiada sandbox dalam kod).
+         */
         const BILLPLZ_CONFIG = {
             collectionId: '2f363f14-4a38-4d6d-a0de-a61a80e9561d',
             proxyUrl: '/api/billplz',
@@ -5498,7 +5501,11 @@
                 } catch {
                     // ignore
                 }
-                window.alert(e.message || 'Gagal cipta bil. Pastikan domain dihoskan pada Cloudflare Pages dengan Functions.');
+                let msg = e.message || 'Gagal cipta bil. Pastikan domain dihoskan pada Cloudflare Pages dengan Functions.';
+                if (String(msg).includes('RecordNotFound')) {
+                    msg += '\n\nPetua: Collection ID dalam kod mesti sepadan dengan koleksi di Billplz production. Secret key mestilah dari akaun yang sama. Buang variable BILLPLZ_SANDBOX di Cloudflare jika ada.';
+                }
+                window.alert(msg);
             } finally {
                 if (cartPayBtn) cartPayBtn.disabled = false;
             }

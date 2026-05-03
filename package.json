@@ -2,7 +2,7 @@
   "name": "alif-langkawi-site",
   "private": true,
   "scripts": {
-    "deploy:worker": "wrangler deploy"
+    "pages:dev": "wrangler pages dev . --compatibility-date=2026-05-03"
   },
   "devDependencies": {
     "wrangler": "^3.99.0"

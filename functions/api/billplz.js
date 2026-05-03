@@ -1,13 +1,18 @@
 /**
  * Cloudflare Pages Function — POST /api/billplz
  *
- * Cloudflare Dashboard → Workers & Pages → [your project] → Settings → Variables:
- *   BILLPLZ_SECRET_KEY = (your Billplz secret key)
- *   BILLPLZ_SANDBOX    = true | false   (optional; default false = production API)
+ * Hanya Billplz PRODUCTION (www.billplz.com).
  *
- * Local preview: npx wrangler pages dev . --compatibility-date=2024-01-01
- *   Create .dev.vars with BILLPLZ_SECRET_KEY=...
+ * Cloudflare Pages → Settings → Variables and Secrets:
+ *   BILLPLZ_SECRET_KEY = secret production dari https://www.billplz.com (satu baris)
+ *
+ * Jangan set BILLPLZ_SANDBOX — sandbox telah dibuang untuk elak silap API.
+ *
+ * Ujian tempatan: npx wrangler pages dev . --compatibility-date=2026-05-03
+ *   + fail .dev.vars: BILLPLZ_SECRET_KEY=...
  */
+
+const BILLPLZ_BILLS_URL = 'https://www.billplz.com/api/v3/bills';
 
 const cors = {
     'Access-Control-Allow-Origin': '*',
@@ -53,11 +58,6 @@ export async function onRequest(context) {
         return jsonResponse({ error: 'Pelayan belum set BILLPLZ_SECRET_KEY dalam Cloudflare.' }, 500);
     }
 
-    const sandbox = env.BILLPLZ_SANDBOX === 'true' || env.BILLPLZ_SANDBOX === '1';
-    const billplzUrl = sandbox
-        ? 'https://www.billplz-sandbox.com/api/v3/bills'
-        : 'https://www.billplz.com/api/v3/bills';
-
     const params = new URLSearchParams({
         collection_id: body.collection_id,
         email: body.email,
@@ -71,7 +71,7 @@ export async function onRequest(context) {
 
     const authHeader = 'Basic ' + btoa(`${secret}:`);
 
-    const upstream = await fetch(billplzUrl, {
+    const upstream = await fetch(BILLPLZ_BILLS_URL, {
         method: 'POST',
         headers: {
             Authorization: authHeader,
