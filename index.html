@@ -6087,18 +6087,12 @@
         });
 
         // ─── BillPlz Payment Integration ─────────────────────────────────────
-        // ⚠️  TESTING MODE — Secret key is exposed in frontend for testing only.
-        //      For production, move bill creation to a backend/serverless function.
+        // Panggil melalui billplz-proxy.php (server-side) untuk elak CORS error
         // ─────────────────────────────────────────────────────────────────────
         const BILLPLZ_CONFIG = {
-            secretKey: 'a811b5f5-a685-4eea-a4ba-db0f7c9777d5',
             collectionId: '2f363f14-4a38-4d6d-a0de-a61a80e9561d',  // ← Replace with your BillPlz Collection ID
-            sandbox: false,   // true = sandbox testing, false = production
+            proxyUrl: 'billplz-proxy.php',             // PHP proxy — sama folder dengan index.html
         };
-
-        const BILLPLZ_BASE = BILLPLZ_CONFIG.sandbox
-            ? 'https://www.billplz-sandbox.com/api/v3'
-            : 'https://www.billplz.com/api/v3';
 
         const WA_NUMBER = '60149495457';
 
@@ -6185,30 +6179,25 @@
             const variantInfo = selectedVariant ? ` - ${selectedVariant.name}` : '';
             const description = `${packageTitle}${variantInfo}`;
 
-            // Build redirect URL (current page + billplz params will be appended by BillPlz)
-            const currentUrl = window.location.href.split('?')[0].split('#')[0];
-            const redirectUrl = `${currentUrl}?billplz_return=1&pkg=${encodeURIComponent(packageTitle)}&phone=${encodeURIComponent(phone)}`;
-            const callbackUrl = redirectUrl; // For static sites, same URL
-
             submitBtn.disabled = true;
             btnText.textContent = 'Memproses...';
 
             try {
-                const authHeader = 'Basic ' + btoa(BILLPLZ_CONFIG.secretKey + ':');
-                const formData = new FormData();
-                formData.append('collection_id', BILLPLZ_CONFIG.collectionId);
-                formData.append('email', email);
-                formData.append('mobile', '+6' + phone.replace(/^0/, ''));
-                formData.append('name', name);
-                formData.append('amount', String(amountInCents));
-                formData.append('description', description);
-                formData.append('redirect_url', redirectUrl);
-                formData.append('callback_url', callbackUrl);
+                const currentUrl = window.location.href.split('?')[0].split('#')[0];
+                const redirectUrl = `${currentUrl}?billplz_return=1&pkg=${encodeURIComponent(packageTitle)}&phone=${encodeURIComponent(phone)}`;
 
-                const res = await fetch(`${BILLPLZ_BASE}/bills`, {
+                const res = await fetch(BILLPLZ_CONFIG.proxyUrl, {
                     method: 'POST',
-                    headers: { 'Authorization': authHeader },
-                    body: formData
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        collection_id: BILLPLZ_CONFIG.collectionId,
+                        email:         email,
+                        mobile:        '+6' + phone.replace(/^0/, ''),
+                        name:          name,
+                        amount:        String(amountInCents),
+                        description:   description,
+                        redirect_url:  redirectUrl,
+                    })
                 });
 
                 const data = await res.json();
