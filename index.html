@@ -5425,6 +5425,11 @@
                 window.alert('Sila isi nama, email dan no. telefon.');
                 return;
             }
+            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            if (!emailOk) {
+                window.alert('Sila isi email yang sah (contoh: nama@gmail.com). Billplz perlukan format email betul.');
+                return;
+            }
 
             const totalCents = getCartTotalCents();
             if (totalCents < 1) {
@@ -5503,7 +5508,7 @@
                 }
                 let msg = e.message || 'Gagal cipta bil. Pastikan domain dihoskan pada Cloudflare Pages dengan Functions.';
                 if (String(msg).includes('RecordNotFound')) {
-                    msg += '\n\nPetua: Collection ID dalam kod mesti sepadan dengan koleksi di Billplz production. Secret key mestilah dari akaun yang sama. Buang variable BILLPLZ_SANDBOX di Cloudflare jika ada.';
+                    msg += '\n\nPetua:\n• Pastikan BILLPLZ_SECRET_KEY di Cloudflare sama dengan Copy Billplz Secret Key (tiada ruang kosong; akaun sama dengan koleksi vyrqagw7).\n• Untuk URL pratonton (*.pages.dev): tambah secret juga dalam Preview variables, bukan Production sahaja.\n• Collection ID dalam kod mesti koleksi aktif di dashboard billplz.com.';
                 }
                 window.alert(msg);
             } finally {

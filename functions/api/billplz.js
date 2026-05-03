@@ -53,20 +53,23 @@ export async function onRequest(context) {
         }
     }
 
-    const secret = env.BILLPLZ_SECRET_KEY;
-    if (!secret || typeof secret !== 'string') {
+    const secretRaw = env.BILLPLZ_SECRET_KEY;
+    const secret = typeof secretRaw === 'string' ? secretRaw.trim() : '';
+    if (!secret) {
         return jsonResponse({ error: 'Pelayan belum set BILLPLZ_SECRET_KEY dalam Cloudflare.' }, 500);
     }
 
+    const trim = (v) => (typeof v === 'string' ? v.trim() : String(v ?? '').trim());
+
     const params = new URLSearchParams({
-        collection_id: body.collection_id,
-        email: body.email,
-        mobile: body.mobile,
-        name: body.name,
-        amount: String(body.amount),
-        description: body.description,
-        redirect_url: body.redirect_url,
-        callback_url: body.redirect_url,
+        collection_id: trim(body.collection_id),
+        email: trim(body.email),
+        mobile: trim(body.mobile),
+        name: trim(body.name),
+        amount: String(body.amount).trim(),
+        description: trim(body.description),
+        redirect_url: trim(body.redirect_url),
+        callback_url: trim(body.redirect_url),
     });
 
     const authHeader = 'Basic ' + btoa(`${secret}:`);
