@@ -2198,6 +2198,17 @@
             gap: 0.55rem;
         }
 
+        .package-modal-footer .primary {
+            background: linear-gradient(120deg, #0a8f72, #0b7c64);
+            color: #fff;
+        }
+
+        .package-modal-footer .secondary {
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            color: #111827;
+        }
+
         .package-modal-footer a,
         .package-modal-footer button {
             width: 100%;
@@ -2210,223 +2221,263 @@
             display: grid;
             place-items: center;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            box-sizing: border-box;
         }
 
-        .package-modal-footer a:hover,
-        .package-modal-footer button:hover {
+        .package-modal-footer button.add-cart {
+            border: none;
+            background: linear-gradient(120deg, #0f7ff2, #005ec4);
+            color: #fff;
+        }
+
+        .package-modal-footer button.add-cart:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+            box-shadow: 0 8px 20px rgba(15, 114, 242, 0.25);
         }
 
-        .package-modal-footer .primary {
+        .cart-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 55;
+            background: rgba(15, 23, 42, 0.45);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .cart-backdrop.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 56;
+            width: min(100%, 420px);
+            height: 100%;
+            background: #fff;
+            box-shadow: -12px 0 40px rgba(15, 23, 42, 0.12);
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.is-open {
+            transform: translateX(0);
+        }
+
+        .cart-drawer-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.1rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .cart-drawer-head h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #0f172a;
+        }
+
+        .cart-drawer-head button {
+            border: 0;
+            background: transparent;
+            font-size: 1.75rem;
+            line-height: 1;
+            cursor: pointer;
+            color: #64748b;
+            padding: 0.25rem;
+        }
+
+        .cart-lines {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .cart-empty {
+            padding: 1.5rem 1.1rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .cart-empty.hidden {
+            display: none;
+        }
+
+        .cart-line {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.85rem;
+            padding: 0.75rem 0.85rem;
+            background: #fff;
+        }
+
+        .cart-line-title {
+            font-weight: 800;
+            font-size: 0.92rem;
+            color: #0f172a;
+            margin: 0 0 0.25rem;
+        }
+
+        .cart-line-meta {
+            font-size: 0.8rem;
+            color: #475569;
+            margin: 0 0 0.35rem;
+            line-height: 1.35;
+        }
+
+        .cart-line-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 0.35rem;
+        }
+
+        .cart-line-price {
+            font-weight: 900;
+            color: #0f7ff2;
+        }
+
+        .cart-line-remove {
+            border: 0;
+            background: transparent;
+            color: #dc2626;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+        }
+
+        .cart-drawer-footer {
+            border-top: 1px solid #e2e8f0;
+            padding: 1rem 1.1rem 1.35rem;
+            background: #f8fafc;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.85rem;
+            font-size: 1rem;
+        }
+
+        .cart-total-row strong {
+            font-size: 1.15rem;
+            color: #0f172a;
+        }
+
+        .checkout-label {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #475569;
+            margin: 0.5rem 0 0.28rem;
+        }
+
+        .checkout-input {
+            width: 100%;
+            padding: 0.55rem 0.65rem;
+            border-radius: 0.6rem;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+
+        .checkout-pay-btn {
+            width: 100%;
+            margin-top: 0.85rem;
+            padding: 0.85rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 900;
+            font-size: 0.82rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            cursor: pointer;
             background: linear-gradient(120deg, #0a8f72, #0b7c64);
             color: #fff;
         }
 
-        .package-modal-footer .pay-now-btn {
-            background: linear-gradient(120deg, #0f7ff2, #005ec4);
-            color: #fff;
-            border: none;
-        }
-
-        .package-modal-footer .secondary {
-            border: 1px solid #cbd5e1;
-            background: #fff;
-            color: #111827;
-        }
-
-        /* Payment form step */
-        .billplz-pay-form {
-            margin-top: 1rem;
-            border: 2px solid #0f7ff2;
-            border-radius: 1rem;
-            overflow: hidden;
-            background: #f0f7ff;
-        }
-
-        .billplz-pay-form-header {
-            padding: 0.75rem 1rem;
-            background: linear-gradient(120deg, #0f7ff2, #005ec4);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .billplz-pay-form-header h5 {
-            font-size: 0.88rem;
-            font-weight: 900;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
-
-        .billplz-pay-form-body {
-            padding: 1rem;
-            display: grid;
-            gap: 0.65rem;
-        }
-
-        .billplz-field-label {
-            display: block;
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #334155;
-            margin-bottom: 0.3rem;
-        }
-
-        .billplz-field-input {
-            width: 100%;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.6rem;
-            background: #ffffff;
-            padding: 0.6rem 0.85rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #0f172a;
-            outline: none;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            box-sizing: border-box;
-        }
-
-        .billplz-field-input:focus {
-            border-color: #0f7ff2;
-            box-shadow: 0 0 0 3px rgba(15, 127, 242, 0.15);
-        }
-
-        .billplz-amount-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.6rem 0.85rem;
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.6rem;
-        }
-
-        .billplz-amount-label {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: #475569;
-        }
-
-        .billplz-amount-value {
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: #0b6aa8;
-        }
-
-        .billplz-pay-submit {
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 0.65rem;
-            border: none;
-            background: linear-gradient(120deg, #0f7ff2, #005ec4);
-            color: #fff;
-            font-size: 0.9rem;
-            font-weight: 900;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.45rem;
-            margin-top: 0.25rem;
-        }
-
-        .billplz-pay-submit:hover:not(:disabled) {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .billplz-pay-submit:disabled {
-            opacity: 0.6;
+        .checkout-pay-btn:disabled {
+            opacity: 0.55;
             cursor: not-allowed;
         }
 
-        .billplz-error-msg {
-            font-size: 0.82rem;
-            color: #dc2626;
-            font-weight: 700;
-            padding: 0.4rem 0.6rem;
-            background: #fef2f2;
-            border: 1px solid #fca5a5;
-            border-radius: 0.5rem;
+        .cart-secondary-btn {
+            width: 100%;
+            margin-top: 0.5rem;
+            padding: 0.65rem;
+            border-radius: 0.65rem;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: #334155;
         }
 
-        /* Payment success overlay */
-        .payment-success-banner {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            background: rgba(2, 6, 23, 0.85);
-            display: grid;
-            place-items: center;
-            padding: 1.5rem;
-        }
-
-        .payment-success-card {
-            width: min(520px, 100%);
-            background: #ffffff;
-            border-radius: 1.5rem;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            box-shadow: 0 30px 70px rgba(2, 6, 23, 0.45);
-            animation: modalIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .payment-success-icon {
-            width: 5rem;
-            height: 5rem;
-            border-radius: 999px;
-            background: #dcfce7;
-            display: grid;
-            place-items: center;
-            margin: 0 auto 1.25rem;
-            font-size: 2rem;
-        }
-
-        .payment-success-card h2 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #0f172a;
-            letter-spacing: -0.02em;
-        }
-
-        .payment-success-card p {
-            margin-top: 0.65rem;
-            font-size: 0.95rem;
-            color: #475569;
-            line-height: 1.5;
-        }
-
-        .payment-success-card .wa-btn {
+        .nav-cart-btn {
+            position: relative;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            margin-top: 1.5rem;
-            padding: 0.85rem 1.75rem;
-            border-radius: 0.75rem;
-            background: #25d366;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.65rem;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            color: #0f172a;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-cart-btn:hover {
+            border-color: #0f7ff2;
+            color: #0f7ff2;
+        }
+
+        .nav-cart-badge {
+            position: absolute;
+            top: -0.28rem;
+            right: -0.28rem;
+            min-width: 1.15rem;
+            height: 1.15rem;
+            padding: 0 0.28rem;
+            border-radius: 999px;
+            background: #ef4444;
             color: #fff;
-            font-size: 0.95rem;
+            font-size: 0.65rem;
             font-weight: 900;
-            letter-spacing: 0.04em;
-            text-decoration: none;
-            transition: transform 0.2s ease, background-color 0.2s ease;
+            display: grid;
+            place-items: center;
+            line-height: 1;
         }
 
-        .payment-success-card .wa-btn:hover {
-            background: #128C7E;
-            transform: translateY(-2px);
-        }
-
-        .payment-failed-icon {
-            background: #fee2e2;
+        .nav-cart-badge:empty,
+        .nav-cart-badge[data-count="0"] {
+            display: none;
         }
 
         .package-booking-shell {
@@ -3398,6 +3449,10 @@
                 <button data-link="contact" onclick="showPage('contact')" class="nav-link hover:text-blue-600 transition">Contact</button>
             </div>
             <div class="flex items-center gap-2">
+                <button type="button" id="navCartBtn" class="nav-cart-btn" aria-label="Open cart" title="Troli">
+                    <i class="bi bi-cart3 text-lg" aria-hidden="true"></i>
+                    <span id="navCartBadge" class="nav-cart-badge" data-count="0"></span>
+                </button>
                 <button id="menuBtn" class="lg:hidden flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 font-bold text-lg leading-none" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
                     <span id="menuIcon" class="inline-flex h-full w-full items-center justify-center leading-none">☰</span>
                 </button>
@@ -4112,19 +4167,6 @@
         </section>
     </main>
 
-    <!-- Payment result banner (shown after BillPlz redirect) -->
-    <div id="paymentSuccessBanner" class="payment-success-banner" style="display:none;">
-        <div class="payment-success-card">
-            <div id="paymentResultIcon" class="payment-success-icon">✅</div>
-            <h2 id="paymentResultTitle">Payment Successful!</h2>
-            <p id="paymentResultMsg">Your payment has been received. Please tap below to confirm your booking details via WhatsApp.</p>
-            <a id="paymentResultWaLink" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="wa-btn">
-                <i class="bi bi-whatsapp"></i> Confirm Booking on WhatsApp
-            </a>
-            <button type="button" onclick="dismissPaymentBanner()" style="display:block;margin:1rem auto 0;font-size:0.8rem;color:#94a3b8;background:none;border:none;cursor:pointer;">Close</button>
-        </div>
-    </div>
-
     <a href="https://wa.me/60149495457"
        target="_blank"
        rel="noopener noreferrer"
@@ -4203,44 +4245,38 @@
                     </div>
                 </section>
 
-                <!-- BillPlz Payment Form (hidden by default) -->
-                <div id="billplzPayForm" class="billplz-pay-form" style="display:none;">
-                    <div class="billplz-pay-form-header">
-                        <h5>💳 Secure Payment via BillPlz</h5>
-                        <button type="button" onclick="hideBillplzForm()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:999px;width:1.75rem;height:1.75rem;font-size:1rem;cursor:pointer;display:grid;place-items:center;">×</button>
-                    </div>
-                    <div class="billplz-pay-form-body">
-                        <div>
-                            <label class="billplz-field-label" for="billplzName">Full Name</label>
-                            <input id="billplzName" type="text" class="billplz-field-input" placeholder="Enter your full name" autocomplete="name">
-                        </div>
-                        <div>
-                            <label class="billplz-field-label" for="billplzEmail">Email Address</label>
-                            <input id="billplzEmail" type="text" inputmode="email" class="billplz-field-input" placeholder="your@email.com" autocomplete="email">
-                        </div>
-                        <div>
-                            <label class="billplz-field-label" for="billplzPhone">Phone / WhatsApp Number</label>
-                            <input id="billplzPhone" type="text" inputmode="numeric" class="billplz-field-input" placeholder="e.g. 0149495457" autocomplete="tel">
-                        </div>
-                        <div class="billplz-amount-row">
-                            <span class="billplz-amount-label">Amount to pay:</span>
-                            <span id="billplzAmountDisplay" class="billplz-amount-value">RM0.00</span>
-                        </div>
-                        <div id="billplzErrorMsg" class="billplz-error-msg" style="display:none;"></div>
-                        <button type="button" id="billplzSubmitBtn" class="billplz-pay-submit" onclick="submitBillplzPayment()">
-                            <span id="billplzBtnText">Pay Now →</span>
-                        </button>
-                        <p style="font-size:0.72rem;color:#64748b;text-align:center;">Secured by BillPlz. You will be redirected to complete payment.</p>
-                    </div>
-                </div>
-
                 <div class="package-modal-footer">
                     <a id="packageModalReserveLink" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="secondary">Reserve Now &amp; Pay Later</a>
-                    <button type="button" id="payNowBtn" class="pay-now-btn" onclick="showBillplzForm()">💳 Pay Now</button>
+                    <button type="button" id="packageModalAddCart" class="add-cart">Add to cart</button>
+                    <a id="packageModalWhatsApp" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="primary">Book on WhatsApp</a>
                 </div>
             </div>
         </article>
     </div>
+
+    <div id="cartBackdrop" class="cart-backdrop" aria-hidden="true"></div>
+    <aside id="cartDrawer" class="cart-drawer" aria-label="Shopping cart" aria-hidden="true">
+        <div class="cart-drawer-head">
+            <h3>Troli</h3>
+            <button type="button" id="cartCloseBtn" aria-label="Tutup troli">×</button>
+        </div>
+        <p id="cartEmptyHint" class="cart-empty">Tiada item. Buka pakej tour dan tekan Add to cart.</p>
+        <div id="cartLines" class="cart-lines"></div>
+        <div class="cart-drawer-footer">
+            <div class="cart-total-row">
+                <span>Jumlah</span>
+                <strong id="cartTotalDisplay">RM 0.00</strong>
+            </div>
+            <label class="checkout-label" for="checkoutName">Nama penuh</label>
+            <input id="checkoutName" class="checkout-input" type="text" autocomplete="name" placeholder="Seperti dalam IC / passport">
+            <label class="checkout-label" for="checkoutEmail">Email</label>
+            <input id="checkoutEmail" class="checkout-input" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
+            <label class="checkout-label" for="checkoutPhone">No. telefon / WhatsApp</label>
+            <input id="checkoutPhone" class="checkout-input" type="text" inputmode="numeric" autocomplete="tel" placeholder="e.g. 0149495457">
+            <button type="button" id="cartPayBtn" class="checkout-pay-btn">Bayar dengan Billplz</button>
+            <button type="button" id="cartClearBtn" class="cart-secondary-btn">Kosongkan troli</button>
+        </div>
+    </aside>
 
     <footer class="border-t border-slate-200 bg-slate-950 px-6 py-14 text-center text-white/70">
         <div class="mx-auto max-w-7xl">
@@ -4270,7 +4306,7 @@
         const packageModalIncludes = document.getElementById('packageModalIncludes');
         const packageModalBonus = document.getElementById('packageModalBonus');
         const packageModalReserveLink = document.getElementById('packageModalReserveLink');
-        const packageModalWhatsApp = document.getElementById('packageModalWhatsApp'); // removed - kept for compat
+        const packageModalWhatsApp = document.getElementById('packageModalWhatsApp');
         const packageBookingTitle = document.getElementById('packageBookingTitle');
         const packageBookingSelected = document.getElementById('packageBookingSelected');
         const packageBookingDeadline = document.getElementById('packageBookingDeadline');
@@ -4278,11 +4314,47 @@
         const packageBookingReserve = document.getElementById('packageBookingReserve');
         const packageBookingPrice = document.getElementById('packageBookingPrice');
         const packageBookingUnit = document.getElementById('packageBookingUnit');
+        const packageModalAddCart = document.getElementById('packageModalAddCart');
+        const cartBackdrop = document.getElementById('cartBackdrop');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const cartCloseBtn = document.getElementById('cartCloseBtn');
+        const navCartBtn = document.getElementById('navCartBtn');
+        const navCartBadge = document.getElementById('navCartBadge');
+        const cartEmptyHint = document.getElementById('cartEmptyHint');
+        const cartLines = document.getElementById('cartLines');
+        const cartTotalDisplay = document.getElementById('cartTotalDisplay');
+        const checkoutName = document.getElementById('checkoutName');
+        const checkoutEmail = document.getElementById('checkoutEmail');
+        const checkoutPhone = document.getElementById('checkoutPhone');
+        const cartPayBtn = document.getElementById('cartPayBtn');
+        const cartClearBtn = document.getElementById('cartClearBtn');
 
         let activePackageDetail = null;
         let selectedBookingTime = '';
         let selectedPackageVariantName = '';
         let selectedPackageTitleOverride = '';
+
+        const CART_KEY = 'alif-langkawi-cart-v1';
+        const PENDING_BILLPLZ_KEY = 'alif-billplz-pending-order';
+        const WA_NUMBER = '60149495457';
+        /** Billplz collection ID (boleh di paparkan); rahsia hanya dalam Cloudflare Worker */
+        const BILLPLZ_CONFIG = {
+            collectionId: '2f363f14-4a38-4d6d-a0de-a61a80e9561d',
+            proxyUrl: '/api/billplz',
+        };
+
+        function readStoredCart() {
+            try {
+                const raw = localStorage.getItem(CART_KEY);
+                if (!raw) return [];
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch {
+                return [];
+            }
+        }
+
+        let cart = readStoredCart();
 
         const packageDetails = {
             'mangrove': {
@@ -4310,7 +4382,8 @@
                     },
                     {
                         name: 'Package A',
-                        price: 'RM 350',
+                        // TEST: 50 sen untuk ujian — tukar semula kepada RM 350 selepas ujian
+                        price: 'RM 0.50',
                         items: [
                             'Eagle Watching',
                             'Fish Farm',
@@ -4380,6 +4453,7 @@
                 tag: 'Langkawi Jet Ski Mangrove Tour',
                 title: 'Mangrove Package',
                 description: 'Group JetSki Mangrove tour with 9 exciting checkpoints around Kilim Geoforest and the Andaman Sea.',
+                price: 'RM 750',
                 stats: '3-4 Hours | 9 Checkpoints | Group Tour',
                 preferredDate: 'November to April for calm seas',
                 timeRange: { start: 10, end: 16 },
@@ -4658,9 +4732,8 @@
                     deadlineHours: 18,
                     cancellationText: 'Free cancellation up to 24 hours before selected activity slot.',
                     reserveText: 'Reserve now and complete payment after confirmation.',
-                    displayPrice: 'RM0.50',
-                    priceInCents: 50,
-                    unitText: 'per person (TEST PRICE)'
+                    displayPrice: 'RM350',
+                    unitText: 'per person'
                 }
             },
             'sedan-tour': {
@@ -4849,6 +4922,15 @@
             return match ? `RM${match[1].replace(/\s+/g, '')}` : String(priceText || '').trim();
         }
 
+        function parsePriceToCents(priceText) {
+            const match = String(priceText || '').match(/RM\s*([0-9]+(?:[.,][0-9]+)?)/i);
+            if (!match) return 0;
+            const normalized = match[1].replace(/,/g, '');
+            const ringgit = parseFloat(normalized);
+            if (Number.isNaN(ringgit)) return 0;
+            return Math.round(ringgit * 100);
+        }
+
         function getSelectedVariant(detail) {
             if (!Array.isArray(detail.variants) || detail.variants.length === 0) {
                 return null;
@@ -4868,6 +4950,14 @@
             }
 
             return detail.title;
+        }
+
+        function getSelectionPriceLabel(detail) {
+            if (!detail) return 'RM 0';
+            const v = getSelectedVariant(detail);
+            if (v) return v.price;
+            const meta = getBookingMeta(detail);
+            return meta.displayPrice || detail.price || 'RM 0';
         }
 
         function updateBookingLinks() {
@@ -4922,7 +5012,7 @@
             const bookMessage = bookLines.join('\n');
 
             packageModalReserveLink.href = `https://wa.me/60149495457?text=${encodeURIComponent(reserveMessage)}`;
-            if (packageModalWhatsApp) packageModalWhatsApp.href = `https://wa.me/60149495457?text=${encodeURIComponent(bookMessage)}`;
+            packageModalWhatsApp.href = `https://wa.me/60149495457?text=${encodeURIComponent(bookMessage)}`;
         }
 
         function syncPreferredBookingSelection() {
@@ -5128,7 +5218,6 @@
 
             packageModalBackdrop.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
-            hideBillplzForm();
         }
 
         function closePackageDetails() {
@@ -5138,7 +5227,6 @@
             selectedBookingTime = '';
             selectedPackageVariantName = '';
             selectedPackageTitleOverride = '';
-            hideBillplzForm();
         }
 
         packageModalClose.addEventListener('click', closePackageDetails);
@@ -5152,10 +5240,342 @@
         packageModalTimeSelect.addEventListener('change', syncPreferredBookingSelection);
 
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && !packageModalBackdrop.classList.contains('hidden')) {
+            if (event.key !== 'Escape') {
+                return;
+            }
+            if (cartDrawer && cartDrawer.classList.contains('is-open')) {
+                closeCart();
+                return;
+            }
+            if (!packageModalBackdrop.classList.contains('hidden')) {
                 closePackageDetails();
             }
         });
+
+        function saveCart() {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        }
+
+        function getCartTotalCents() {
+            return cart.reduce((sum, line) => sum + (line.cents || 0), 0);
+        }
+
+        function formatRmFromCents(cents) {
+            const rm = cents / 100;
+            return `RM ${rm.toLocaleString('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        function updateNavBadge() {
+            if (!navCartBadge) return;
+            const n = cart.length;
+            if (n === 0) {
+                navCartBadge.textContent = '';
+                navCartBadge.dataset.count = '0';
+                navCartBadge.style.display = 'none';
+                return;
+            }
+            navCartBadge.textContent = n > 99 ? '99+' : String(n);
+            navCartBadge.dataset.count = String(n);
+            navCartBadge.style.display = 'grid';
+        }
+
+        function renderCartPanel() {
+            if (!cartLines || !cartTotalDisplay || !cartEmptyHint) return;
+
+            cartLines.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartEmptyHint.classList.remove('hidden');
+                cartTotalDisplay.textContent = 'RM 0.00';
+                updateNavBadge();
+                return;
+            }
+
+            if (cartEmptyHint) {
+                cartEmptyHint.classList.add('hidden');
+            }
+
+            cart.forEach((line) => {
+                const row = document.createElement('div');
+                row.className = 'cart-line';
+                row.innerHTML = `
+                    <p class="cart-line-title">${line.title}</p>
+                    <p class="cart-line-meta">${line.variant ? `${line.variant}<br>` : ''}${line.date ? `Tarikh: ${line.date}` : ''}${line.time ? ` · Masa: ${line.time}` : ''}</p>
+                    <div class="cart-line-foot">
+                        <span class="cart-line-price">${line.priceLabel}</span>
+                        <button type="button" class="cart-line-remove" data-id="${line.id}">Buang</button>
+                    </div>
+                `;
+                cartLines.appendChild(row);
+            });
+
+            cartLines.querySelectorAll('.cart-line-remove').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    cart = cart.filter((l) => l.id !== btn.dataset.id);
+                    saveCart();
+                    renderCartPanel();
+                });
+            });
+
+            cartTotalDisplay.textContent = formatRmFromCents(getCartTotalCents());
+            updateNavBadge();
+        }
+
+        function openCart() {
+            if (cartDrawer) {
+                cartDrawer.classList.add('is-open');
+                cartDrawer.setAttribute('aria-hidden', 'false');
+            }
+            if (cartBackdrop) {
+                cartBackdrop.classList.add('is-open');
+            }
+            document.body.style.overflow = 'hidden';
+            renderCartPanel();
+        }
+
+        function closeCart() {
+            if (cartDrawer) {
+                cartDrawer.classList.remove('is-open');
+                cartDrawer.setAttribute('aria-hidden', 'true');
+            }
+            if (cartBackdrop) {
+                cartBackdrop.classList.remove('is-open');
+            }
+            const pkgOpen = packageModalBackdrop && !packageModalBackdrop.classList.contains('hidden');
+            if (!pkgOpen) {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function normalizeMyPhone(phone) {
+            let d = String(phone || '').replace(/\D/g, '');
+            if (d.startsWith('0')) d = '6' + d;
+            if (!d.startsWith('60')) d = '60' + d;
+            return d;
+        }
+
+        function addCurrentPackageToCart() {
+            if (!activePackageDetail) {
+                return;
+            }
+            const dateVal = packageModalPreferredDateInput ? packageModalPreferredDateInput.value : '';
+            const timeVal = selectedBookingTime || (packageModalTimeSelect ? packageModalTimeSelect.value : '');
+            if (!dateVal || !timeVal) {
+                window.alert('Sila pilih tarikh dan masa tempahan sebelum tambah ke troli.');
+                return;
+            }
+
+            const priceLabel = getSelectionPriceLabel(activePackageDetail);
+            const cents = parsePriceToCents(priceLabel);
+            if (cents <= 0) {
+                window.alert('Harga tidak sah untuk item ini.');
+                return;
+            }
+
+            const packageKey = Object.keys(packageDetails).find((k) => packageDetails[k] === activePackageDetail) || '';
+            const variant = getSelectedVariant(activePackageDetail);
+            const preferredDateStr = new Date(`${dateVal}T00:00:00`).toLocaleDateString('en-MY', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+            });
+
+            const line = {
+                id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+                packageKey,
+                title: getSelectedPackageTitle(activePackageDetail),
+                variant: variant ? variant.name : '',
+                priceLabel: parsePriceValue(priceLabel),
+                cents,
+                date: preferredDateStr,
+                time: timeVal,
+            };
+
+            cart.push(line);
+            saveCart();
+            renderCartPanel();
+            openCart();
+        }
+
+        function buildBillDescription() {
+            const parts = cart.map((line, i) => {
+                const bits = [`${i + 1}. ${line.title}`];
+                if (line.variant) bits.push(`(${line.variant})`);
+                bits.push(`${line.date} ${line.time}`);
+                return bits.join(' ');
+            });
+            let desc = parts.join(' | ');
+            if (desc.length > 190) desc = `${desc.slice(0, 187)}...`;
+            return desc || 'Alif Langkawi booking';
+        }
+
+        /** Perlukan Cloudflare Pages + Functions (`functions/api/billplz.js`), bukan GitHub Pages sahaja */
+        async function submitCartToBillplz() {
+            if (!cart.length) {
+                window.alert('Troli kosong.');
+                return;
+            }
+            const name = checkoutName ? checkoutName.value.trim() : '';
+            const email = checkoutEmail ? checkoutEmail.value.trim() : '';
+            const phone = checkoutPhone ? checkoutPhone.value.trim() : '';
+            if (!name || !email || !phone) {
+                window.alert('Sila isi nama, email dan no. telefon.');
+                return;
+            }
+
+            const totalCents = getCartTotalCents();
+            if (totalCents < 1) {
+                window.alert('Jumlah bayaran tidak sah.');
+                return;
+            }
+
+            const mobile = normalizeMyPhone(phone);
+            const currentUrl = window.location.href.split('?')[0].split('#')[0];
+            const redirectUrl = `${currentUrl}?billplz_return=1`;
+
+            if (cartPayBtn) cartPayBtn.disabled = true;
+
+            const pending = {
+                lines: cart.map((l) => ({ ...l })),
+                totalCents,
+                name,
+                email,
+                phone: mobile,
+            };
+            try {
+                sessionStorage.setItem(PENDING_BILLPLZ_KEY, JSON.stringify(pending));
+            } catch {
+                // ignore
+            }
+
+            const description = buildBillDescription();
+
+            try {
+                const res = await fetch(BILLPLZ_CONFIG.proxyUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        collection_id: BILLPLZ_CONFIG.collectionId,
+                        email,
+                        mobile,
+                        name,
+                        amount: String(totalCents),
+                        description,
+                        redirect_url: redirectUrl,
+                    }),
+                });
+
+                const data = await res.json();
+
+                if (!res.ok || data.error) {
+                    let errMsg = '';
+                    if (data.error) {
+                        if (typeof data.error === 'string') {
+                            errMsg = data.error;
+                        } else if (data.error.message) {
+                            if (typeof data.error.message === 'string') {
+                                errMsg = data.error.message;
+                            } else {
+                                errMsg = Object.entries(data.error.message)
+                                    .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`)
+                                    .join(' | ');
+                            }
+                        } else {
+                            errMsg = JSON.stringify(data.error);
+                        }
+                    }
+                    throw new Error(errMsg || `Ralat ${res.status}`);
+                }
+
+                if (data.url) {
+                    window.location.href = data.url;
+                    return;
+                }
+                throw new Error('Billplz tidak memulangkan pautan bayaran.');
+            } catch (e) {
+                try {
+                    sessionStorage.removeItem(PENDING_BILLPLZ_KEY);
+                } catch {
+                    // ignore
+                }
+                window.alert(e.message || 'Gagal cipta bil. Pastikan domain dihoskan pada Cloudflare Pages dengan Functions.');
+            } finally {
+                if (cartPayBtn) cartPayBtn.disabled = false;
+            }
+        }
+
+        function handleBillplzReturn() {
+            const params = new URLSearchParams(window.location.search);
+            if (!params.get('billplz_return')) {
+                return;
+            }
+
+            const paidRaw = params.get('billplz[paid]') || params.get('billplz_paid');
+            const billId = params.get('billplz[id]') || params.get('billplz_id');
+
+            let pending = null;
+            try {
+                const raw = sessionStorage.getItem(PENDING_BILLPLZ_KEY);
+                if (raw) pending = JSON.parse(raw);
+            } catch {
+                pending = null;
+            }
+
+            const paid = paidRaw === 'true' || paidRaw === '1';
+
+            if (paid && pending && Array.isArray(pending.lines)) {
+                const lines = [
+                    'Hi ALIF LANGKAWI EXPERIENCE,',
+                    'Saya telah selesaikan bayaran (Billplz).',
+                    billId ? `ID bil: ${billId}` : '',
+                    `Jumlah: ${formatRmFromCents(pending.totalCents || 0)}`,
+                    'Butiran tempahan:',
+                    ...pending.lines.map((l, i) => `${i + 1}. ${l.title}${l.variant ? ` — ${l.variant}` : ''} | ${l.date} ${l.time} | ${l.priceLabel}`),
+                    `Nama: ${pending.name || ''}`,
+                    `Email: ${pending.email || ''}`,
+                    `No. telefon: ${pending.phone || ''}`,
+                    'Sila sahkan tempahan. Terima kasih.',
+                ].filter(Boolean);
+                window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
+                cart = [];
+                saveCart();
+                sessionStorage.removeItem(PENDING_BILLPLZ_KEY);
+                renderCartPanel();
+            } else if (!paid) {
+                window.alert('Bayaran belum selesai atau dibatalkan. Item masih dalam troli.');
+            }
+
+            const clean = window.location.href.split('?')[0].split('#')[0];
+            window.history.replaceState(null, '', clean);
+        }
+
+        if (packageModalAddCart) {
+            packageModalAddCart.addEventListener('click', addCurrentPackageToCart);
+        }
+        if (navCartBtn) {
+            navCartBtn.addEventListener('click', openCart);
+        }
+        if (cartCloseBtn) {
+            cartCloseBtn.addEventListener('click', closeCart);
+        }
+        if (cartBackdrop) {
+            cartBackdrop.addEventListener('click', closeCart);
+        }
+        if (cartClearBtn) {
+            cartClearBtn.addEventListener('click', () => {
+                if (cart.length && window.confirm('Kosongkan semua item dalam troli?')) {
+                    cart = [];
+                    saveCart();
+                    renderCartPanel();
+                }
+            });
+        }
+        if (cartPayBtn) {
+            cartPayBtn.addEventListener('click', () => submitCartToBillplz());
+        }
+
+        renderCartPanel();
+        handleBillplzReturn();
 
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
@@ -6086,213 +6506,7 @@
             element.classList.add(index % 2 === 0 ? 'slide-in-left' : 'slide-in-right');
         });
 
-        // ─── BillPlz Payment Integration ─────────────────────────────────────
-        // Panggil melalui billplz-proxy.php (server-side) untuk elak CORS error
-        // ─────────────────────────────────────────────────────────────────────
-        const BILLPLZ_CONFIG = {
-            collectionId: '2f363f14-4a38-4d6d-a0de-a61a80e9561d',  // ← Replace with your BillPlz Collection ID
-            proxyUrl: '/api/billplz',              // Vercel serverless function
-        };
-
-        const WA_NUMBER = '60149495457';
-
-        // Parsed numeric price (in cents) for active package
-        function getActivePriceInCents() {
-            if (!activePackageDetail) return 0;
-            const booking = activePackageDetail.booking || {};
-
-            // Check if variant is selected and has a price
-            const selectedVariant = getSelectedVariant(activePackageDetail);
-            if (selectedVariant && selectedVariant.price) {
-                const match = selectedVariant.price.replace(/,/g, '').match(/[\d.]+/);
-                if (match) return Math.round(parseFloat(match[0]) * 100);
-            }
-
-            // Use explicit priceInCents if defined (e.g. test package)
-            if (booking.priceInCents !== undefined) return booking.priceInCents;
-
-            // Parse from displayPrice string
-            if (booking.displayPrice) {
-                const match = booking.displayPrice.replace(/,/g, '').match(/[\d.]+/);
-                if (match) return Math.round(parseFloat(match[0]) * 100);
-            }
-            return 0;
-        }
-
-        function getActiveAmountDisplay() {
-            const cents = getActivePriceInCents();
-            return 'RM' + (cents / 100).toFixed(2);
-        }
-
-        function showBillplzForm() {
-            if (!activePackageDetail) return;
-            const form = document.getElementById('billplzPayForm');
-            if (form) {
-                form.style.display = 'block';
-                document.getElementById('billplzAmountDisplay').textContent = getActiveAmountDisplay();
-                document.getElementById('billplzErrorMsg').style.display = 'none';
-                // Scroll to form
-                form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-        }
-
-        function hideBillplzForm() {
-            const form = document.getElementById('billplzPayForm');
-            if (form) form.style.display = 'none';
-        }
-
-        async function submitBillplzPayment() {
-            const name = document.getElementById('billplzName').value.trim();
-            const email = document.getElementById('billplzEmail').value.trim();
-            const phone = document.getElementById('billplzPhone').value.trim();
-            const errorEl = document.getElementById('billplzErrorMsg');
-            const btnText = document.getElementById('billplzBtnText');
-            const submitBtn = document.getElementById('billplzSubmitBtn');
-
-            errorEl.style.display = 'none';
-
-            if (!name || !email || !phone) {
-                errorEl.textContent = 'Sila isi semua field: nama, email dan nombor telefon.';
-                errorEl.style.display = 'block';
-                return;
-            }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                errorEl.textContent = 'Format email tidak sah.';
-                errorEl.style.display = 'block';
-                return;
-            }
-            if (BILLPLZ_CONFIG.collectionId === 'FILL_YOUR_COLLECTION_ID') {
-                errorEl.textContent = '⚠️ Collection ID belum diisi. Sila update BILLPLZ_CONFIG.collectionId dalam kod.';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const amountInCents = getActivePriceInCents();
-            if (amountInCents < 1) {
-                errorEl.textContent = 'Harga pakej tidak sah.';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const selectedVariant = getSelectedVariant(activePackageDetail);
-            const packageTitle = getSelectedPackageTitle(activePackageDetail);
-            const variantInfo = selectedVariant ? ` - ${selectedVariant.name}` : '';
-            const description = `${packageTitle}${variantInfo}`;
-
-            submitBtn.disabled = true;
-            btnText.textContent = 'Memproses...';
-
-            try {
-                const currentUrl = window.location.href.split('?')[0].split('#')[0];
-                const redirectUrl = `${currentUrl}?billplz_return=1&pkg=${encodeURIComponent(packageTitle)}&phone=${encodeURIComponent(phone)}`;
-
-                // Format phone: strip all non-digits, ensure starts with 60
-                let mobileClean = phone.replace(/\D/g, '');
-                if (mobileClean.startsWith('0')) mobileClean = '6' + mobileClean;
-                if (!mobileClean.startsWith('60')) mobileClean = '60' + mobileClean;
-
-                const res = await fetch(BILLPLZ_CONFIG.proxyUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        collection_id: BILLPLZ_CONFIG.collectionId,
-                        email:         email,
-                        mobile:        mobileClean,
-                        name:          name,
-                        amount:        String(amountInCents),
-                        description:   description,
-                        redirect_url:  redirectUrl,
-                    })
-                });
-
-                const data = await res.json();
-
-                if (!res.ok || data.error) {
-                    // BillPlz returns errors as object or string
-                    let errMsg = '';
-                    if (data.error) {
-                        if (typeof data.error === 'string') {
-                            errMsg = data.error;
-                        } else if (data.error.message) {
-                            if (typeof data.error.message === 'string') {
-                                errMsg = data.error.message;
-                            } else {
-                                // Object like {mobile: ["invalid"], email: ["invalid"]}
-                                errMsg = Object.entries(data.error.message)
-                                    .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`)
-                                    .join(' | ');
-                            }
-                        } else {
-                            errMsg = JSON.stringify(data.error);
-                        }
-                    }
-                    throw new Error(errMsg || `HTTP ${res.status}`);
-                }
-
-                if (data.url) {
-                    window.location.href = data.url;
-                } else {
-                    throw new Error('URL pembayaran tidak diterima dari BillPlz.');
-                }
-            } catch (err) {
-                errorEl.textContent = '❌ ' + (err.message || 'Terjadi ralat. Cuba lagi.');
-                errorEl.style.display = 'block';
-                submitBtn.disabled = false;
-                btnText.textContent = 'Pay Now →';
-            }
-        }
-
-        // Handle BillPlz redirect return
-        function handleBillplzReturn() {
-            const params = new URLSearchParams(window.location.search);
-            if (!params.has('billplz_return')) return;
-
-            const billplzId = params.get('billplz[id]') || params.get('billplz_id') || '';
-            const paid = params.get('billplz[paid]') || params.get('billplz_paid') || 'false';
-            const pkg = decodeURIComponent(params.get('pkg') || 'Pakej');
-            const phone = decodeURIComponent(params.get('phone') || WA_NUMBER);
-
-            const banner = document.getElementById('paymentSuccessBanner');
-            const icon = document.getElementById('paymentResultIcon');
-            const title = document.getElementById('paymentResultTitle');
-            const msg = document.getElementById('paymentResultMsg');
-            const waLink = document.getElementById('paymentResultWaLink');
-
-            if (paid === 'true') {
-                icon.textContent = '✅';
-                icon.className = 'payment-success-icon';
-                title.textContent = 'Pembayaran Berjaya!';
-                msg.textContent = `Terima kasih! Pembayaran untuk "${pkg}" telah diterima (BillPlz ID: ${billplzId}). Sila tekan butang bawah untuk sahkan tempahan anda via WhatsApp.`;
-
-                const waMsg = encodeURIComponent(
-                    `Hi ALIF LANGKAWI EXPERIENCE,\nSaya telah buat pembayaran untuk: ${pkg}\nBillPlz ID: ${billplzId}\nSila sahkan tempahan saya. Terima kasih!`
-                );
-                waLink.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
-                waLink.textContent = ''; 
-                waLink.innerHTML = '<i class="bi bi-whatsapp"></i> Sahkan Tempahan via WhatsApp';
-            } else {
-                icon.textContent = '❌';
-                icon.className = 'payment-success-icon payment-failed-icon';
-                title.textContent = 'Pembayaran Tidak Berjaya';
-                msg.textContent = `Pembayaran untuk "${pkg}" tidak berjaya atau dibatalkan. Sila cuba lagi atau hubungi kami via WhatsApp.`;
-                const waMsg = encodeURIComponent(`Hi ALIF LANGKAWI EXPERIENCE,\nSaya ada masalah dengan pembayaran untuk: ${pkg}\nBillPlz ID: ${billplzId}\nSila bantu saya. Terima kasih!`);
-                waLink.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
-                waLink.innerHTML = '<i class="bi bi-whatsapp"></i> Hubungi Kami via WhatsApp';
-                waLink.style.background = '#ef4444';
-            }
-
-            banner.style.display = 'grid';
-            // Clean URL
-            history.replaceState(null, '', window.location.pathname + window.location.hash);
-        }
-
-        function dismissPaymentBanner() {
-            document.getElementById('paymentSuccessBanner').style.display = 'none';
-        }
-
-        // Run on page load
-        handleBillplzReturn();
-        // ─── End BillPlz Integration ──────────────────────────────────────────
+        // Fallback so every image still appears if any external URL fails.
         const fallbackImage = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200';
         const allImages = document.querySelectorAll('img');
         allImages.forEach((img) => {

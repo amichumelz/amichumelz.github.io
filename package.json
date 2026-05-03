@@ -1,0 +1,10 @@
+{
+  "name": "alif-langkawi-site",
+  "private": true,
+  "scripts": {
+    "deploy:worker": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.99.0"
+  }
+}
