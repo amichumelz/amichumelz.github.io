@@ -2198,7 +2198,8 @@
             gap: 0.55rem;
         }
 
-        .package-modal-footer a {
+        .package-modal-footer a,
+        .package-modal-footer button {
             width: 100%;
             border-radius: 0.75rem;
             min-height: 2.8rem;
@@ -2208,6 +2209,14 @@
             text-transform: uppercase;
             display: grid;
             place-items: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .package-modal-footer a:hover,
+        .package-modal-footer button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
         }
 
         .package-modal-footer .primary {
@@ -2215,10 +2224,209 @@
             color: #fff;
         }
 
+        .package-modal-footer .pay-now-btn {
+            background: linear-gradient(120deg, #0f7ff2, #005ec4);
+            color: #fff;
+            border: none;
+        }
+
         .package-modal-footer .secondary {
             border: 1px solid #cbd5e1;
             background: #fff;
             color: #111827;
+        }
+
+        /* Payment form step */
+        .billplz-pay-form {
+            margin-top: 1rem;
+            border: 2px solid #0f7ff2;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #f0f7ff;
+        }
+
+        .billplz-pay-form-header {
+            padding: 0.75rem 1rem;
+            background: linear-gradient(120deg, #0f7ff2, #005ec4);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .billplz-pay-form-header h5 {
+            font-size: 0.88rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .billplz-pay-form-body {
+            padding: 1rem;
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        .billplz-field-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #334155;
+            margin-bottom: 0.3rem;
+        }
+
+        .billplz-field-input {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.6rem;
+            background: #ffffff;
+            padding: 0.6rem 0.85rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #0f172a;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .billplz-field-input:focus {
+            border-color: #0f7ff2;
+            box-shadow: 0 0 0 3px rgba(15, 127, 242, 0.15);
+        }
+
+        .billplz-amount-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.85rem;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.6rem;
+        }
+
+        .billplz-amount-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .billplz-amount-value {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #0b6aa8;
+        }
+
+        .billplz-pay-submit {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.65rem;
+            border: none;
+            background: linear-gradient(120deg, #0f7ff2, #005ec4);
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            margin-top: 0.25rem;
+        }
+
+        .billplz-pay-submit:hover:not(:disabled) {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .billplz-pay-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .billplz-error-msg {
+            font-size: 0.82rem;
+            color: #dc2626;
+            font-weight: 700;
+            padding: 0.4rem 0.6rem;
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-radius: 0.5rem;
+        }
+
+        /* Payment success overlay */
+        .payment-success-banner {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(2, 6, 23, 0.85);
+            display: grid;
+            place-items: center;
+            padding: 1.5rem;
+        }
+
+        .payment-success-card {
+            width: min(520px, 100%);
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(2, 6, 23, 0.45);
+            animation: modalIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .payment-success-icon {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 999px;
+            background: #dcfce7;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 1.25rem;
+            font-size: 2rem;
+        }
+
+        .payment-success-card h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .payment-success-card p {
+            margin-top: 0.65rem;
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .payment-success-card .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+            padding: 0.85rem 1.75rem;
+            border-radius: 0.75rem;
+            background: #25d366;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .payment-success-card .wa-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .payment-failed-icon {
+            background: #fee2e2;
         }
 
         .package-booking-shell {
@@ -3904,6 +4112,19 @@
         </section>
     </main>
 
+    <!-- Payment result banner (shown after BillPlz redirect) -->
+    <div id="paymentSuccessBanner" class="payment-success-banner" style="display:none;">
+        <div class="payment-success-card">
+            <div id="paymentResultIcon" class="payment-success-icon">✅</div>
+            <h2 id="paymentResultTitle">Payment Successful!</h2>
+            <p id="paymentResultMsg">Your payment has been received. Please tap below to confirm your booking details via WhatsApp.</p>
+            <a id="paymentResultWaLink" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="wa-btn">
+                <i class="bi bi-whatsapp"></i> Confirm Booking on WhatsApp
+            </a>
+            <button type="button" onclick="dismissPaymentBanner()" style="display:block;margin:1rem auto 0;font-size:0.8rem;color:#94a3b8;background:none;border:none;cursor:pointer;">Close</button>
+        </div>
+    </div>
+
     <a href="https://wa.me/60149495457"
        target="_blank"
        rel="noopener noreferrer"
@@ -3982,9 +4203,40 @@
                     </div>
                 </section>
 
+                <!-- BillPlz Payment Form (hidden by default) -->
+                <div id="billplzPayForm" class="billplz-pay-form" style="display:none;">
+                    <div class="billplz-pay-form-header">
+                        <h5>💳 Secure Payment via BillPlz</h5>
+                        <button type="button" onclick="hideBillplzForm()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:999px;width:1.75rem;height:1.75rem;font-size:1rem;cursor:pointer;display:grid;place-items:center;">×</button>
+                    </div>
+                    <div class="billplz-pay-form-body">
+                        <div>
+                            <label class="billplz-field-label" for="billplzName">Full Name</label>
+                            <input id="billplzName" type="text" class="billplz-field-input" placeholder="Enter your full name" autocomplete="name">
+                        </div>
+                        <div>
+                            <label class="billplz-field-label" for="billplzEmail">Email Address</label>
+                            <input id="billplzEmail" type="email" class="billplz-field-input" placeholder="your@email.com" autocomplete="email">
+                        </div>
+                        <div>
+                            <label class="billplz-field-label" for="billplzPhone">Phone / WhatsApp Number</label>
+                            <input id="billplzPhone" type="tel" class="billplz-field-input" placeholder="e.g. 0149495457" autocomplete="tel">
+                        </div>
+                        <div class="billplz-amount-row">
+                            <span class="billplz-amount-label">Amount to pay:</span>
+                            <span id="billplzAmountDisplay" class="billplz-amount-value">RM0.00</span>
+                        </div>
+                        <div id="billplzErrorMsg" class="billplz-error-msg" style="display:none;"></div>
+                        <button type="button" id="billplzSubmitBtn" class="billplz-pay-submit" onclick="submitBillplzPayment()">
+                            <span id="billplzBtnText">Pay Now →</span>
+                        </button>
+                        <p style="font-size:0.72rem;color:#64748b;text-align:center;">Secured by BillPlz. You will be redirected to complete payment.</p>
+                    </div>
+                </div>
+
                 <div class="package-modal-footer">
                     <a id="packageModalReserveLink" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="secondary">Reserve Now &amp; Pay Later</a>
-                    <a id="packageModalWhatsApp" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="primary">Book Now</a>
+                    <button type="button" id="payNowBtn" class="pay-now-btn" onclick="showBillplzForm()">💳 Pay Now</button>
                 </div>
             </div>
         </article>
@@ -4018,7 +4270,7 @@
         const packageModalIncludes = document.getElementById('packageModalIncludes');
         const packageModalBonus = document.getElementById('packageModalBonus');
         const packageModalReserveLink = document.getElementById('packageModalReserveLink');
-        const packageModalWhatsApp = document.getElementById('packageModalWhatsApp');
+        const packageModalWhatsApp = document.getElementById('packageModalWhatsApp'); // removed - kept for compat
         const packageBookingTitle = document.getElementById('packageBookingTitle');
         const packageBookingSelected = document.getElementById('packageBookingSelected');
         const packageBookingDeadline = document.getElementById('packageBookingDeadline');
@@ -4406,8 +4658,9 @@
                     deadlineHours: 18,
                     cancellationText: 'Free cancellation up to 24 hours before selected activity slot.',
                     reserveText: 'Reserve now and complete payment after confirmation.',
-                    displayPrice: 'RM350',
-                    unitText: 'per person'
+                    displayPrice: 'RM0.50',
+                    priceInCents: 50,
+                    unitText: 'per person (TEST PRICE)'
                 }
             },
             'sedan-tour': {
@@ -4669,7 +4922,7 @@
             const bookMessage = bookLines.join('\n');
 
             packageModalReserveLink.href = `https://wa.me/60149495457?text=${encodeURIComponent(reserveMessage)}`;
-            packageModalWhatsApp.href = `https://wa.me/60149495457?text=${encodeURIComponent(bookMessage)}`;
+            if (packageModalWhatsApp) packageModalWhatsApp.href = `https://wa.me/60149495457?text=${encodeURIComponent(bookMessage)}`;
         }
 
         function syncPreferredBookingSelection() {
@@ -4875,6 +5128,7 @@
 
             packageModalBackdrop.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            hideBillplzForm();
         }
 
         function closePackageDetails() {
@@ -4884,6 +5138,7 @@
             selectedBookingTime = '';
             selectedPackageVariantName = '';
             selectedPackageTitleOverride = '';
+            hideBillplzForm();
         }
 
         packageModalClose.addEventListener('click', closePackageDetails);
@@ -5831,7 +6086,201 @@
             element.classList.add(index % 2 === 0 ? 'slide-in-left' : 'slide-in-right');
         });
 
-        // Fallback so every image still appears if any external URL fails.
+        // ─── BillPlz Payment Integration ─────────────────────────────────────
+        // ⚠️  TESTING MODE — Secret key is exposed in frontend for testing only.
+        //      For production, move bill creation to a backend/serverless function.
+        // ─────────────────────────────────────────────────────────────────────
+        const BILLPLZ_CONFIG = {
+            secretKey: 'a811b5f5-a685-4eea-a4ba-db0f7c9777d5',
+            collectionId: '2f363f14-4a38-4d6d-a0de-a61a80e9561d',  // ← Replace with your BillPlz Collection ID
+            sandbox: true,   // true = sandbox testing, false = production
+        };
+
+        const BILLPLZ_BASE = BILLPLZ_CONFIG.sandbox
+            ? 'https://www.billplz-sandbox.com/api/v3'
+            : 'https://www.billplz.com/api/v3';
+
+        const WA_NUMBER = '60149495457';
+
+        // Parsed numeric price (in cents) for active package
+        function getActivePriceInCents() {
+            if (!activePackageDetail) return 0;
+            const booking = activePackageDetail.booking || {};
+
+            // Check if variant is selected and has a price
+            const selectedVariant = getSelectedVariant(activePackageDetail);
+            if (selectedVariant && selectedVariant.price) {
+                const match = selectedVariant.price.replace(/,/g, '').match(/[\d.]+/);
+                if (match) return Math.round(parseFloat(match[0]) * 100);
+            }
+
+            // Use explicit priceInCents if defined (e.g. test package)
+            if (booking.priceInCents !== undefined) return booking.priceInCents;
+
+            // Parse from displayPrice string
+            if (booking.displayPrice) {
+                const match = booking.displayPrice.replace(/,/g, '').match(/[\d.]+/);
+                if (match) return Math.round(parseFloat(match[0]) * 100);
+            }
+            return 0;
+        }
+
+        function getActiveAmountDisplay() {
+            const cents = getActivePriceInCents();
+            return 'RM' + (cents / 100).toFixed(2);
+        }
+
+        function showBillplzForm() {
+            if (!activePackageDetail) return;
+            const form = document.getElementById('billplzPayForm');
+            if (form) {
+                form.style.display = 'block';
+                document.getElementById('billplzAmountDisplay').textContent = getActiveAmountDisplay();
+                document.getElementById('billplzErrorMsg').style.display = 'none';
+                // Scroll to form
+                form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function hideBillplzForm() {
+            const form = document.getElementById('billplzPayForm');
+            if (form) form.style.display = 'none';
+        }
+
+        async function submitBillplzPayment() {
+            const name = document.getElementById('billplzName').value.trim();
+            const email = document.getElementById('billplzEmail').value.trim();
+            const phone = document.getElementById('billplzPhone').value.trim();
+            const errorEl = document.getElementById('billplzErrorMsg');
+            const btnText = document.getElementById('billplzBtnText');
+            const submitBtn = document.getElementById('billplzSubmitBtn');
+
+            errorEl.style.display = 'none';
+
+            if (!name || !email || !phone) {
+                errorEl.textContent = 'Sila isi semua field: nama, email dan nombor telefon.';
+                errorEl.style.display = 'block';
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errorEl.textContent = 'Format email tidak sah.';
+                errorEl.style.display = 'block';
+                return;
+            }
+            if (BILLPLZ_CONFIG.collectionId === 'FILL_YOUR_COLLECTION_ID') {
+                errorEl.textContent = '⚠️ Collection ID belum diisi. Sila update BILLPLZ_CONFIG.collectionId dalam kod.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            const amountInCents = getActivePriceInCents();
+            if (amountInCents < 1) {
+                errorEl.textContent = 'Harga pakej tidak sah.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            const selectedVariant = getSelectedVariant(activePackageDetail);
+            const packageTitle = getSelectedPackageTitle(activePackageDetail);
+            const variantInfo = selectedVariant ? ` - ${selectedVariant.name}` : '';
+            const description = `${packageTitle}${variantInfo}`;
+
+            // Build redirect URL (current page + billplz params will be appended by BillPlz)
+            const currentUrl = window.location.href.split('?')[0].split('#')[0];
+            const redirectUrl = `${currentUrl}?billplz_return=1&pkg=${encodeURIComponent(packageTitle)}&phone=${encodeURIComponent(phone)}`;
+            const callbackUrl = redirectUrl; // For static sites, same URL
+
+            submitBtn.disabled = true;
+            btnText.textContent = 'Memproses...';
+
+            try {
+                const authHeader = 'Basic ' + btoa(BILLPLZ_CONFIG.secretKey + ':');
+                const formData = new FormData();
+                formData.append('collection_id', BILLPLZ_CONFIG.collectionId);
+                formData.append('email', email);
+                formData.append('mobile', '+6' + phone.replace(/^0/, ''));
+                formData.append('name', name);
+                formData.append('amount', String(amountInCents));
+                formData.append('description', description);
+                formData.append('redirect_url', redirectUrl);
+                formData.append('callback_url', callbackUrl);
+
+                const res = await fetch(`${BILLPLZ_BASE}/bills`, {
+                    method: 'POST',
+                    headers: { 'Authorization': authHeader },
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (!res.ok || data.error) {
+                    throw new Error(data.error?.message || data.error || 'Gagal mencipta bil BillPlz.');
+                }
+
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    throw new Error('URL pembayaran tidak diterima dari BillPlz.');
+                }
+            } catch (err) {
+                errorEl.textContent = '❌ ' + (err.message || 'Terjadi ralat. Cuba lagi.');
+                errorEl.style.display = 'block';
+                submitBtn.disabled = false;
+                btnText.textContent = 'Pay Now →';
+            }
+        }
+
+        // Handle BillPlz redirect return
+        function handleBillplzReturn() {
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('billplz_return')) return;
+
+            const billplzId = params.get('billplz[id]') || params.get('billplz_id') || '';
+            const paid = params.get('billplz[paid]') || params.get('billplz_paid') || 'false';
+            const pkg = decodeURIComponent(params.get('pkg') || 'Pakej');
+            const phone = decodeURIComponent(params.get('phone') || WA_NUMBER);
+
+            const banner = document.getElementById('paymentSuccessBanner');
+            const icon = document.getElementById('paymentResultIcon');
+            const title = document.getElementById('paymentResultTitle');
+            const msg = document.getElementById('paymentResultMsg');
+            const waLink = document.getElementById('paymentResultWaLink');
+
+            if (paid === 'true') {
+                icon.textContent = '✅';
+                icon.className = 'payment-success-icon';
+                title.textContent = 'Pembayaran Berjaya!';
+                msg.textContent = `Terima kasih! Pembayaran untuk "${pkg}" telah diterima (BillPlz ID: ${billplzId}). Sila tekan butang bawah untuk sahkan tempahan anda via WhatsApp.`;
+
+                const waMsg = encodeURIComponent(
+                    `Hi ALIF LANGKAWI EXPERIENCE,\nSaya telah buat pembayaran untuk: ${pkg}\nBillPlz ID: ${billplzId}\nSila sahkan tempahan saya. Terima kasih!`
+                );
+                waLink.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+                waLink.textContent = ''; 
+                waLink.innerHTML = '<i class="bi bi-whatsapp"></i> Sahkan Tempahan via WhatsApp';
+            } else {
+                icon.textContent = '❌';
+                icon.className = 'payment-success-icon payment-failed-icon';
+                title.textContent = 'Pembayaran Tidak Berjaya';
+                msg.textContent = `Pembayaran untuk "${pkg}" tidak berjaya atau dibatalkan. Sila cuba lagi atau hubungi kami via WhatsApp.`;
+                const waMsg = encodeURIComponent(`Hi ALIF LANGKAWI EXPERIENCE,\nSaya ada masalah dengan pembayaran untuk: ${pkg}\nBillPlz ID: ${billplzId}\nSila bantu saya. Terima kasih!`);
+                waLink.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+                waLink.innerHTML = '<i class="bi bi-whatsapp"></i> Hubungi Kami via WhatsApp';
+                waLink.style.background = '#ef4444';
+            }
+
+            banner.style.display = 'grid';
+            // Clean URL
+            history.replaceState(null, '', window.location.pathname + window.location.hash);
+        }
+
+        function dismissPaymentBanner() {
+            document.getElementById('paymentSuccessBanner').style.display = 'none';
+        }
+
+        // Run on page load
+        handleBillplzReturn();
+        // ─── End BillPlz Integration ──────────────────────────────────────────
         const fallbackImage = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200';
         const allImages = document.querySelectorAll('img');
         allImages.forEach((img) => {
