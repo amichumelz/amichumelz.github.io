@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/billplz.js", "use": "@vercel/node" },
+    { "src": "*.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/billplz", "dest": "/api/billplz.js" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
