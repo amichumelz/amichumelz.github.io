@@ -2480,6 +2480,198 @@
             display: none;
         }
 
+        .payment-success-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 70;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.55);
+        }
+
+        .payment-success-backdrop.hidden {
+            display: none;
+        }
+
+        .payment-success-panel {
+            width: 100%;
+            max-width: 420px;
+            background: #fff;
+            border-radius: 1rem;
+            padding: 1.5rem 1.35rem 1.35rem;
+            box-shadow: 0 24px 50px rgba(15, 23, 42, 0.18);
+            text-align: center;
+        }
+
+        .payment-success-icon {
+            width: 3.25rem;
+            height: 3.25rem;
+            margin: 0 auto 0.75rem;
+            border-radius: 50%;
+            background: linear-gradient(120deg, #0a8f72, #0b7c64);
+            color: #fff;
+            font-size: 1.75rem;
+            font-weight: 900;
+            display: grid;
+            place-items: center;
+            line-height: 1;
+        }
+
+        .payment-success-panel h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        .payment-success-detail {
+            margin: 0 0 0.65rem;
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.45;
+        }
+
+        .payment-success-hint {
+            margin: 0 0 1rem;
+            font-size: 0.82rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        .payment-success-actions {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .checkout-terms-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            margin: 0.85rem 0 0.35rem;
+            padding: 0.65rem 0.5rem;
+            border-radius: 0.65rem;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+        }
+
+        .checkout-terms-checkbox {
+            margin-top: 0.2rem;
+            width: 1.05rem;
+            height: 1.05rem;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .checkout-terms-label {
+            font-size: 0.82rem;
+            line-height: 1.45;
+            color: #334155;
+            cursor: pointer;
+        }
+
+        .checkout-terms-link {
+            display: inline;
+            padding: 0;
+            border: none;
+            background: none;
+            color: #0f7ff2;
+            font-weight: 800;
+            font-size: inherit;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .checkout-terms-link:hover {
+            color: #005ec4;
+        }
+
+        .terms-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 72;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.55);
+        }
+
+        .terms-modal-backdrop.hidden {
+            display: none;
+        }
+
+        .terms-modal-panel {
+            width: 100%;
+            max-width: 520px;
+            max-height: min(85vh, 640px);
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 24px 50px rgba(15, 23, 42, 0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .terms-modal-head {
+            flex-shrink: 0;
+            padding: 1rem 1.15rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8fafc;
+        }
+
+        .terms-modal-head h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        .terms-modal-head button {
+            border: 0;
+            background: transparent;
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            color: #64748b;
+            padding: 0.2rem;
+        }
+
+        .terms-modal-body {
+            padding: 1rem 1.15rem 1.25rem;
+            overflow-y: auto;
+            font-size: 0.84rem;
+            line-height: 1.55;
+            color: #334155;
+        }
+
+        .terms-modal-body h4 {
+            margin: 1rem 0 0.35rem;
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .terms-modal-body h4:first-child {
+            margin-top: 0;
+        }
+
+        .terms-modal-body ul {
+            margin: 0.35rem 0 0;
+            padding-left: 1.15rem;
+        }
+
+        .terms-modal-foot {
+            flex-shrink: 0;
+            padding: 0.75rem 1.15rem 1rem;
+            border-top: 1px solid #e2e8f0;
+            background: #fff;
+        }
+
         .package-booking-shell {
             margin-top: 1rem;
             border: 2px solid rgba(13, 148, 136, 0.7);
@@ -3449,7 +3641,7 @@
                 <button data-link="contact" onclick="showPage('contact')" class="nav-link hover:text-blue-600 transition">Contact</button>
             </div>
             <div class="flex items-center gap-2">
-                <button type="button" id="navCartBtn" class="nav-cart-btn" aria-label="Open cart" title="Troli">
+                <button type="button" id="navCartBtn" class="nav-cart-btn" aria-label="Open cart" title="Cart">
                     <i class="bi bi-cart3 text-lg" aria-hidden="true"></i>
                     <span id="navCartBadge" class="nav-cart-badge" data-count="0"></span>
                 </button>
@@ -3668,7 +3860,7 @@
                         <img src="https://media.cnn.com/api/v1/images/stellar/prod/170502125641-langkawi-malaysia-jet-ski.jpg?q=w_4208,h_3086,x_0,y_0,c_fill" alt="JetSki Tour Packages">
                         <div class="activity-card-content">
                             <h3>JetSki Tour Packages</h3>
-                            <p>Mangrove JetSki Tour 3-4 jam, 9 checkpoint, RM750 per JetSki (2 pax).</p>
+                            <p>Mangrove JetSki Tour 3-4 hours, 9 checkpoints, RM750 per JetSki (2 pax).</p>
                             <button onclick="openPackageDetails('jetski-silver')" class="cta">Discover Deals</button>
                         </div>
                     </article>
@@ -4257,26 +4449,73 @@
     <div id="cartBackdrop" class="cart-backdrop" aria-hidden="true"></div>
     <aside id="cartDrawer" class="cart-drawer" aria-label="Shopping cart" aria-hidden="true">
         <div class="cart-drawer-head">
-            <h3>Troli</h3>
-            <button type="button" id="cartCloseBtn" aria-label="Tutup troli">×</button>
+            <h3>Cart</h3>
+            <button type="button" id="cartCloseBtn" aria-label="Close cart">×</button>
         </div>
-        <p id="cartEmptyHint" class="cart-empty">Tiada item. Buka pakej tour dan tekan Add to cart.</p>
+        <p id="cartEmptyHint" class="cart-empty">No items yet. Open a tour package and tap Add to cart.</p>
         <div id="cartLines" class="cart-lines"></div>
         <div class="cart-drawer-footer">
             <div class="cart-total-row">
-                <span>Jumlah</span>
+                <span>Total</span>
                 <strong id="cartTotalDisplay">RM 0.00</strong>
             </div>
-            <label class="checkout-label" for="checkoutName">Nama penuh</label>
-            <input id="checkoutName" class="checkout-input" type="text" autocomplete="name" placeholder="Seperti dalam IC / passport">
+            <label class="checkout-label" for="checkoutName">Full name</label>
+            <input id="checkoutName" class="checkout-input" type="text" autocomplete="name" placeholder="As on ID / passport">
             <label class="checkout-label" for="checkoutEmail">Email</label>
             <input id="checkoutEmail" class="checkout-input" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
-            <label class="checkout-label" for="checkoutPhone">No. telefon / WhatsApp</label>
+            <label class="checkout-label" for="checkoutPhone">Phone / WhatsApp</label>
             <input id="checkoutPhone" class="checkout-input" type="text" inputmode="numeric" autocomplete="tel" placeholder="e.g. 0149495457">
-            <button type="button" id="cartPayBtn" class="checkout-pay-btn">Bayar dengan Billplz</button>
-            <button type="button" id="cartClearBtn" class="cart-secondary-btn">Kosongkan troli</button>
+            <div class="checkout-terms-row">
+                <input type="checkbox" id="checkoutTermsAgree" class="checkout-terms-checkbox" autocomplete="off">
+                <p class="checkout-terms-label" style="margin: 0">
+                    <label for="checkoutTermsAgree">I have read and agree to the </label><button type="button" id="termsOpenBtn" class="checkout-terms-link">Terms &amp; Conditions</button>.
+                </p>
+            </div>
+            <button type="button" id="cartPayBtn" class="checkout-pay-btn" disabled>Pay with Billplz</button>
+            <button type="button" id="cartClearBtn" class="cart-secondary-btn">Empty cart</button>
         </div>
     </aside>
+
+    <div id="termsBackdrop" class="terms-modal-backdrop hidden" aria-hidden="true">
+        <div class="terms-modal-panel" role="dialog" aria-modal="true" aria-labelledby="termsModalTitle">
+            <div class="terms-modal-head">
+                <h3 id="termsModalTitle">Terms &amp; Conditions</h3>
+                <button type="button" id="termsCloseBtn" aria-label="Close terms">×</button>
+            </div>
+            <div class="terms-modal-body">
+                <h4>1. Bookings</h4>
+                <p>All tours and services are subject to availability and weather or operational conditions. ALIF LANGKAWI EXPERIENCE may reschedule or suggest alternatives where necessary.</p>
+                <h4>2. Pricing &amp; payment</h4>
+                <p>Prices shown on this website are subject to change until payment is completed. Online payments are processed securely via Billplz. You agree to pay the total amount shown at checkout for the items in your cart.</p>
+                <h4>3. Cancellations &amp; refunds</h4>
+                <p>Cancellation and refund rules follow the policy stated on each package or as communicated by us in writing. Service fees or third-party charges may be non-refundable.</p>
+                <h4>4. Conduct &amp; safety</h4>
+                <p>Guests must follow crew and driver instructions and applicable safety rules. We may refuse service where safety or legal requirements are not met.</p>
+                <h4>5. Personal data</h4>
+                <p>Contact details you provide are used to confirm bookings, process payments, and communicate about your trip. We do not sell your data.</p>
+                <h4>6. Limitation of liability</h4>
+                <p>To the fullest extent permitted by law, our liability is limited to the amount paid for the relevant booking. We are not liable for indirect loss or events outside our reasonable control.</p>
+                <h4>7. Changes</h4>
+                <p>We may update these terms from time to time. Continued use of checkout after changes means you accept the updated terms.</p>
+            </div>
+            <div class="terms-modal-foot">
+                <button type="button" id="termsAcceptCloseBtn" class="checkout-pay-btn">I understand</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="paymentSuccessBackdrop" class="payment-success-backdrop hidden" aria-hidden="true">
+        <div class="payment-success-panel" role="dialog" aria-labelledby="paymentSuccessTitle" aria-modal="true">
+            <div class="payment-success-icon" aria-hidden="true">✓</div>
+            <h3 id="paymentSuccessTitle">Payment successful</h3>
+            <p id="paymentSuccessDetail" class="payment-success-detail"></p>
+            <p class="payment-success-hint">Tap the button below to send your booking confirmation to our WhatsApp.</p>
+            <div class="payment-success-actions">
+                <button type="button" id="paymentSuccessWaBtn" class="checkout-pay-btn">WhatsApp — confirm booking</button>
+                <button type="button" id="paymentSuccessCloseBtn" class="cart-secondary-btn">Close</button>
+            </div>
+        </div>
+    </div>
 
     <footer class="border-t border-slate-200 bg-slate-950 px-6 py-14 text-center text-white/70">
         <div class="mx-auto max-w-7xl">
@@ -4328,6 +4567,36 @@
         const checkoutPhone = document.getElementById('checkoutPhone');
         const cartPayBtn = document.getElementById('cartPayBtn');
         const cartClearBtn = document.getElementById('cartClearBtn');
+        const paymentSuccessBackdrop = document.getElementById('paymentSuccessBackdrop');
+        const paymentSuccessDetail = document.getElementById('paymentSuccessDetail');
+        const paymentSuccessWaBtn = document.getElementById('paymentSuccessWaBtn');
+        const paymentSuccessCloseBtn = document.getElementById('paymentSuccessCloseBtn');
+        const checkoutTermsAgree = document.getElementById('checkoutTermsAgree');
+        const termsBackdrop = document.getElementById('termsBackdrop');
+        const termsCloseBtn = document.getElementById('termsCloseBtn');
+        const termsOpenBtn = document.getElementById('termsOpenBtn');
+        const termsAcceptCloseBtn = document.getElementById('termsAcceptCloseBtn');
+
+        let paymentSuccessWaUrl = '';
+
+        function updateCheckoutPayEnabled() {
+            if (!cartPayBtn) return;
+            const hasCart = cart.length > 0;
+            const termsOk = checkoutTermsAgree && checkoutTermsAgree.checked;
+            cartPayBtn.disabled = !hasCart || !termsOk;
+        }
+
+        function openTermsModal() {
+            if (!termsBackdrop) return;
+            termsBackdrop.classList.remove('hidden');
+            termsBackdrop.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeTermsModal() {
+            if (!termsBackdrop) return;
+            termsBackdrop.classList.add('hidden');
+            termsBackdrop.setAttribute('aria-hidden', 'true');
+        }
 
         let activePackageDetail = null;
         let selectedBookingTime = '';
@@ -4338,8 +4607,8 @@
         const PENDING_BILLPLZ_KEY = 'alif-billplz-pending-order';
         const WA_NUMBER = '60149495457';
         /**
-         * Billplz PRODUCTION sahaja — salin Collection ID dari https://www.billplz.com → Collections.
-         * Mesti sama akaun dengan BILLPLZ_SECRET_KEY dalam Cloudflare (tiada sandbox dalam kod).
+         * Billplz PRODUCTION only — copy Collection ID from https://www.billplz.com → Collections.
+         * Must match the same account as BILLPLZ_SECRET_KEY in Cloudflare (no sandbox in code).
          */
         const BILLPLZ_CONFIG = {
             collectionId: 'vyrqagw7',
@@ -4378,15 +4647,14 @@
                         name: 'Private Boat (2 Hours)',
                         price: 'RM 400',
                         items: [
-                            'Private boat tour (2 jam)',
+                            'Private boat tour (2 hours)',
                             'Eagle Watching',
                             'Kilim river route'
                         ]
                     },
                     {
                         name: 'Package A',
-                        // TEST: 50 sen untuk ujian — tukar semula kepada RM 350 selepas ujian
-                        price: 'RM 0.50',
+                        price: 'RM 350',
                         items: [
                             'Eagle Watching',
                             'Fish Farm',
@@ -4502,7 +4770,7 @@
                         name: '4 Hours',
                         price: 'RM 700',
                         items: [
-                            'Luxury tour 4 jam',
+                            'Luxury tour 4 hours',
                             'Driver included',
                             'Custom route'
                         ]
@@ -4511,7 +4779,7 @@
                         name: '8 Hours',
                         price: 'RM 1200',
                         items: [
-                            'Luxury tour 8 jam',
+                            'Luxury tour 8 hours',
                             'Driver included',
                             'Full day itinerary'
                         ]
@@ -4548,7 +4816,7 @@
                         name: '4 Hours',
                         price: 'RM 650',
                         items: [
-                            'Van tour 4 jam',
+                            'Van tour 4 hours',
                             'Driver included',
                             'Custom route'
                         ]
@@ -4557,7 +4825,7 @@
                         name: '8 Hours',
                         price: 'RM 750',
                         items: [
-                            'Van tour 8 jam',
+                            'Van tour 8 hours',
                             'Driver included',
                             'Full day itinerary'
                         ]
@@ -4691,8 +4959,7 @@
                 tag: 'Cruise',
                 title: 'Sunset Cruise',
                 description: 'Evening ocean cruise with golden hour views and relaxing vibes.',
-                // TEST: RM 1.00 untuk uji Billplz — kembalikan RM250 apabila selesai
-                price: 'RM 1.00',
+                price: 'RM 250',
                 stats: '3-4 Hours | Sharing | Evening',
                 preferredDate: 'November to February for calm seas',
                 timeRange: { start: 16, end: 16 },
@@ -4711,7 +4978,7 @@
                     deadlineHours: 28,
                     cancellationText: 'Free cancellation up to 24 hours before departure.',
                     reserveText: 'Reserve now, pay later available for selected dates.',
-                    displayPrice: 'RM 1.00',
+                    displayPrice: 'RM250',
                     unitText: 'per sharing'
                 }
             },
@@ -4759,7 +5026,7 @@
                         name: '4 Hours',
                         price: 'RM 160',
                         items: [
-                            'Sedan private tour 4 jam',
+                            'Sedan private tour 4 hours',
                             'Flexible landmark stops',
                             'Driver included'
                         ]
@@ -4768,7 +5035,7 @@
                         name: '8 Hours',
                         price: 'RM 250',
                         items: [
-                            'Sedan private tour 8 jam',
+                            'Sedan private tour 8 hours',
                             'Full-day itinerary',
                             'Driver included'
                         ]
@@ -4805,7 +5072,7 @@
                         name: '4 Hours',
                         price: 'RM 200',
                         items: [
-                            'MPV private tour 4 jam',
+                            'MPV private tour 4 hours',
                             'Flexible landmark stops',
                             'Driver included'
                         ]
@@ -4814,7 +5081,7 @@
                         name: '8 Hours',
                         price: 'RM 350',
                         items: [
-                            'MPV private tour 8 jam',
+                            'MPV private tour 8 hours',
                             'Full-day itinerary',
                             'Driver included'
                         ]
@@ -4852,7 +5119,7 @@
                         price: 'RM 160',
                         titleOverride: 'Tour Langkawi With Sedan Car',
                         items: [
-                            'Sedan private tour 4 jam',
+                            'Sedan private tour 4 hours',
                             'Flexible landmark stops',
                             'Driver included'
                         ]
@@ -4862,7 +5129,7 @@
                         price: 'RM 250',
                         titleOverride: 'Tour Langkawi With Sedan Car',
                         items: [
-                            'Sedan private tour 8 jam',
+                            'Sedan private tour 8 hours',
                             'Full-day itinerary',
                             'Driver included'
                         ]
@@ -4872,7 +5139,7 @@
                         price: 'RM 200',
                         titleOverride: 'Tour Langkawi With MPV Car',
                         items: [
-                            'MPV private tour 4 jam',
+                            'MPV private tour 4 hours',
                             'Flexible landmark stops',
                             'Driver included'
                         ]
@@ -4882,7 +5149,7 @@
                         price: 'RM 350',
                         titleOverride: 'Tour Langkawi With MPV Car',
                         items: [
-                            'MPV private tour 8 jam',
+                            'MPV private tour 8 hours',
                             'Full-day itinerary',
                             'Driver included'
                         ]
@@ -5248,6 +5515,14 @@
             if (event.key !== 'Escape') {
                 return;
             }
+            if (termsBackdrop && !termsBackdrop.classList.contains('hidden')) {
+                closeTermsModal();
+                return;
+            }
+            if (paymentSuccessBackdrop && !paymentSuccessBackdrop.classList.contains('hidden')) {
+                closePaymentSuccessModal(true);
+                return;
+            }
             if (cartDrawer && cartDrawer.classList.contains('is-open')) {
                 closeCart();
                 return;
@@ -5293,6 +5568,7 @@
                 cartEmptyHint.classList.remove('hidden');
                 cartTotalDisplay.textContent = 'RM 0.00';
                 updateNavBadge();
+                updateCheckoutPayEnabled();
                 return;
             }
 
@@ -5305,10 +5581,10 @@
                 row.className = 'cart-line';
                 row.innerHTML = `
                     <p class="cart-line-title">${line.title}</p>
-                    <p class="cart-line-meta">${line.variant ? `${line.variant}<br>` : ''}${line.date ? `Tarikh: ${line.date}` : ''}${line.time ? ` · Masa: ${line.time}` : ''}</p>
+                    <p class="cart-line-meta">${line.variant ? `${line.variant}<br>` : ''}${line.date ? `Date: ${line.date}` : ''}${line.time ? ` · Time: ${line.time}` : ''}</p>
                     <div class="cart-line-foot">
                         <span class="cart-line-price">${line.priceLabel}</span>
-                        <button type="button" class="cart-line-remove" data-id="${line.id}">Buang</button>
+                        <button type="button" class="cart-line-remove" data-id="${line.id}">Remove</button>
                     </div>
                 `;
                 cartLines.appendChild(row);
@@ -5324,6 +5600,7 @@
 
             cartTotalDisplay.textContent = formatRmFromCents(getCartTotalCents());
             updateNavBadge();
+            updateCheckoutPayEnabled();
         }
 
         function openCart() {
@@ -5366,14 +5643,14 @@
             const dateVal = packageModalPreferredDateInput ? packageModalPreferredDateInput.value : '';
             const timeVal = selectedBookingTime || (packageModalTimeSelect ? packageModalTimeSelect.value : '');
             if (!dateVal || !timeVal) {
-                window.alert('Sila pilih tarikh dan masa tempahan sebelum tambah ke troli.');
+                window.alert('Please select a date and time before adding to cart.');
                 return;
             }
 
             const priceLabel = getSelectionPriceLabel(activePackageDetail);
             const cents = parsePriceToCents(priceLabel);
             if (cents <= 0) {
-                window.alert('Harga tidak sah untuk item ini.');
+                window.alert('Invalid price for this item.');
                 return;
             }
 
@@ -5414,28 +5691,32 @@
             return desc || 'Alif Langkawi booking';
         }
 
-        /** Perlukan Cloudflare Pages + Functions (`functions/api/billplz.js`), bukan GitHub Pages sahaja */
+        /** Requires Cloudflare Pages + Functions (`functions/api/billplz.js`); plain GitHub Pages cannot run the API. */
         async function submitCartToBillplz() {
             if (!cart.length) {
-                window.alert('Troli kosong.');
+                window.alert('Your cart is empty.');
+                return;
+            }
+            if (!checkoutTermsAgree || !checkoutTermsAgree.checked) {
+                window.alert('Please tick to agree to the Terms & Conditions before paying.');
                 return;
             }
             const name = checkoutName ? checkoutName.value.trim() : '';
             const email = checkoutEmail ? checkoutEmail.value.trim() : '';
             const phone = checkoutPhone ? checkoutPhone.value.trim() : '';
             if (!name || !email || !phone) {
-                window.alert('Sila isi nama, email dan no. telefon.');
+                window.alert('Please fill in name, email and phone number.');
                 return;
             }
             const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             if (!emailOk) {
-                window.alert('Sila isi email yang sah (contoh: nama@gmail.com). Billplz perlukan format email betul.');
+                window.alert('Please enter a valid email (e.g. name@gmail.com). Billplz requires a proper email format.');
                 return;
             }
 
             const totalCents = getCartTotalCents();
             if (totalCents < 1) {
-                window.alert('Jumlah bayaran tidak sah.');
+                window.alert('Invalid payment amount.');
                 return;
             }
 
@@ -5494,38 +5775,96 @@
                             errMsg = JSON.stringify(data.error);
                         }
                     }
-                    throw new Error(errMsg || `Ralat ${res.status}`);
+                    throw new Error(errMsg || `Error ${res.status}`);
                 }
 
                 if (data.url) {
                     window.location.href = data.url;
                     return;
                 }
-                throw new Error('Billplz tidak memulangkan pautan bayaran.');
+                throw new Error('Billplz did not return a payment link.');
             } catch (e) {
                 try {
                     sessionStorage.removeItem(PENDING_BILLPLZ_KEY);
                 } catch {
                     // ignore
                 }
-                let msg = e.message || 'Gagal cipta bil. Pastikan domain dihoskan pada Cloudflare Pages dengan Functions.';
+                let msg = e.message || 'Could not create the bill. Make sure the site is on Cloudflare Pages with Functions enabled.';
                 if (String(msg).includes('RecordNotFound')) {
-                    msg += '\n\nPetua:\n• Pastikan BILLPLZ_SECRET_KEY di Cloudflare sama dengan Copy Billplz Secret Key (tiada ruang kosong; akaun sama dengan koleksi vyrqagw7).\n• Untuk URL pratonton (*.pages.dev): tambah secret juga dalam Preview variables, bukan Production sahaja.\n• Collection ID dalam kod mesti koleksi aktif di dashboard billplz.com.';
+                    msg += '\n\nTips:\n• BILLPLZ_SECRET_KEY in Cloudflare must match “Copy Billplz Secret Key” in the Billplz dashboard (no extra spaces; same account as collection vyrqagw7).\n• For preview URLs (*.pages.dev), add the secret under Preview variables too, not only Production.\n• The collection ID in your code must be an active collection on billplz.com.';
                 }
                 window.alert(msg);
             } finally {
-                if (cartPayBtn) cartPayBtn.disabled = false;
+                updateCheckoutPayEnabled();
             }
         }
 
-        function handleBillplzReturn() {
+        function readBillplzReturnParams() {
             const params = new URLSearchParams(window.location.search);
-            if (!params.get('billplz_return')) {
+            const billId = params.get('billplz[id]') || params.get('billplz_id');
+            const paidRaw = params.get('billplz[paid]') ?? params.get('billplz_paid');
+            return { billId, paidRaw, hasReturn: params.has('billplz_return') };
+        }
+
+        function buildWhatsAppAfterPayMessage(billId, pending) {
+            const lines = [
+                'Hi ALIF LANGKAWI EXPERIENCE,',
+                'I have completed payment (Billplz).',
+                billId ? `Bill ID: ${billId}` : '',
+                `Amount: ${formatRmFromCents(pending.totalCents || 0)}`,
+                'Booking details:',
+                ...pending.lines.map((l, i) => `${i + 1}. ${l.title}${l.variant ? ` — ${l.variant}` : ''} | ${l.date} ${l.time} | ${l.priceLabel}`),
+                `Name: ${pending.name || ''}`,
+                `Email: ${pending.email || ''}`,
+                `Phone: ${pending.phone || ''}`,
+                'Please confirm my booking. Thank you.',
+            ];
+            return lines.filter(Boolean).join('\n');
+        }
+
+        function clearUrlQueryAfterPayment() {
+            const clean = window.location.href.split('?')[0].split('#')[0];
+            window.history.replaceState(null, '', clean);
+        }
+
+        function closePaymentSuccessModal(stillOnPage) {
+            if (paymentSuccessBackdrop) {
+                paymentSuccessBackdrop.classList.add('hidden');
+                paymentSuccessBackdrop.setAttribute('aria-hidden', 'true');
+            }
+            document.body.style.overflow = '';
+            paymentSuccessWaUrl = '';
+            if (stillOnPage) {
+                clearUrlQueryAfterPayment();
+            }
+        }
+
+        function finalizePaidOrder() {
+            cart = [];
+            saveCart();
+            sessionStorage.removeItem(PENDING_BILLPLZ_KEY);
+            renderCartPanel();
+        }
+
+        function showPaymentSuccessModal(billId, pending) {
+            const amountLine = `Amount paid: <strong>${formatRmFromCents(pending.totalCents || 0)}</strong>`;
+            const idLine = billId ? `Bill ID: <strong>${billId}</strong>` : '';
+            if (paymentSuccessDetail) {
+                paymentSuccessDetail.innerHTML = [idLine, amountLine].filter(Boolean).join('<br>');
+            }
+            paymentSuccessWaUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(buildWhatsAppAfterPayMessage(billId, pending))}`;
+            if (paymentSuccessBackdrop) {
+                paymentSuccessBackdrop.classList.remove('hidden');
+                paymentSuccessBackdrop.setAttribute('aria-hidden', 'false');
+            }
+            document.body.style.overflow = 'hidden';
+        }
+
+        function handleBillplzReturn() {
+            const { billId, paidRaw, hasReturn } = readBillplzReturnParams();
+            if (!hasReturn) {
                 return;
             }
-
-            const paidRaw = params.get('billplz[paid]') || params.get('billplz_paid');
-            const billId = params.get('billplz[id]') || params.get('billplz_id');
 
             let pending = null;
             try {
@@ -5535,32 +5874,34 @@
                 pending = null;
             }
 
-            const paid = paidRaw === 'true' || paidRaw === '1';
+            const paid = paidRaw === 'true' || paidRaw === '1' || paidRaw === true;
 
             if (paid && pending && Array.isArray(pending.lines)) {
-                const lines = [
-                    'Hi ALIF LANGKAWI EXPERIENCE,',
-                    'Saya telah selesaikan bayaran (Billplz).',
-                    billId ? `ID bil: ${billId}` : '',
-                    `Jumlah: ${formatRmFromCents(pending.totalCents || 0)}`,
-                    'Butiran tempahan:',
-                    ...pending.lines.map((l, i) => `${i + 1}. ${l.title}${l.variant ? ` — ${l.variant}` : ''} | ${l.date} ${l.time} | ${l.priceLabel}`),
-                    `Nama: ${pending.name || ''}`,
-                    `Email: ${pending.email || ''}`,
-                    `No. telefon: ${pending.phone || ''}`,
-                    'Sila sahkan tempahan. Terima kasih.',
-                ].filter(Boolean);
-                window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
-                cart = [];
-                saveCart();
-                sessionStorage.removeItem(PENDING_BILLPLZ_KEY);
-                renderCartPanel();
+                finalizePaidOrder();
+                showPaymentSuccessModal(billId, pending);
+                clearUrlQueryAfterPayment();
             } else if (!paid) {
-                window.alert('Bayaran belum selesai atau dibatalkan. Item masih dalam troli.');
+                window.alert('Payment was not completed or was cancelled. Your cart items are unchanged.');
+                clearUrlQueryAfterPayment();
+            } else if (paid && !pending) {
+                window.alert('Payment successful. Please contact us on WhatsApp with your bill ID if you need help.');
+                clearUrlQueryAfterPayment();
+            } else {
+                clearUrlQueryAfterPayment();
             }
+        }
 
-            const clean = window.location.href.split('?')[0].split('#')[0];
-            window.history.replaceState(null, '', clean);
+        if (paymentSuccessWaBtn) {
+            paymentSuccessWaBtn.addEventListener('click', () => {
+                if (paymentSuccessWaUrl) {
+                    window.location.href = paymentSuccessWaUrl;
+                }
+            });
+        }
+        if (paymentSuccessCloseBtn) {
+            paymentSuccessCloseBtn.addEventListener('click', () => {
+                closePaymentSuccessModal(true);
+            });
         }
 
         if (packageModalAddCart) {
@@ -5577,7 +5918,7 @@
         }
         if (cartClearBtn) {
             cartClearBtn.addEventListener('click', () => {
-                if (cart.length && window.confirm('Kosongkan semua item dalam troli?')) {
+                if (cart.length && window.confirm('Remove all items from your cart?')) {
                     cart = [];
                     saveCart();
                     renderCartPanel();
@@ -5586,6 +5927,23 @@
         }
         if (cartPayBtn) {
             cartPayBtn.addEventListener('click', () => submitCartToBillplz());
+        }
+        if (checkoutTermsAgree) {
+            checkoutTermsAgree.addEventListener('change', updateCheckoutPayEnabled);
+        }
+        if (termsOpenBtn) {
+            termsOpenBtn.addEventListener('click', openTermsModal);
+        }
+        if (termsCloseBtn) {
+            termsCloseBtn.addEventListener('click', closeTermsModal);
+        }
+        if (termsAcceptCloseBtn) {
+            termsAcceptCloseBtn.addEventListener('click', closeTermsModal);
+        }
+        if (termsBackdrop) {
+            termsBackdrop.addEventListener('click', (e) => {
+                if (e.target === termsBackdrop) closeTermsModal();
+            });
         }
 
         renderCartPanel();

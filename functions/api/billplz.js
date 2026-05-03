@@ -1,15 +1,13 @@
 /**
  * Cloudflare Pages Function — POST /api/billplz
  *
- * Hanya Billplz PRODUCTION (www.billplz.com).
+ * Billplz PRODUCTION only (www.billplz.com).
  *
  * Cloudflare Pages → Settings → Variables and Secrets:
- *   BILLPLZ_SECRET_KEY = secret production dari https://www.billplz.com (satu baris)
+ *   BILLPLZ_SECRET_KEY = production secret from https://www.billplz.com (single line)
  *
- * Jangan set BILLPLZ_SANDBOX — sandbox telah dibuang untuk elak silap API.
- *
- * Ujian tempatan: npx wrangler pages dev . --compatibility-date=2026-05-03
- *   + fail .dev.vars: BILLPLZ_SECRET_KEY=...
+ * Local preview: npx wrangler pages dev . --compatibility-date=2026-05-03
+ *   Create .dev.vars with BILLPLZ_SECRET_KEY=...
  */
 
 const BILLPLZ_BILLS_URL = 'https://www.billplz.com/api/v3/bills';
@@ -49,14 +47,14 @@ export async function onRequest(context) {
     for (const key of required) {
         const val = body[key];
         if (val === undefined || val === null || val === '') {
-            return jsonResponse({ error: `Field '${key}' diperlukan.` }, 400);
+            return jsonResponse({ error: `Field '${key}' is required.` }, 400);
         }
     }
 
     const secretRaw = env.BILLPLZ_SECRET_KEY;
     const secret = typeof secretRaw === 'string' ? secretRaw.trim() : '';
     if (!secret) {
-        return jsonResponse({ error: 'Pelayan belum set BILLPLZ_SECRET_KEY dalam Cloudflare.' }, 500);
+        return jsonResponse({ error: 'Server misconfigured: set BILLPLZ_SECRET_KEY in Cloudflare.' }, 500);
     }
 
     const trim = (v) => (typeof v === 'string' ? v.trim() : String(v ?? '').trim());
@@ -89,7 +87,7 @@ export async function onRequest(context) {
         data = JSON.parse(text);
     } catch {
         return jsonResponse(
-            { error: 'Respons Billplz tidak sah', detail: text.slice(0, 300) },
+            { error: 'Invalid response from Billplz', detail: text.slice(0, 300) },
             502
         );
     }
