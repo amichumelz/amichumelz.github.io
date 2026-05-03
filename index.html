@@ -4216,11 +4216,11 @@
                         </div>
                         <div>
                             <label class="billplz-field-label" for="billplzEmail">Email Address</label>
-                            <input id="billplzEmail" type="email" class="billplz-field-input" placeholder="your@email.com" autocomplete="email">
+                            <input id="billplzEmail" type="text" inputmode="email" class="billplz-field-input" placeholder="your@email.com" autocomplete="email">
                         </div>
                         <div>
                             <label class="billplz-field-label" for="billplzPhone">Phone / WhatsApp Number</label>
-                            <input id="billplzPhone" type="tel" class="billplz-field-input" placeholder="e.g. 0149495457" autocomplete="tel">
+                            <input id="billplzPhone" type="text" inputmode="numeric" class="billplz-field-input" placeholder="e.g. 0149495457" autocomplete="tel">
                         </div>
                         <div class="billplz-amount-row">
                             <span class="billplz-amount-label">Amount to pay:</span>
@@ -6091,7 +6091,7 @@
         // ─────────────────────────────────────────────────────────────────────
         const BILLPLZ_CONFIG = {
             collectionId: '2f363f14-4a38-4d6d-a0de-a61a80e9561d',  // ← Replace with your BillPlz Collection ID
-            proxyUrl: 'billplz-proxy.php',             // PHP proxy — sama folder dengan index.html
+            proxyUrl: '/api/billplz',              // Vercel serverless function
         };
 
         const WA_NUMBER = '60149495457';
