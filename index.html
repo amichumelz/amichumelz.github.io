@@ -6186,13 +6186,18 @@
                 const currentUrl = window.location.href.split('?')[0].split('#')[0];
                 const redirectUrl = `${currentUrl}?billplz_return=1&pkg=${encodeURIComponent(packageTitle)}&phone=${encodeURIComponent(phone)}`;
 
+                // Format phone: strip all non-digits, ensure starts with 60
+                let mobileClean = phone.replace(/\D/g, '');
+                if (mobileClean.startsWith('0')) mobileClean = '6' + mobileClean;
+                if (!mobileClean.startsWith('60')) mobileClean = '60' + mobileClean;
+
                 const res = await fetch(BILLPLZ_CONFIG.proxyUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         collection_id: BILLPLZ_CONFIG.collectionId,
                         email:         email,
-                        mobile:        '+6' + phone.replace(/^0/, ''),
+                        mobile:        mobileClean,
                         name:          name,
                         amount:        String(amountInCents),
                         description:   description,
@@ -6203,7 +6208,25 @@
                 const data = await res.json();
 
                 if (!res.ok || data.error) {
-                    throw new Error(data.error?.message || data.error || 'Gagal mencipta bil BillPlz.');
+                    // BillPlz returns errors as object or string
+                    let errMsg = '';
+                    if (data.error) {
+                        if (typeof data.error === 'string') {
+                            errMsg = data.error;
+                        } else if (data.error.message) {
+                            if (typeof data.error.message === 'string') {
+                                errMsg = data.error.message;
+                            } else {
+                                // Object like {mobile: ["invalid"], email: ["invalid"]}
+                                errMsg = Object.entries(data.error.message)
+                                    .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`)
+                                    .join(' | ');
+                            }
+                        } else {
+                            errMsg = JSON.stringify(data.error);
+                        }
+                    }
+                    throw new Error(errMsg || `HTTP ${res.status}`);
                 }
 
                 if (data.url) {
