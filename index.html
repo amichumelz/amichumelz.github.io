@@ -4158,6 +4158,7 @@
                 <div class="rental-mode-toggle" role="tablist" aria-label="Rental mode switch">
                     <button type="button" class="rental-mode-btn active" data-rental-mode-tab="self" aria-selected="true">Self Drive</button>
                     <button type="button" class="rental-mode-btn" data-rental-mode-tab="driver" aria-selected="false">With Driver</button>
+                    <button type="button" class="rental-mode-btn" data-rental-mode-tab="motor" aria-selected="false">Motor Rental</button>
                 </div>
 
                 <div id="rentalSelfDriveSection" class="reveal rental-showroom">
@@ -4264,6 +4265,62 @@
                                 <div class="rental-showroom-spec">
                                     <strong id="driverSpec4">Private</strong>
                                     <span>Trip Type</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rentalMotorSection" class="reveal rental-showroom hidden">
+                    <div class="rental-hero-area">
+                        <div class="rental-model-switch">
+                            <label class="rental-model-switch-label" for="rentalMotorModelSelect">Choose Motor</label>
+                            <select id="rentalMotorModelSelect" aria-label="Choose motor model">
+                                <option value="adv160">Honda ADV160</option>
+                                <option value="egosolariz">Yamaha Ego Solariz</option>
+                            </select>
+                        </div>
+                        <div class="rental-hero-media">
+                            <img id="rentalMotorHeroImage" src="image/adv160.png" alt="Honda ADV160 motor rental">
+                        </div>
+                    </div>
+
+                    <div class="rental-showroom-footer">
+                        <div class="rental-showroom-grid">
+                            <div>
+                                <h3 id="rentalMotorHeroName" class="rental-showroom-name">Honda ADV160</h3>
+                                <p id="rentalMotorHeroNote" class="rental-showroom-note">Adventure scooter — 24-hour rental at RM 90/day</p>
+                                <div class="rental-season-panel">
+                                    <label for="rentalMotorDateInput">Pickup Date</label>
+                                    <input id="rentalMotorDateInput" type="date" aria-label="Select pickup date for motor rental">
+                                    <label for="rentalMotorPickupTimeSelect">Pickup Time</label>
+                                    <select id="rentalMotorPickupTimeSelect" aria-label="Select motor pickup time"></select>
+                                    <label for="rentalMotorReturnDateInput">Return Date</label>
+                                    <input id="rentalMotorReturnDateInput" type="date" aria-label="Select return date for motor rental">
+                                    <label for="rentalMotorReturnTimeSelect">Return Time</label>
+                                    <select id="rentalMotorReturnTimeSelect" aria-label="Select motor return time"></select>
+                                </div>
+                                <p id="rentalMotorTotalHint" class="rental-season-note">Rental period: 1 day. Estimated total: RM 90.</p>
+                                <div class="rental-showroom-actions">
+                                    <button id="rentalMotorBookNowBtn" type="button" class="primary">Book Now</button>
+                                </div>
+                            </div>
+                            <div class="rental-showroom-specs">
+                                <div class="rental-showroom-spec">
+                                    <strong id="rentalMotorSpec1">RM 90</strong>
+                                    <span>Per Day</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong id="rentalMotorSpec2">Auto</strong>
+                                    <span>Transmission</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong>2 Pax</strong>
+                                    <span>Capacity</span>
+                                </div>
+                                <div class="rental-showroom-spec">
+                                    <strong>Helmet</strong>
+                                    <span>Included</span>
                                 </div>
                             </div>
                         </div>
@@ -6820,14 +6877,216 @@
             });
         });
 
+        const motorModels = {
+            adv160: {
+                name: 'Honda ADV160',
+                note: 'Adventure scooter — 24-hour rental at RM 90/day',
+                image: 'image/adv160.png',
+                perDay: 90,
+                transmission: 'Auto'
+            },
+            egosolariz: {
+                name: 'Yamaha Ego Solariz',
+                note: 'Lightweight 125cc scooter — 24-hour rental at RM 45/day',
+                image: 'image/ego-solariz.png',
+                perDay: 45,
+                transmission: 'Auto'
+            }
+        };
+
+        const rentalMotorSection = document.getElementById('rentalMotorSection');
+        const rentalMotorModelSelect = document.getElementById('rentalMotorModelSelect');
+        const rentalMotorHeroImage = document.getElementById('rentalMotorHeroImage');
+        const rentalMotorHeroName = document.getElementById('rentalMotorHeroName');
+        const rentalMotorHeroNote = document.getElementById('rentalMotorHeroNote');
+        const rentalMotorSpec1 = document.getElementById('rentalMotorSpec1');
+        const rentalMotorSpec2 = document.getElementById('rentalMotorSpec2');
+        const rentalMotorDateInput = document.getElementById('rentalMotorDateInput');
+        const rentalMotorReturnDateInput = document.getElementById('rentalMotorReturnDateInput');
+        const rentalMotorPickupTimeSelect = document.getElementById('rentalMotorPickupTimeSelect');
+        const rentalMotorReturnTimeSelect = document.getElementById('rentalMotorReturnTimeSelect');
+        const rentalMotorTotalHint = document.getElementById('rentalMotorTotalHint');
+        const rentalMotorBookNowBtn = document.getElementById('rentalMotorBookNowBtn');
+
+        let activeMotorModelKey = 'adv160';
+
+        function populateMotorTimeOptions() {
+            const timeOptions = Array.from({ length: 24 }, (_, hourValue) => ({
+                value: `${String(hourValue).padStart(2, '0')}:00`,
+                label: formatHourLabel(hourValue)
+            }));
+
+            const fillTimeOptions = (selectElement, defaultValue) => {
+                if (!selectElement) {
+                    return;
+                }
+                selectElement.innerHTML = '';
+                timeOptions.forEach((timeOption) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = timeOption.value;
+                    optionElement.textContent = timeOption.label;
+                    selectElement.appendChild(optionElement);
+                });
+                selectElement.value = defaultValue;
+            };
+
+            fillTimeOptions(rentalMotorPickupTimeSelect, '09:00');
+            fillTimeOptions(rentalMotorReturnTimeSelect, '09:00');
+        }
+
+        function getMotorBookingSummary(model) {
+            const pickupDate = rentalMotorDateInput && rentalMotorDateInput.value ? rentalMotorDateInput.value : '';
+            const returnDate = rentalMotorReturnDateInput && rentalMotorReturnDateInput.value ? rentalMotorReturnDateInput.value : '';
+            const pickupTimeValue = getSelectedTimeValue(rentalMotorPickupTimeSelect) || '09:00';
+            const returnTimeValue = getSelectedTimeValue(rentalMotorReturnTimeSelect) || '09:00';
+
+            const duration = calculateSelfDriveDurationAndPrice({
+                pickupDate,
+                pickupTimeValue,
+                returnDate,
+                returnTimeValue,
+                dailyRateValue: model.perDay,
+                extraHourRateValue: 5
+            });
+
+            return {
+                pickupDate: pickupDate || 'Not selected',
+                pickupTime: getSelectedTimeLabel(rentalMotorPickupTimeSelect),
+                returnDate: returnDate || 'Not selected',
+                returnTime: getSelectedTimeLabel(rentalMotorReturnTimeSelect),
+                rentalDays: duration.rentalDays,
+                extraHours: duration.extraHours,
+                extraHourCharge: duration.extraHourCharge,
+                totalPriceValue: duration.totalPriceValue,
+                dailyRateLabel: `RM ${model.perDay}`
+            };
+        }
+
+        function updateMotorTotalSummary() {
+            if (!rentalMotorTotalHint) {
+                return;
+            }
+            const model = motorModels[activeMotorModelKey];
+            if (!model) {
+                return;
+            }
+            const summary = getMotorBookingSummary(model);
+            const extraHourLine = summary.extraHours > 0
+                ? ` + ${summary.extraHours} extra hour${summary.extraHours > 1 ? 's' : ''}`
+                : '';
+            rentalMotorTotalHint.textContent = `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${extraHourLine}. Estimated total: RM ${summary.totalPriceValue.toLocaleString('en-MY')}.`;
+        }
+
+        function setMotorModel(modelKey) {
+            const model = motorModels[modelKey];
+            if (!model || !rentalMotorHeroImage) {
+                return;
+            }
+
+            activeMotorModelKey = modelKey;
+
+            rentalMotorHeroName.textContent = model.name;
+            rentalMotorHeroNote.textContent = model.note;
+            rentalMotorHeroImage.src = model.image;
+            rentalMotorHeroImage.alt = model.name;
+            rentalMotorSpec1.textContent = `RM ${model.perDay}`;
+            rentalMotorSpec2.textContent = model.transmission;
+
+            if (rentalMotorModelSelect) {
+                rentalMotorModelSelect.value = modelKey;
+            }
+
+            updateMotorTotalSummary();
+        }
+
+        function openMotorWhatsAppBooking() {
+            const model = motorModels[activeMotorModelKey];
+            if (!model) {
+                return;
+            }
+            const summary = getMotorBookingSummary(model);
+
+            const message = [
+                'Hi ALIF LANGKAWI EXPERIENCE,',
+                'I want to book a Motor Rental:',
+                model.name,
+                `Pickup date: ${summary.pickupDate}`,
+                `Pickup time: ${summary.pickupTime}`,
+                `Return date: ${summary.returnDate}`,
+                `Return time: ${summary.returnTime}`,
+                `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${summary.extraHours > 0 ? ` + ${summary.extraHours} hour${summary.extraHours > 1 ? 's' : ''}` : ''}`,
+                `Rate (per day): ${summary.dailyRateLabel}`,
+                `Total price: RM ${summary.totalPriceValue.toLocaleString('en-MY')}`,
+                `Transmission: ${model.transmission}`,
+                'Please confirm availability. Thank you.'
+            ].join('\n');
+
+            window.open(`https://wa.me/60149495457?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        populateMotorTimeOptions();
+
+        if (rentalMotorModelSelect) {
+            rentalMotorModelSelect.addEventListener('change', (event) => {
+                setMotorModel(event.target.value);
+            });
+        }
+
+        if (rentalMotorDateInput) {
+            const today = new Date();
+            const todayValue = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            rentalMotorDateInput.value = todayValue;
+            rentalMotorDateInput.min = todayValue;
+            if (rentalMotorReturnDateInput) {
+                rentalMotorReturnDateInput.min = todayValue;
+                rentalMotorReturnDateInput.value = todayValue;
+            }
+            rentalMotorDateInput.addEventListener('change', () => {
+                if (rentalMotorReturnDateInput) {
+                    rentalMotorReturnDateInput.min = rentalMotorDateInput.value || todayValue;
+                    if (!rentalMotorReturnDateInput.value || rentalMotorReturnDateInput.value < rentalMotorReturnDateInput.min) {
+                        rentalMotorReturnDateInput.value = rentalMotorReturnDateInput.min;
+                    }
+                }
+                updateMotorTotalSummary();
+            });
+        }
+
+        if (rentalMotorReturnDateInput) {
+            rentalMotorReturnDateInput.addEventListener('change', () => {
+                if (rentalMotorDateInput && rentalMotorReturnDateInput.value < rentalMotorDateInput.value) {
+                    rentalMotorReturnDateInput.value = rentalMotorDateInput.value;
+                }
+                updateMotorTotalSummary();
+            });
+        }
+
+        if (rentalMotorPickupTimeSelect) {
+            rentalMotorPickupTimeSelect.addEventListener('change', updateMotorTotalSummary);
+        }
+
+        if (rentalMotorReturnTimeSelect) {
+            rentalMotorReturnTimeSelect.addEventListener('change', updateMotorTotalSummary);
+        }
+
+        if (rentalMotorBookNowBtn) {
+            rentalMotorBookNowBtn.addEventListener('click', openMotorWhatsAppBooking);
+        }
+
         function setRentalMode(mode) {
             if (!rentalSelfDriveSection || !rentalWithDriverSection) {
                 return;
             }
 
             const isDriverMode = mode === 'driver';
-            rentalSelfDriveSection.classList.toggle('hidden', isDriverMode);
+            const isMotorMode = mode === 'motor';
+            const isSelfMode = !isDriverMode && !isMotorMode;
+
+            rentalSelfDriveSection.classList.toggle('hidden', !isSelfMode);
             rentalWithDriverSection.classList.toggle('hidden', !isDriverMode);
+            if (rentalMotorSection) {
+                rentalMotorSection.classList.toggle('hidden', !isMotorMode);
+            }
 
             rentalModeTabs.forEach((button) => {
                 const isActive = button.dataset.rentalModeTab === mode;
@@ -6845,6 +7104,7 @@
         setRentalModel('axia');
         setRentalMode('self');
         setDriverModel('vios');
+        setMotorModel('adv160');
 
         const clubFilterButtons = document.querySelectorAll('[data-club-filter]');
 
