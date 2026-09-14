@@ -45,6 +45,7 @@ function buildHtmlEmail(data) {
                 <strong>${idx + 1}. ${item.title || 'Tour Item'}</strong>
                 ${item.variant ? `<br><span style="color: #64748b; font-size: 12px;">${item.variant}</span>` : ''}
                 ${item.date || item.time ? `<br><span style="color: #0a8f72; font-size: 12px;">📅 ${item.date || ''} ${item.time ? '· ⏰ ' + item.time : ''}</span>` : ''}
+                ${item.pickupLocation ? `<br><span style="color: #0284c7; font-size: 12px; font-weight: 600;">📍 Pickup: ${item.pickupLocation} · Return: ${item.returnLocation || item.pickupLocation}</span>` : ''}
                 ${item.isDeposit ? `<br><span style="color: #ea580c; font-size: 11px; font-weight: bold;">⚡ Deposit only</span>` : ''}
             </td>
             <td style="padding: 12px 8px; font-size: 14px; font-weight: bold; color: #0f172a; text-align: right; white-space: nowrap;">

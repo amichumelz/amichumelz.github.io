@@ -1188,6 +1188,7 @@
             font-size: 0.78rem;
             font-weight: 700;
             padding: 0.46rem 0.65rem;
+            cursor: pointer;
         }
 
         .rental-season-badge {
@@ -4720,10 +4721,20 @@
                                     <input id="rentalDateInput" type="date" aria-label="Select pickup date for seasonal price">
                                     <label for="rentalPickupTimeSelect">Pickup Time</label>
                                     <select id="rentalPickupTimeSelect" aria-label="Select pickup time"></select>
+                                    <label for="rentalPickupLocSelect">Pickup Location</label>
+                                    <select id="rentalPickupLocSelect" aria-label="Select pickup location">
+                                        <option value="Airport">Airport</option>
+                                        <option value="Jetty">Jetty</option>
+                                    </select>
                                     <label for="rentalReturnDateInput">Return Date</label>
                                     <input id="rentalReturnDateInput" type="date" aria-label="Select return date for rental period">
                                     <label for="rentalReturnTimeSelect">Return Time</label>
                                     <select id="rentalReturnTimeSelect" aria-label="Select return time"></select>
+                                    <label for="rentalReturnLocSelect">Return Location</label>
+                                    <select id="rentalReturnLocSelect" aria-label="Select return location">
+                                        <option value="Airport">Airport</option>
+                                        <option value="Jetty">Jetty</option>
+                                    </select>
                                     <span id="rentalSeasonBadge" class="rental-season-badge low">Low Season</span>
                                 </div>
                                 <p id="rentalSeasonHint" class="rental-season-note">Low Season from RM 80/day. Peak Season from RM 100/day.</p>
@@ -4828,10 +4839,20 @@
                                     <input id="rentalMotorDateInput" type="date" aria-label="Select pickup date for motor rental">
                                     <label for="rentalMotorPickupTimeSelect">Pickup Time</label>
                                     <select id="rentalMotorPickupTimeSelect" aria-label="Select motor pickup time"></select>
+                                    <label for="rentalMotorPickupLocSelect">Pickup Location</label>
+                                    <select id="rentalMotorPickupLocSelect" aria-label="Select motor pickup location">
+                                        <option value="Airport">Airport</option>
+                                        <option value="Jetty">Jetty</option>
+                                    </select>
                                     <label for="rentalMotorReturnDateInput">Return Date</label>
                                     <input id="rentalMotorReturnDateInput" type="date" aria-label="Select return date for motor rental">
                                     <label for="rentalMotorReturnTimeSelect">Return Time</label>
                                     <select id="rentalMotorReturnTimeSelect" aria-label="Select motor return time"></select>
+                                    <label for="rentalMotorReturnLocSelect">Return Location</label>
+                                    <select id="rentalMotorReturnLocSelect" aria-label="Select motor return location">
+                                        <option value="Airport">Airport</option>
+                                        <option value="Jetty">Jetty</option>
+                                    </select>
                                 </div>
                                 <p id="rentalMotorTotalHint" class="rental-season-note">Rental period: 1 day. Estimated total: RM 90.</p>
                                 <div class="rental-showroom-actions">
@@ -6267,7 +6288,7 @@
                 row.className = 'cart-line';
                 row.innerHTML = `
                     <p class="cart-line-title">${line.title}</p>
-                    <p class="cart-line-meta">${line.variant ? `${line.variant}<br>` : ''}${line.date ? `Date: ${line.date}` : ''}${line.time ? ` · Time: ${line.time}` : ''}${line.isDeposit ? `<br><em style="color:#0a8f72;font-size:0.76rem;font-weight:700;">⚡ Deposit only — ${line.depositNote || 'Balance paid on arrival.'}</em>` : ''}</p>
+                    <p class="cart-line-meta">${line.variant ? `${line.variant}<br>` : ''}${line.date ? `Date: ${line.date}` : ''}${line.time ? ` · Time: ${line.time}` : ''}${line.pickupLocation ? `<br>📍 Pickup: ${line.pickupLocation} · Return: ${line.returnLocation || line.pickupLocation}` : ''}${line.isDeposit ? `<br><em style="color:#0a8f72;font-size:0.76rem;font-weight:700;">⚡ Deposit only — ${line.depositNote || 'Balance paid on arrival.'}</em>` : ''}</p>
                     <div class="cart-line-foot">
                         <span class="cart-line-price">${line.priceLabel}</span>
                         <button type="button" class="cart-line-remove" data-id="${line.id}">Remove</button>
@@ -6374,6 +6395,7 @@
                 const bits = [`${i + 1}. ${line.title}`];
                 if (line.variant) bits.push(`(${line.variant})`);
                 bits.push(`${line.date} ${line.time}`);
+                if (line.pickupLocation) bits.push(`[Pickup: ${line.pickupLocation}, Return: ${line.returnLocation || line.pickupLocation}]`);
                 return bits.join(' ');
             });
             let desc = parts.join(' | ');
@@ -6608,7 +6630,7 @@
                 `Amount: ${formatRmFromCents(pending.totalCents || 0)}`,
                 pending.hotelPickup ? `🏨 Hotel Pickup: ${pending.hotelPickup}` : '',
                 'Booking details:',
-                ...(pending.lines || []).map((l, i) => `${i + 1}. ${l.title}${l.variant ? ` — ${l.variant}` : ''} | ${l.date} ${l.time} | ${l.priceLabel}`),
+                ...(pending.lines || []).map((l, i) => `${i + 1}. ${l.title}${l.variant ? ` — ${l.variant}` : ''} | ${l.date} ${l.time}${l.pickupLocation ? ` | Pickup: ${l.pickupLocation} · Return: ${l.returnLocation || l.pickupLocation}` : ''} | ${l.priceLabel}`),
                 `Name: ${pending.name || ''}`,
                 `Email: ${pending.email || ''}`,
                 `Phone: ${pending.phone || ''}`,
@@ -7211,6 +7233,8 @@
         const rentalReturnDateInput = document.getElementById('rentalReturnDateInput');
         const rentalPickupTimeSelect = document.getElementById('rentalPickupTimeSelect');
         const rentalReturnTimeSelect = document.getElementById('rentalReturnTimeSelect');
+        const rentalPickupLocSelect = document.getElementById('rentalPickupLocSelect');
+        const rentalReturnLocSelect = document.getElementById('rentalReturnLocSelect');
         const atvDateInput = document.getElementById('atvDateInput');
         const atvTimeSelect = document.getElementById('atvTimeSelect');
         const atvPaxInput = document.getElementById('atvPaxInput');
@@ -7427,12 +7451,17 @@
         }
 
         function getSelfDriveBookingSummary(model) {
+            const pickupLocation = rentalPickupLocSelect ? rentalPickupLocSelect.value : 'Airport';
+            const returnLocation = rentalReturnLocSelect ? rentalReturnLocSelect.value : 'Airport';
+
             if (!model) {
                 return {
                     pickupDate: rentalDateInput && rentalDateInput.value ? rentalDateInput.value : 'Not selected',
                     pickupTime: getSelectedTimeLabel(rentalPickupTimeSelect),
+                    pickupLocation,
                     returnDate: rentalReturnDateInput && rentalReturnDateInput.value ? rentalReturnDateInput.value : 'Not selected',
                     returnTime: getSelectedTimeLabel(rentalReturnTimeSelect),
+                    returnLocation,
                     seasonLabel: 'Low Season',
                     dailyRateLabel: 'RM 0',
                     dailyRateValue: 0,
@@ -7467,8 +7496,10 @@
             return {
                 pickupDate: pickupDate || 'Not selected',
                 pickupTime,
+                pickupLocation,
                 returnDate: returnDate || 'Not selected',
                 returnTime,
+                returnLocation,
                 seasonLabel: isPeakSeason ? 'Peak Season' : 'Low Season',
                 dailyRateLabel,
                 dailyRateValue,
@@ -7512,8 +7543,10 @@
                 model.name,
                 `Pickup date: ${summary.pickupDate}`,
                 `Pickup time: ${summary.pickupTime}`,
+                `Pickup location: ${summary.pickupLocation}`,
                 `Return date: ${summary.returnDate}`,
                 `Return time: ${summary.returnTime}`,
+                `Return location: ${summary.returnLocation}`,
                 `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${summary.extraHours > 0 ? ` + ${summary.extraHours} hour${summary.extraHours > 1 ? 's' : ''}` : ''}`,
                 `Rate (24 Hour / Unit): ${summary.dailyRateLabel} (${summary.seasonLabel})`,
                 `Additional hour charge: RM ${summary.extraHourCharge.toLocaleString('en-MY')}`,
@@ -7547,6 +7580,8 @@
                 cents: depositCents,
                 date: formattedDate,
                 time: summary.pickupTime,
+                pickupLocation: summary.pickupLocation,
+                returnLocation: summary.returnLocation,
                 isDeposit: true,
                 depositNote: 'Balance paid on arrival.'
             };
@@ -7617,6 +7652,8 @@
                 cents: depositCents,
                 date: formattedDate,
                 time: summary.pickupTime,
+                pickupLocation: summary.pickupLocation,
+                returnLocation: summary.returnLocation,
                 isDeposit: true,
                 depositNote: 'Balance paid on arrival.'
             };
@@ -7954,6 +7991,8 @@
         const rentalMotorReturnDateInput = document.getElementById('rentalMotorReturnDateInput');
         const rentalMotorPickupTimeSelect = document.getElementById('rentalMotorPickupTimeSelect');
         const rentalMotorReturnTimeSelect = document.getElementById('rentalMotorReturnTimeSelect');
+        const rentalMotorPickupLocSelect = document.getElementById('rentalMotorPickupLocSelect');
+        const rentalMotorReturnLocSelect = document.getElementById('rentalMotorReturnLocSelect');
         const rentalMotorTotalHint = document.getElementById('rentalMotorTotalHint');
         const rentalMotorBookNowBtn = document.getElementById('rentalMotorBookNowBtn');
 
@@ -7988,6 +8027,8 @@
             const returnDate = rentalMotorReturnDateInput && rentalMotorReturnDateInput.value ? rentalMotorReturnDateInput.value : '';
             const pickupTimeValue = getSelectedTimeValue(rentalMotorPickupTimeSelect) || '09:00';
             const returnTimeValue = getSelectedTimeValue(rentalMotorReturnTimeSelect) || '09:00';
+            const pickupLocation = rentalMotorPickupLocSelect ? rentalMotorPickupLocSelect.value : 'Airport';
+            const returnLocation = rentalMotorReturnLocSelect ? rentalMotorReturnLocSelect.value : 'Airport';
 
             const duration = calculateSelfDriveDurationAndPrice({
                 pickupDate,
@@ -8001,8 +8042,10 @@
             return {
                 pickupDate: pickupDate || 'Not selected',
                 pickupTime: getSelectedTimeLabel(rentalMotorPickupTimeSelect),
+                pickupLocation,
                 returnDate: returnDate || 'Not selected',
                 returnTime: getSelectedTimeLabel(rentalMotorReturnTimeSelect),
+                returnLocation,
                 rentalDays: duration.rentalDays,
                 extraHours: duration.extraHours,
                 extraHourCharge: duration.extraHourCharge,
@@ -8061,8 +8104,10 @@
                 model.name,
                 `Pickup date: ${summary.pickupDate}`,
                 `Pickup time: ${summary.pickupTime}`,
+                `Pickup location: ${summary.pickupLocation}`,
                 `Return date: ${summary.returnDate}`,
                 `Return time: ${summary.returnTime}`,
+                `Return location: ${summary.returnLocation}`,
                 `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${summary.extraHours > 0 ? ` + ${summary.extraHours} hour${summary.extraHours > 1 ? 's' : ''}` : ''}`,
                 `Rate (per day): ${summary.dailyRateLabel}`,
                 `Total price: RM ${summary.totalPriceValue.toLocaleString('en-MY')}`,
