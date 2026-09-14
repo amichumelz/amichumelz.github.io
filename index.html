@@ -3124,6 +3124,230 @@
             50% { transform: scale(1.25); opacity: 0.85; }
         }
 
+        /* ─── Alif Assistant Bot Widget (Apollo-style) ──────────────── */
+        .alif-bot-widget {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 1.25rem;
+            width: 380px;
+            height: 580px;
+            max-height: calc(100vh - 2.5rem);
+            background: #ffffff;
+            border-radius: 22px;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+        }
+
+        .alif-bot-widget.is-open {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .alif-bot-header {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: #ffffff;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+
+        .alif-bot-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alif-bot-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .alif-bot-title {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+
+        .alif-bot-status {
+            font-size: 11px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .alif-bot-status-dot {
+            width: 7px;
+            height: 7px;
+            background: #4ade80;
+            border-radius: 999px;
+            box-shadow: 0 0 6px #4ade80;
+        }
+
+        .alif-bot-close-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 2px 6px;
+            opacity: 0.85;
+            transition: opacity 0.15s;
+        }
+
+        .alif-bot-close-btn:hover {
+            opacity: 1;
+        }
+
+        .alif-bot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #fafafa;
+        }
+
+        .alif-bot-msg-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .alif-bot-msg-sender {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            padding-left: 4px;
+        }
+
+        .alif-bot-bubble-bot {
+            background: #f1f5f9;
+            color: #1e293b;
+            border-radius: 18px 18px 18px 4px;
+            padding: 12px 16px;
+            font-size: 13.5px;
+            line-height: 1.55;
+            max-width: 90%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .alif-bot-bubble-user {
+            align-self: flex-end;
+            background: #059669;
+            color: #ffffff;
+            border-radius: 18px 18px 4px 18px;
+            padding: 10px 15px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            max-width: 85%;
+            box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2);
+        }
+
+        .alif-bot-chips-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 7px;
+            margin-top: 4px;
+        }
+
+        .alif-bot-chip {
+            display: inline-block;
+            background: #ffffff;
+            border: 1.5px solid #059669;
+            color: #047857;
+            border-radius: 999px;
+            padding: 7px 15px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: right;
+            transition: all 0.18s ease;
+            box-shadow: 0 1px 3px rgba(5, 150, 105, 0.08);
+        }
+
+        .alif-bot-chip:hover {
+            background: #059669;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(5, 150, 105, 0.2);
+        }
+
+        .alif-bot-input-bar {
+            padding: 12px 14px;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alif-bot-input {
+            flex: 1;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 999px;
+            padding: 9px 16px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .alif-bot-input:focus {
+            border-color: #059669;
+        }
+
+        .alif-bot-send-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            background: #059669;
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.15s;
+        }
+
+        .alif-bot-send-btn:hover {
+            background: #047857;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            .alif-bot-widget {
+                right: 0;
+                bottom: 0;
+                width: 100vw;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+        }
+
         .brand-title {
             font-family: 'Sora', 'Manrope', sans-serif;
             font-size: 1.2rem;
@@ -7950,6 +8174,48 @@
         });
     </script>
 
+    <!-- Alif Assistant Bot Widget (Apollo-style with Quick Replies) -->
+    <div id="alifBotWidget" class="alif-bot-widget" role="dialog" aria-modal="true" aria-labelledby="alifBotTitle">
+        <div class="alif-bot-header">
+            <div class="alif-bot-header-left">
+                <button type="button" onclick="closeAlifBot()" class="alif-bot-close-btn" aria-label="Back" style="font-size:18px;margin-right:2px;">&lsaquo;</button>
+                <div class="alif-bot-avatar">🤖</div>
+                <div>
+                    <h3 id="alifBotTitle" class="alif-bot-title">Alif Assistant</h3>
+                    <div class="alif-bot-status"><span class="alif-bot-status-dot"></span> Online &bull; Replies instantly</div>
+                </div>
+            </div>
+            <button type="button" onclick="closeAlifBot()" class="alif-bot-close-btn" aria-label="Close Chat">&times;</button>
+        </div>
+
+        <div id="alifBotMessages" class="alif-bot-messages">
+            <!-- Initial Greeting -->
+            <div class="alif-bot-msg-group">
+                <div class="alif-bot-msg-sender">Alif Assistant</div>
+                <div class="alif-bot-bubble-bot">
+                    👋 Hai! Saya <strong>Alif Assistant</strong>. Selamat datang ke <strong>Alif Langkawi Experience</strong>.<br><br>
+                    Pilih mana-mana topik di bawah untuk maklumat pantas:
+                </div>
+            </div>
+
+            <!-- Quick Reply Chips (like Apollo) -->
+            <div id="alifBotInitialChips" class="alif-bot-chips-container">
+                <button type="button" onclick="handleBotChipClick('packages')" class="alif-bot-chip">🏝️ Senarai Pakej &amp; Harga</button>
+                <button type="button" onclick="handleBotChipClick('car_rental')" class="alif-bot-chip">🚗 Sewa Kereta &amp; Motor</button>
+                <button type="button" onclick="handleBotChipClick('hotel_pickup')" class="alif-bot-chip">🏨 Hotel Pickup (Percuma)</button>
+                <button type="button" onclick="handleBotChipClick('atv')" class="alif-bot-chip">🏎️ ATV Adventure Ride</button>
+                <button type="button" onclick="handleBotChipClick('live_admin')" class="alif-bot-chip" style="border-color:#0284c7;color:#0284c7;font-weight:700;">💬 Chat Terus dengan Admin</button>
+            </div>
+        </div>
+
+        <form class="alif-bot-input-bar" onsubmit="handleBotUserSubmit(event)">
+            <input id="alifBotUserInput" type="text" placeholder="Type and press [enter].." class="alif-bot-input" autocomplete="off">
+            <button type="submit" class="alif-bot-send-btn" aria-label="Send">
+                <i class="bi bi-send-fill" style="font-size:13px;"></i>
+            </button>
+        </form>
+    </div>
+
     <!-- Quick Inquiry Modal (Direct On-Site Chat & Support) -->
     <div id="quickInquiryModal" class="package-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="inquiryModalTitle">
         <div class="package-modal" style="max-width: 480px;">
@@ -7991,6 +8257,13 @@
         var TAWK_WIDGET_ID = '1k2et4rn9';
 
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        Tawk_API.onLoad = function() {
+            try {
+                // Sembunyikan bubble lalai Tawk supaya butang cantik Alif Assistant kita yang mengawalnya
+                Tawk_API.hideWidget();
+            } catch(e) {}
+        };
+
         (function(){
             if (!TAWK_PROPERTY_ID || TAWK_PROPERTY_ID === 'YOUR_PROPERTY_ID') {
                 return;
@@ -8003,15 +8276,198 @@
             s0.parentNode.insertBefore(s1, s0);
         })();
 
-        function openLiveChat() {
-            if (window.Tawk_API && typeof window.Tawk_API.maximize === 'function') {
-                try {
-                    window.Tawk_API.showWidget();
-                    window.Tawk_API.maximize();
-                    return;
-                } catch (e) {}
+        // ─── Alif Assistant Interactive Bot Logic ────────────────────────
+        const alifBotWidget = document.getElementById('alifBotWidget');
+        const alifBotMessages = document.getElementById('alifBotMessages');
+        const alifBotUserInput = document.getElementById('alifBotUserInput');
+
+        function openAlifBot() {
+            if (alifBotWidget) {
+                alifBotWidget.classList.add('is-open');
             }
-            openQuickInquiryModal();
+        }
+
+        function closeAlifBot() {
+            if (alifBotWidget) {
+                alifBotWidget.classList.remove('is-open');
+            }
+        }
+
+        function toggleAlifBot() {
+            if (alifBotWidget) {
+                if (alifBotWidget.classList.contains('is-open')) {
+                    closeAlifBot();
+                } else {
+                    openAlifBot();
+                }
+            }
+        }
+
+        function openLiveChat() {
+            openAlifBot();
+        }
+
+        function scrollBotToBottom() {
+            if (alifBotMessages) {
+                alifBotMessages.scrollTop = alifBotMessages.scrollHeight;
+            }
+        }
+
+        function appendUserBubble(text) {
+            const bubble = document.createElement('div');
+            bubble.className = 'alif-bot-bubble-user';
+            bubble.textContent = text;
+            alifBotMessages.appendChild(bubble);
+            scrollBotToBottom();
+        }
+
+        function appendBotBubble(htmlContent, followUpChips = []) {
+            const group = document.createElement('div');
+            group.className = 'alif-bot-msg-group';
+
+            const sender = document.createElement('div');
+            sender.className = 'alif-bot-msg-sender';
+            sender.textContent = 'Alif Assistant';
+            group.appendChild(sender);
+
+            const bubble = document.createElement('div');
+            bubble.className = 'alif-bot-bubble-bot';
+            bubble.innerHTML = htmlContent;
+            group.appendChild(bubble);
+            alifBotMessages.appendChild(group);
+
+            if (followUpChips.length > 0) {
+                const chipsContainer = document.createElement('div');
+                chipsContainer.className = 'alif-bot-chips-container';
+                followUpChips.forEach(chip => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'alif-bot-chip';
+                    btn.innerHTML = chip.text;
+                    if (chip.isPrimary) {
+                        btn.style.borderColor = '#0284c7';
+                        btn.style.color = '#0284c7';
+                        btn.style.fontWeight = '700';
+                    }
+                    btn.onclick = () => handleBotChipClick(chip.action);
+                    chipsContainer.appendChild(btn);
+                });
+                alifBotMessages.appendChild(chipsContainer);
+            }
+
+            scrollBotToBottom();
+        }
+
+        function handleBotChipClick(action) {
+            if (action === 'packages') {
+                appendUserBubble('🏝️ Senarai Pakej & Harga');
+                setTimeout(() => {
+                    appendBotBubble(
+                        `Kami menyediakan pelbagai pakej percutian menarik di Langkawi:<br><br>
+                        &bull; <strong>Island Hopping</strong>: Sharing dari RM45/pax | Private bot dari RM450<br>
+                        &bull; <strong>Mangrove Safari Tour</strong>: Sharing dari RM120/pax | Private bot RM350 - RM650<br>
+                        &bull; <strong>Sunset Cruise</strong>: Serendah RM160/pax (termasuk BBQ dinner &amp; jacuzzi)<br><br>
+                        Semua tempahan boleh dibayar terus secara online di laman web!`,
+                        [
+                            { text: '👉 Lihat Semua Pakej', action: 'goto_packages' },
+                            { text: '💬 Chat Terus dengan Admin', action: 'live_admin', isPrimary: true }
+                        ]
+                    );
+                }, 300);
+            } else if (action === 'car_rental') {
+                appendUserBubble('🚗 Sewa Kereta & Motor');
+                setTimeout(() => {
+                    appendBotBubble(
+                        `Pilihan kenderaan sewa kami:<br><br>
+                        &bull; <strong>Perodua Axia</strong>: Serendah RM80 - RM110 / hari<br>
+                        &bull; <strong>Toyota Vios</strong>: Serendah RM130 - RM160 / hari<br>
+                        &bull; <strong>Toyota Vellfire / Staria</strong>: Dari RM400 - RM600 / hari<br>
+                        &bull; <strong>Sewa Motor (ADV160, NMAX)</strong>: Dari RM50 - RM90 / hari<br><br>
+                        ⚡ <em>Hanya bayar deposit RM100 secara online di website, baki bayar semasa ambil kunci di Langkawi!</em>`,
+                        [
+                            { text: '👉 Pilih Kereta Sewa', action: 'goto_rental' },
+                            { text: '💬 Chat Terus dengan Admin', action: 'live_admin', isPrimary: true }
+                        ]
+                    );
+                }, 300);
+            } else if (action === 'hotel_pickup') {
+                appendUserBubble('🏨 Hotel Pickup (Percuma)');
+                setTimeout(() => {
+                    appendBotBubble(
+                        `<strong>Ya, kami sediakan Hotel Pickup PERCUMA!</strong> 🎉<br><br>
+                        Untuk pakej lawatan dan aktiviti terpilih sekitar kawasan Kuah dan Pantai Cenang, van kami akan ambil anda terus dari lobi hotel.<br><br>
+                        Semasa membuat tempahan di website, tandakan kotak <em>"Add hotel pickup"</em> dan masukkan nama hotel anda.`,
+                        [
+                            { text: '👉 Tempah Pakej Sekarang', action: 'goto_packages' },
+                            { text: '💬 Chat Terus dengan Admin', action: 'live_admin', isPrimary: true }
+                        ]
+                    );
+                }, 300);
+            } else if (action === 'atv') {
+                appendUserBubble('🏎️ ATV Adventure Ride');
+                setTimeout(() => {
+                    appendBotBubble(
+                        `<strong>ATV Adventure Ride Langkawi</strong>:<br><br>
+                        &bull; <strong>Harga</strong>: RM250 untuk 1 ATV (boleh naik 2 orang / berdua)<br>
+                        &bull; <strong>Tempoh</strong>: 50 - 70 Minit<br>
+                        &bull; <strong>Laluan Menarik</strong>: Sawah padi, empangan air, ladang pokok getah, dan air terjun tersembunyi.<br><br>
+                        Boleh pilih tarikh &amp; masa terus di website dan bayar online segera!`,
+                        [
+                            { text: '👉 Tempah ATV Sekarang', action: 'goto_atv' },
+                            { text: '💬 Chat Terus dengan Admin', action: 'live_admin', isPrimary: true }
+                        ]
+                    );
+                }, 300);
+            } else if (action === 'goto_packages') {
+                closeAlifBot();
+                goToTopRatedActivities();
+            } else if (action === 'goto_rental') {
+                closeAlifBot();
+                showPage('rental');
+            } else if (action === 'goto_atv') {
+                closeAlifBot();
+                showPage('atv');
+            } else if (action === 'live_admin') {
+                connectToLiveAdmin();
+            }
+        }
+
+        function connectToLiveAdmin(customMsg = '') {
+            appendUserBubble(customMsg || '💬 Chat Terus dengan Admin');
+            setTimeout(() => {
+                appendBotBubble('Menyambungkan anda ke Live Chat bersama Admin... Anda boleh terus berbual di skrin chat ini!');
+                setTimeout(() => {
+                    closeAlifBot();
+                    if (window.Tawk_API && typeof window.Tawk_API.maximize === 'function') {
+                        try {
+                            window.Tawk_API.showWidget();
+                            window.Tawk_API.maximize();
+                            return;
+                        } catch(e) {}
+                    }
+                    openQuickInquiryModal();
+                }, 500);
+            }, 300);
+        }
+
+        function handleBotUserSubmit(event) {
+            event.preventDefault();
+            const val = alifBotUserInput ? alifBotUserInput.value.trim() : '';
+            if (!val) return;
+            if (alifBotUserInput) alifBotUserInput.value = '';
+
+            const lower = val.toLowerCase();
+            if (lower.includes('pakej') || lower.includes('harga') || lower.includes('tour') || lower.includes('island')) {
+                handleBotChipClick('packages');
+            } else if (lower.includes('kereta') || lower.includes('sewa') || lower.includes('motor') || lower.includes('car')) {
+                handleBotChipClick('car_rental');
+            } else if (lower.includes('hotel') || lower.includes('pickup') || lower.includes('ambil')) {
+                handleBotChipClick('hotel_pickup');
+            } else if (lower.includes('atv')) {
+                handleBotChipClick('atv');
+            } else {
+                connectToLiveAdmin(val);
+            }
         }
 
         function openQuickInquiryModal() {
