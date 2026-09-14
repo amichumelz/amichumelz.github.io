@@ -2259,15 +2259,57 @@
         .package-modal-footer .primary {
             background: linear-gradient(120deg, #0a8f72, #0b7c64);
             color: #fff;
+            border: none;
+            box-shadow: 0 4px 14px rgba(10, 143, 114, 0.28);
+        }
+
+        .package-modal-footer .primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(10, 143, 114, 0.35);
         }
 
         .package-modal-footer .secondary {
-            border: 1px solid #cbd5e1;
+            border: 1.5px solid #cbd5e1;
             background: #fff;
-            color: #111827;
+            color: #0f172a;
         }
 
-        .package-modal-footer a,
+        .package-modal-footer .secondary:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        .package-modal-inquiry-box {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 0.25rem;
+        }
+
+        .package-modal-inquiry-link {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            width: auto !important;
+            min-height: unset !important;
+            font-size: 0.78rem !important;
+            font-weight: 700 !important;
+            text-transform: none !important;
+            letter-spacing: normal !important;
+            color: #059669 !important;
+            text-decoration: underline !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 0.3rem 0.6rem !important;
+        }
+
+        .package-modal-inquiry-link:hover {
+            color: #047857 !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .package-modal-footer a:not(.package-modal-inquiry-link),
         .package-modal-footer button {
             width: 100%;
             border-radius: 0.75rem;
@@ -2285,14 +2327,15 @@
         }
 
         .package-modal-footer button.add-cart {
-            border: none;
-            background: linear-gradient(120deg, #0f7ff2, #005ec4);
-            color: #fff;
+            border: 1.5px solid #cbd5e1;
+            background: #fff;
+            color: #0f172a;
         }
 
         .package-modal-footer button.add-cart:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(15, 114, 242, 0.25);
         }
 
         .cart-backdrop {
@@ -2459,6 +2502,155 @@
             border: 1px solid #cbd5e1;
             font-size: 0.9rem;
             box-sizing: border-box;
+        }
+
+        .checkout-hotel-card {
+            border: 1.5px solid #cbd5e1;
+            border-radius: 0.85rem;
+            padding: 0.75rem 0.85rem;
+            margin: 0.65rem 0;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        .checkout-hotel-card.is-active {
+            border-color: #0a8f72;
+            background: #f0fdf9;
+        }
+
+        .checkout-hotel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .checkout-hotel-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.86rem;
+            font-weight: 800;
+            color: #0f172a;
+            user-select: none;
+        }
+
+        .checkout-hotel-toggle input[type="checkbox"] {
+            width: 1.15rem;
+            height: 1.15rem;
+            accent-color: #0a8f72;
+            cursor: pointer;
+            border-radius: 0.3rem;
+        }
+
+        .checkout-hotel-free-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 0.15rem 0.55rem;
+            border-radius: 9999px;
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            letter-spacing: 0.02em;
+        }
+
+        .checkout-hotel-hint {
+            margin: 0.3rem 0 0.55rem;
+            font-size: 0.72rem;
+            color: #64748b;
+            line-height: 1.35;
+        }
+
+        .checkout-hotel-field-group {
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 0.55rem;
+            margin-top: 0.35rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .checkout-hotel-field-group.is-hidden {
+            display: none;
+        }
+
+        .checkout-hotel-field-group .checkout-label {
+            margin-top: 0.1rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .checkout-pm-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            margin: 0.35rem 0 0.55rem;
+        }
+
+        .checkout-pm-option {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkout-pm-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .checkout-pm-card {
+            border: 1.5px solid #cbd5e1;
+            border-radius: 0.65rem;
+            padding: 0.55rem 0.75rem;
+            background: #fff;
+            transition: all 0.2s ease;
+        }
+
+        .checkout-pm-option.is-selected .checkout-pm-card,
+        .checkout-pm-option:has(input:checked) .checkout-pm-card {
+            border-color: #0a8f72;
+            background: #f0fdf9;
+            box-shadow: 0 0 0 1px #0a8f72;
+        }
+
+        .checkout-pm-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.15rem;
+        }
+
+        .checkout-pm-name {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .checkout-pm-badge {
+            font-size: 0.64rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.12rem 0.4rem;
+            border-radius: 0.35rem;
+            background: #e2e8f0;
+            color: #334155;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .checkout-pm-option.is-selected .checkout-pm-badge,
+        .checkout-pm-option:has(input:checked) .checkout-pm-badge {
+            background: #0a8f72;
+            color: #fff;
+        }
+
+        .checkout-pm-desc {
+            display: block;
+            font-size: 0.72rem;
+            color: #64748b;
         }
 
         .checkout-pay-btn {
@@ -4096,7 +4288,7 @@
                                 </div>
                                 <div class="rounded-2xl border border-white/10 bg-white/8 p-4">
                                     <p class="text-xs font-bold uppercase tracking-[0.2em] text-sky-200">Booking</p>
-                                    <p class="mt-2 text-lg font-extrabold">WhatsApp Confirm</p>
+                                    <p class="mt-2 text-lg font-extrabold">Instant Payment</p>
                                 </div>
                             </div>
 
@@ -4114,7 +4306,7 @@
 
                             <div class="mt-8 rounded-2xl border border-white/10 bg-white/8 p-5">
                                 <h2 class="text-lg font-extrabold uppercase tracking-[0.14em] text-white">Booking Details</h2>
-                                <p class="mt-2 text-sm leading-6 text-white/80">Select your date, preferred time and pax before sending to WhatsApp.</p>
+                                <p class="mt-2 text-sm leading-6 text-white/80">Select your date, preferred time and pax to book &amp; pay online instantly.</p>
 
                                 <div class="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                                     <div>
@@ -4144,8 +4336,8 @@
                             </div>
 
                             <div class="mt-8 flex flex-wrap gap-3">
-                                <button type="button" onclick="bookAtvRide()" class="btn-lift rounded-2xl bg-sky-500 px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Book ATV Ride</button>
-                                <button type="button" onclick="showPage('contact')" class="btn-lift rounded-2xl bg-white px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-slate-900 transition hover:bg-slate-100">Chat on WhatsApp</button>
+                                <button type="button" onclick="bookAtvRide()" class="btn-lift rounded-2xl bg-sky-500 px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600"><i class="bi bi-lightning-charge-fill"></i> Book &amp; Pay Now</button>
+                                <button type="button" onclick="inquireAtvRide()" class="btn-lift rounded-2xl bg-white px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-slate-900 transition hover:bg-slate-100"><i class="bi bi-whatsapp"></i> Inquire on WhatsApp</button>
                             </div>
                         </div>
                     </article>
@@ -4259,9 +4451,8 @@
                                 <p id="rentalExtraHourHint" class="rental-season-note">Additional hour: RM10/hour. If rental exceeds 5 hours, it will be charged as a full day.</p>
                                 <p id="rentalTotalHint" class="rental-season-note">Rental period: 1 day. Estimated total: RM 80.</p>
                                 <div class="rental-showroom-actions">
-                                    <button id="rentalPayDepositBtn" type="button" class="pay-deposit"><i class="bi bi-credit-card"></i> Pay Deposit RM100</button>
+                                    <button id="rentalPayDepositBtn" type="button" class="pay-deposit"><i class="bi bi-lightning-charge-fill"></i> Pay Deposit RM100</button>
                                     <button id="rentalAddToCartBtn" type="button" class="add-cart"><i class="bi bi-cart-plus"></i> Add to Cart</button>
-                                    <button id="rentalBookNowBtn" type="button" class="wa-book"><i class="bi bi-whatsapp"></i> Book via WhatsApp</button>
                                 </div>
                                 <p class="rental-deposit-note"><strong>RM100 deposit</strong> required to secure booking. Balance paid on arrival.</p>
                             </div>
@@ -4307,9 +4498,8 @@
                                 <h3 id="driverHeroName" class="rental-showroom-name">Sedan Toyota Vios with Driver</h3>
                                 <p id="driverHeroNote" class="rental-showroom-note">Comfortable private transfer for small groups</p>
                                 <div class="rental-showroom-actions">
-                                    <button id="driverPayNowBtn" type="button" class="pay-full"><i class="bi bi-credit-card"></i> Pay Now</button>
+                                    <button id="driverPayNowBtn" type="button" class="pay-full"><i class="bi bi-lightning-charge-fill"></i> Book &amp; Pay Now</button>
                                     <button id="driverAddToCartBtn" type="button" class="add-cart"><i class="bi bi-cart-plus"></i> Add to Cart</button>
-                                    <button id="driverBookNowBtn" type="button" class="wa-book"><i class="bi bi-whatsapp"></i> Book via WhatsApp</button>
                                 </div>
                                 <p class="rental-deposit-note"><strong>Full payment</strong> accepted on website. Secure your booking now.</p>
                             </div>
@@ -4366,9 +4556,8 @@
                                 </div>
                                 <p id="rentalMotorTotalHint" class="rental-season-note">Rental period: 1 day. Estimated total: RM 90.</p>
                                 <div class="rental-showroom-actions">
-                                    <button id="rentalMotorPayDepositBtn" type="button" class="pay-deposit"><i class="bi bi-credit-card"></i> Pay Deposit RM100</button>
+                                    <button id="rentalMotorPayDepositBtn" type="button" class="pay-deposit"><i class="bi bi-lightning-charge-fill"></i> Pay Deposit RM100</button>
                                     <button id="rentalMotorAddToCartBtn" type="button" class="add-cart"><i class="bi bi-cart-plus"></i> Add to Cart</button>
-                                    <button id="rentalMotorBookNowBtn" type="button" class="wa-book"><i class="bi bi-whatsapp"></i> Book via WhatsApp</button>
                                 </div>
                                 <p class="rental-deposit-note"><strong>RM100 deposit</strong> required to secure booking. Balance paid on arrival.</p>
                             </div>
@@ -4562,9 +4751,13 @@
                 </section>
 
                 <div class="package-modal-footer">
-                    <button type="button" id="packageModalPayNowBtn" class="secondary">Pay Now</button>
-                    <button type="button" id="packageModalAddCart" class="add-cart">Add to cart</button>
-                    <a id="packageModalWhatsApp" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="primary">Book on WhatsApp</a>
+                    <button type="button" id="packageModalPayNowBtn" class="primary"><i class="bi bi-lightning-charge-fill"></i> Book &amp; Pay Now</button>
+                    <button type="button" id="packageModalAddCart" class="secondary"><i class="bi bi-cart-plus"></i> Add to Cart</button>
+                    <div class="package-modal-inquiry-box">
+                        <a id="packageModalInquiryLink" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="package-modal-inquiry-link">
+                            <i class="bi bi-whatsapp"></i> Have questions before booking? Chat on WhatsApp &rarr;
+                        </a>
+                    </div>
                 </div>
             </div>
         </article>
@@ -4589,13 +4782,50 @@
             <input id="checkoutEmail" class="checkout-input" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
             <label class="checkout-label" for="checkoutPhone">Phone / WhatsApp</label>
             <input id="checkoutPhone" class="checkout-input" type="text" inputmode="numeric" autocomplete="tel" placeholder="e.g. 0149495457">
+            <div class="checkout-hotel-card is-active" id="checkoutHotelCard">
+                <div class="checkout-hotel-head">
+                    <label class="checkout-hotel-toggle" for="checkoutHotelPickupToggle">
+                        <input type="checkbox" id="checkoutHotelPickupToggle" checked>
+                        <span>Add hotel pickup</span>
+                    </label>
+                    <span class="checkout-hotel-free-badge">Free</span>
+                </div>
+                <p class="checkout-hotel-hint">Complimentary pickup &amp; drop-off in selected Langkawi areas.</p>
+                <div id="checkoutHotelFieldGroup" class="checkout-hotel-field-group">
+                    <label class="checkout-label" for="checkoutHotelName">Hotel name / pickup location</label>
+                    <input id="checkoutHotelName" class="checkout-input" type="text" placeholder="e.g. Grand Hotel, Room 205">
+                </div>
+            </div>
+            <label class="checkout-label">Payment Method</label>
+            <div class="checkout-pm-grid" role="radiogroup" aria-label="Payment Method">
+                <label class="checkout-pm-option is-selected" for="checkoutPmStripe">
+                    <input type="radio" id="checkoutPmStripe" name="checkoutPaymentMethod" value="stripe" checked>
+                    <div class="checkout-pm-card">
+                        <div class="checkout-pm-top">
+                            <span class="checkout-pm-name">💳 Credit / Debit Card</span>
+                            <span class="checkout-pm-badge">Stripe</span>
+                        </div>
+                        <span class="checkout-pm-desc">Visa, Mastercard, Apple Pay</span>
+                    </div>
+                </label>
+                <label class="checkout-pm-option" for="checkoutPmBillplz">
+                    <input type="radio" id="checkoutPmBillplz" name="checkoutPaymentMethod" value="billplz">
+                    <div class="checkout-pm-card">
+                        <div class="checkout-pm-top">
+                            <span class="checkout-pm-name">🏛️ FPX Online Banking</span>
+                            <span class="checkout-pm-badge">Billplz</span>
+                        </div>
+                        <span class="checkout-pm-desc">Maybank2u, CIMB, Bank Islam, etc.</span>
+                    </div>
+                </label>
+            </div>
             <div class="checkout-terms-row">
                 <input type="checkbox" id="checkoutTermsAgree" class="checkout-terms-checkbox" autocomplete="off">
                 <p class="checkout-terms-label" style="margin: 0">
                     <label for="checkoutTermsAgree">I have read and agree to the </label><button type="button" id="termsOpenBtn" class="checkout-terms-link">Terms &amp; Conditions</button>.
                 </p>
             </div>
-            <button type="button" id="cartPayBtn" class="checkout-pay-btn" disabled>Pay with Billplz</button>
+            <button type="button" id="cartPayBtn" class="checkout-pay-btn" disabled>Pay with Card (Stripe)</button>
             <button type="button" id="cartClearBtn" class="cart-secondary-btn">Empty cart</button>
         </div>
     </aside>
@@ -4610,7 +4840,7 @@
                 <h4>1. Bookings</h4>
                 <p>All tours and services are subject to availability and weather or operational conditions. ALIF LANGKAWI EXPERIENCE may reschedule or suggest alternatives where necessary.</p>
                 <h4>2. Pricing &amp; payment</h4>
-                <p>Prices shown on this website are subject to change until payment is completed. Online payments are processed securely via Billplz. You agree to pay the total amount shown at checkout for the items in your cart.</p>
+                <p>Prices shown on this website are subject to change until payment is completed. Online payments are processed securely via Stripe (Credit / Debit Card) and Billplz (FPX Online Banking). You agree to pay the total amount shown at checkout for the items in your cart.</p>
                 <h4>3. Cancellations &amp; refunds</h4>
                 <p>Cancellation and refund rules follow the policy stated on each package or as communicated by us in writing. Service fees or third-party charges may be non-refundable.</p>
                 <h4>4. Conduct &amp; safety</h4>
@@ -4669,7 +4899,7 @@
         const packageModalIncludes = document.getElementById('packageModalIncludes');
         const packageModalBonus = document.getElementById('packageModalBonus');
         const packageModalPayNowBtn = document.getElementById('packageModalPayNowBtn');
-        const packageModalWhatsApp = document.getElementById('packageModalWhatsApp');
+        const packageModalInquiryLink = document.getElementById('packageModalInquiryLink');
         const packageBookingTitle = document.getElementById('packageBookingTitle');
         const packageBookingSelected = document.getElementById('packageBookingSelected');
         const packageBookingDeadline = document.getElementById('packageBookingDeadline');
@@ -4689,6 +4919,30 @@
         const checkoutName = document.getElementById('checkoutName');
         const checkoutEmail = document.getElementById('checkoutEmail');
         const checkoutPhone = document.getElementById('checkoutPhone');
+        const checkoutHotelCard = document.getElementById('checkoutHotelCard');
+        const checkoutHotelPickupToggle = document.getElementById('checkoutHotelPickupToggle');
+        const checkoutHotelFieldGroup = document.getElementById('checkoutHotelFieldGroup');
+        const checkoutHotelName = document.getElementById('checkoutHotelName');
+
+        function getHotelPickupValue() {
+            if (!checkoutHotelPickupToggle || !checkoutHotelPickupToggle.checked) {
+                return 'No pickup requested';
+            }
+            const val = checkoutHotelName ? checkoutHotelName.value.trim() : '';
+            return val || 'Hotel Pickup Requested (Hotel to be advised)';
+        }
+
+        if (checkoutHotelPickupToggle) {
+            checkoutHotelPickupToggle.addEventListener('change', () => {
+                const isChecked = checkoutHotelPickupToggle.checked;
+                if (checkoutHotelFieldGroup) {
+                    checkoutHotelFieldGroup.classList.toggle('is-hidden', !isChecked);
+                }
+                if (checkoutHotelCard) {
+                    checkoutHotelCard.classList.toggle('is-active', isChecked);
+                }
+            });
+        }
         const cartPayBtn = document.getElementById('cartPayBtn');
         const cartClearBtn = document.getElementById('cartClearBtn');
         const paymentSuccessBackdrop = document.getElementById('paymentSuccessBackdrop');
@@ -4703,11 +4957,32 @@
 
         let paymentSuccessWaUrl = '';
 
+        function getSelectedPaymentMethod() {
+            const checked = document.querySelector('input[name="checkoutPaymentMethod"]:checked');
+            return checked ? checked.value : 'stripe';
+        }
+
         function updateCheckoutPayEnabled() {
             if (!cartPayBtn) return;
             const hasCart = cart.length > 0;
             const termsOk = checkoutTermsAgree && checkoutTermsAgree.checked;
             cartPayBtn.disabled = !hasCart || !termsOk;
+
+            const pm = getSelectedPaymentMethod();
+            if (pm === 'stripe') {
+                cartPayBtn.textContent = 'Pay with Card (Stripe)';
+            } else {
+                cartPayBtn.textContent = 'Pay with Billplz (FPX)';
+            }
+
+            document.querySelectorAll('.checkout-pm-option').forEach((opt) => {
+                const radio = opt.querySelector('input[name="checkoutPaymentMethod"]');
+                if (radio && radio.checked) {
+                    opt.classList.add('is-selected');
+                } else {
+                    opt.classList.remove('is-selected');
+                }
+            });
         }
 
         function openTermsModal() {
@@ -4729,7 +5004,11 @@
 
         const CART_KEY = 'alif-langkawi-cart-v1';
         const PENDING_BILLPLZ_KEY = 'alif-billplz-pending-order';
+        const PENDING_STRIPE_KEY = 'alif-stripe-pending-order';
         const WA_NUMBER = '60149495457';
+        const STRIPE_CONFIG = {
+            proxyUrl: '/api/stripe',
+        };
         /**
          * Billplz PRODUCTION only — copy Collection ID from https://www.billplz.com → Collections.
          * Must match the same account as BILLPLZ_SECRET_KEY in Cloudflare (no sandbox in code).
@@ -5403,11 +5682,13 @@
 
             bookLines.push(`Preferred date: ${preferredDate}`);
             bookLines.push(`Preferred time: ${timeText}`);
-            bookLines.push('Please confirm availability. Thank you.');
+            bookLines.push('Could you advise? Thank you.');
 
-            const bookMessage = bookLines.join('\n');
+            const inquiryMessage = bookLines.join('\n');
 
-            packageModalWhatsApp.href = `https://wa.me/60149495457?text=${encodeURIComponent(bookMessage)}`;
+            if (packageModalInquiryLink) {
+                packageModalInquiryLink.href = `https://wa.me/60149495457?text=${encodeURIComponent(inquiryMessage)}`;
+            }
         }
 
         function syncPreferredBookingSelection() {
@@ -5814,6 +6095,102 @@
             return desc || 'Alif Langkawi booking';
         }
 
+        /** Requires Cloudflare Pages + Functions (`functions/api/stripe.js`) */
+        async function submitCartToStripe() {
+            if (!cart.length) {
+                window.alert('Your cart is empty.');
+                return;
+            }
+            if (!checkoutTermsAgree || !checkoutTermsAgree.checked) {
+                window.alert('Please tick to agree to the Terms & Conditions before paying.');
+                return;
+            }
+            const name = checkoutName ? checkoutName.value.trim() : '';
+            const email = checkoutEmail ? checkoutEmail.value.trim() : '';
+            const phone = checkoutPhone ? checkoutPhone.value.trim() : '';
+            if (!name || !email || !phone) {
+                window.alert('Please fill in name, email and phone number.');
+                return;
+            }
+            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            if (!emailOk) {
+                window.alert('Please enter a valid email (e.g. name@gmail.com).');
+                return;
+            }
+
+            const totalCents = getCartTotalCents();
+            if (totalCents < 1) {
+                window.alert('Invalid payment amount.');
+                return;
+            }
+
+            const mobile = normalizeMyPhone(phone);
+            const hotelPickup = getHotelPickupValue();
+            const currentUrl = window.location.href.split('?')[0].split('#')[0];
+            const redirectUrl = currentUrl;
+
+            if (cartPayBtn) {
+                cartPayBtn.disabled = true;
+                cartPayBtn.textContent = 'Connecting to Stripe...';
+            }
+
+            const pending = {
+                lines: cart.map((l) => ({ ...l })),
+                totalCents,
+                name,
+                email,
+                phone: mobile,
+                hotelPickup,
+                gateway: 'Stripe',
+            };
+            try {
+                sessionStorage.setItem(PENDING_STRIPE_KEY, JSON.stringify(pending));
+            } catch {
+                // ignore
+            }
+
+            const description = buildBillDescription();
+
+            try {
+                const res = await fetch(STRIPE_CONFIG.proxyUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email,
+                        mobile,
+                        name,
+                        hotelPickup,
+                        cart,
+                        amount: totalCents,
+                        description: `${description}${hotelPickup ? ` | Hotel: ${hotelPickup}` : ''}`,
+                        redirect_url: redirectUrl,
+                    }),
+                });
+
+                const data = await res.json();
+
+                if (!res.ok || data.error) {
+                    throw new Error(data.error || `Error ${res.status}`);
+                }
+
+                if (data.url) {
+                    window.location.href = data.url;
+                    return;
+                }
+                throw new Error('Stripe did not return a payment link.');
+            } catch (e) {
+                try {
+                    sessionStorage.removeItem(PENDING_STRIPE_KEY);
+                } catch {
+                    // ignore
+                }
+                let msg = e.message || 'Could not connect to Stripe. Make sure STRIPE_SECRET_KEY is configured in Cloudflare.';
+                window.alert(msg);
+            } finally {
+                updateCheckoutPayEnabled();
+            }
+        }
+
         /** Requires Cloudflare Pages + Functions (`functions/api/billplz.js`); plain GitHub Pages cannot run the API. */
         async function submitCartToBillplz() {
             if (!cart.length) {
@@ -5844,6 +6221,7 @@
             }
 
             const mobile = normalizeMyPhone(phone);
+            const hotelPickup = getHotelPickupValue();
             const currentUrl = window.location.href.split('?')[0].split('#')[0];
             const redirectUrl = `${currentUrl}?billplz_return=1`;
 
@@ -5855,6 +6233,8 @@
                 name,
                 email,
                 phone: mobile,
+                hotelPickup,
+                gateway: 'Billplz',
             };
             try {
                 sessionStorage.setItem(PENDING_BILLPLZ_KEY, JSON.stringify(pending));
@@ -5862,7 +6242,10 @@
                 // ignore
             }
 
-            const description = buildBillDescription();
+            let description = buildBillDescription();
+            if (hotelPickup) {
+                description = `${description} | Hotel: ${hotelPickup}`;
+            }
 
             try {
                 const res = await fetch(BILLPLZ_CONFIG.proxyUrl, {
@@ -5929,20 +6312,45 @@
             return { billId, paidRaw, hasReturn: params.has('billplz_return') };
         }
 
-        function buildWhatsAppAfterPayMessage(billId, pending) {
+        function buildWhatsAppAfterPayMessage(refId, pending, gateway = 'Billplz') {
+            const methodLabel = gateway === 'Stripe' ? 'Stripe (Card)' : 'Billplz';
+            const idLabel = gateway === 'Stripe' ? 'Payment Ref' : 'Bill ID';
             const lines = [
                 'Hi ALIF LANGKAWI EXPERIENCE,',
-                'I have completed payment (Billplz).',
-                billId ? `Bill ID: ${billId}` : '',
+                `I have completed payment (${methodLabel}).`,
+                refId ? `${idLabel}: ${refId}` : '',
                 `Amount: ${formatRmFromCents(pending.totalCents || 0)}`,
+                pending.hotelPickup ? `🏨 Hotel Pickup: ${pending.hotelPickup}` : '',
                 'Booking details:',
-                ...pending.lines.map((l, i) => `${i + 1}. ${l.title}${l.variant ? ` — ${l.variant}` : ''} | ${l.date} ${l.time} | ${l.priceLabel}`),
+                ...(pending.lines || []).map((l, i) => `${i + 1}. ${l.title}${l.variant ? ` — ${l.variant}` : ''} | ${l.date} ${l.time} | ${l.priceLabel}`),
                 `Name: ${pending.name || ''}`,
                 `Email: ${pending.email || ''}`,
                 `Phone: ${pending.phone || ''}`,
                 'Please confirm my booking. Thank you.',
             ];
             return lines.filter(Boolean).join('\n');
+        }
+
+        async function triggerBookingEmail(pending, refId, gateway) {
+            if (!pending || !pending.email) return;
+            try {
+                await fetch('/api/send-booking-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: pending.name || '',
+                        email: pending.email || '',
+                        phone: pending.phone || '',
+                        hotelPickup: pending.hotelPickup || '',
+                        lines: pending.lines || [],
+                        totalCents: pending.totalCents || 0,
+                        gateway: gateway || pending.gateway || 'Online',
+                        paymentRef: refId || '',
+                    }),
+                });
+            } catch {
+                // Background email delivery; do not disrupt user experience
+            }
         }
 
         function clearUrlQueryAfterPayment() {
@@ -5962,20 +6370,26 @@
             }
         }
 
-        function finalizePaidOrder() {
+        function finalizePaidOrder(gateway = 'Billplz') {
             cart = [];
             saveCart();
-            sessionStorage.removeItem(PENDING_BILLPLZ_KEY);
+            if (gateway === 'Stripe') {
+                sessionStorage.removeItem(PENDING_STRIPE_KEY);
+            } else {
+                sessionStorage.removeItem(PENDING_BILLPLZ_KEY);
+            }
             renderCartPanel();
         }
 
-        function showPaymentSuccessModal(billId, pending) {
+        function showPaymentSuccessModal(refId, pending, gateway = 'Billplz') {
             const amountLine = `Amount paid: <strong>${formatRmFromCents(pending.totalCents || 0)}</strong>`;
-            const idLine = billId ? `Bill ID: <strong>${billId}</strong>` : '';
+            const idLabel = gateway === 'Stripe' ? 'Payment Ref' : 'Bill ID';
+            const idLine = refId ? `${idLabel}: <strong>${refId}</strong>` : '';
+            const pickupLine = pending.hotelPickup ? `Hotel Pickup: <strong>${pending.hotelPickup}</strong>` : '';
             if (paymentSuccessDetail) {
-                paymentSuccessDetail.innerHTML = [idLine, amountLine].filter(Boolean).join('<br>');
+                paymentSuccessDetail.innerHTML = [idLine, amountLine, pickupLine].filter(Boolean).join('<br>');
             }
-            paymentSuccessWaUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(buildWhatsAppAfterPayMessage(billId, pending))}`;
+            paymentSuccessWaUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(buildWhatsAppAfterPayMessage(refId, pending, gateway))}`;
             if (paymentSuccessBackdrop) {
                 paymentSuccessBackdrop.classList.remove('hidden');
                 paymentSuccessBackdrop.setAttribute('aria-hidden', 'false');
@@ -6000,8 +6414,9 @@
             const paid = paidRaw === 'true' || paidRaw === '1' || paidRaw === true;
 
             if (paid && pending && Array.isArray(pending.lines)) {
-                finalizePaidOrder();
-                showPaymentSuccessModal(billId, pending);
+                finalizePaidOrder('Billplz');
+                showPaymentSuccessModal(billId, pending, 'Billplz');
+                triggerBookingEmail(pending, billId, 'Billplz');
                 clearUrlQueryAfterPayment();
             } else if (!paid) {
                 window.alert('Payment was not completed or was cancelled. Your cart items are unchanged.');
@@ -6010,6 +6425,62 @@
                 window.alert('Payment successful. Please contact us on WhatsApp with your bill ID if you need help.');
                 clearUrlQueryAfterPayment();
             } else {
+                clearUrlQueryAfterPayment();
+            }
+        }
+
+        async function handleStripeReturn() {
+            const params = new URLSearchParams(window.location.search);
+            const hasReturn = params.has('stripe_return');
+            const hasCancel = params.has('stripe_cancel');
+            const sessionId = params.get('session_id');
+
+            if (hasCancel) {
+                window.alert('Payment was not completed or was cancelled. Your cart items are unchanged.');
+                clearUrlQueryAfterPayment();
+                return;
+            }
+
+            if (!hasReturn || !sessionId) {
+                return;
+            }
+
+            let pending = null;
+            try {
+                const raw = sessionStorage.getItem(PENDING_STRIPE_KEY);
+                if (raw) pending = JSON.parse(raw);
+            } catch {
+                pending = null;
+            }
+
+            try {
+                const res = await fetch(`${STRIPE_CONFIG.proxyUrl}?session_id=${encodeURIComponent(sessionId)}`);
+                const data = await res.json();
+
+                if (data.paid) {
+                    finalizePaidOrder('Stripe');
+                    const orderData = pending || {
+                        lines: [],
+                        totalCents: data.amount_total || 0,
+                        name: data.metadata?.customer_name || '',
+                        email: data.customer_email || '',
+                        phone: data.metadata?.customer_phone || '',
+                        hotelPickup: data.metadata?.hotel_pickup || '',
+                    };
+                    showPaymentSuccessModal(sessionId, orderData, 'Stripe');
+                    triggerBookingEmail(orderData, sessionId, 'Stripe');
+                } else {
+                    window.alert('Payment was not completed or was cancelled. Your cart items are unchanged.');
+                }
+            } catch (e) {
+                if (pending && Array.isArray(pending.lines)) {
+                    finalizePaidOrder('Stripe');
+                    showPaymentSuccessModal(sessionId, pending, 'Stripe');
+                    triggerBookingEmail(pending, sessionId, 'Stripe');
+                } else {
+                    window.alert('Payment processed. Please contact us on WhatsApp with reference: ' + sessionId);
+                }
+            } finally {
                 clearUrlQueryAfterPayment();
             }
         }
@@ -6064,8 +6535,18 @@
         }
 
         if (cartPayBtn) {
-            cartPayBtn.addEventListener('click', () => submitCartToBillplz());
+            cartPayBtn.addEventListener('click', () => {
+                const pm = getSelectedPaymentMethod();
+                if (pm === 'stripe') {
+                    submitCartToStripe();
+                } else {
+                    submitCartToBillplz();
+                }
+            });
         }
+        document.querySelectorAll('input[name="checkoutPaymentMethod"]').forEach((radio) => {
+            radio.addEventListener('change', updateCheckoutPayEnabled);
+        });
         if (checkoutTermsAgree) {
             checkoutTermsAgree.addEventListener('change', updateCheckoutPayEnabled);
         }
@@ -6086,6 +6567,7 @@
 
         renderCartPanel();
         handleBillplzReturn();
+        handleStripeReturn();
 
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
@@ -6832,20 +7314,45 @@
         }
 
         function bookAtvRide() {
+            const pickupDateRaw = atvDateInput && atvDateInput.value ? atvDateInput.value : '';
+            const formattedDate = pickupDateRaw && pickupDateRaw.includes('-')
+                ? new Date(`${pickupDateRaw}T00:00:00`).toLocaleDateString('en-MY', { day: '2-digit', month: 'short', year: 'numeric' })
+                : (pickupDateRaw || 'Not selected');
+            const pickupTime = atvTimeSelect && atvTimeSelect.value ? atvTimeSelect.value : 'Not selected';
+            const atvPricing = calculateAtvPricing(atvPaxInput ? atvPaxInput.value : '');
+            const cents = atvPricing.totalPrice * 100;
+
+            const item = {
+                id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+                packageKey: 'atv-ride',
+                title: 'ATV Adventure Ride',
+                variant: `${atvPricing.unitsNeeded} ATV (${atvPricing.paxCount} Pax)`,
+                priceLabel: `RM ${atvPricing.totalPrice.toLocaleString('en-MY')}`,
+                cents: cents,
+                date: formattedDate,
+                time: pickupTime,
+                isDeposit: false
+            };
+
+            cart.push(item);
+            saveCart();
+            renderCartPanel();
+            openCart();
+        }
+
+        function inquireAtvRide() {
             const pickupDate = atvDateInput && atvDateInput.value ? atvDateInput.value : 'Not selected';
             const pickupTime = atvTimeSelect && atvTimeSelect.value ? atvTimeSelect.value : 'Not selected';
             const atvPricing = calculateAtvPricing(atvPaxInput ? atvPaxInput.value : '');
-            const paxCount = atvPricing.paxCount;
-
             const message = [
                 'Hi ALIF LANGKAWI EXPERIENCE,',
-                'I want to book ATV Ride:',
+                'I have an inquiry about ATV Adventure Ride:',
                 `Preferred date: ${pickupDate}`,
                 `Preferred time: ${pickupTime}`,
-                `Number of pax: ${paxCount}`,
-                `ATV required: ${atvPricing.unitsNeeded}`,
-                `Total price: RM ${atvPricing.totalPrice.toLocaleString('en-MY')}`,
-                'Please confirm availability. Thank you.'
+                `Number of pax: ${atvPricing.paxCount}`,
+                `ATV needed: ${atvPricing.unitsNeeded}`,
+                `Estimated price: RM ${atvPricing.totalPrice.toLocaleString('en-MY')}`,
+                'Could you provide more details? Thank you.'
             ].join('\n');
 
             window.open(`https://wa.me/60149495457?text=${encodeURIComponent(message)}`, '_blank');
