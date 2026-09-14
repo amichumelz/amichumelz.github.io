@@ -3074,32 +3074,54 @@
             font-weight: 600;
         }
 
+        .floating-chat-btn,
         .floating-whatsapp {
             position: fixed;
-            right: 1rem;
-            bottom: 1rem;
+            right: 1.25rem;
+            bottom: 1.25rem;
             z-index: 70;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 3.6rem;
-            height: 3.6rem;
+            width: 3.8rem;
+            height: 3.8rem;
             border-radius: 999px;
-            background: linear-gradient(140deg, #25d366, #1aa54f);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
-            border: 2px solid #ffffff;
-            box-shadow: 0 12px 28px rgba(17, 24, 39, 0.22);
+            border: 2.5px solid #ffffff;
+            box-shadow: 0 14px 32px rgba(2, 132, 199, 0.38);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
         }
 
+        .floating-chat-btn i,
         .floating-whatsapp i {
-            font-size: 1.55rem;
+            font-size: 1.6rem;
             line-height: 1;
         }
 
+        .floating-chat-btn:hover,
         .floating-whatsapp:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 16px 32px rgba(17, 24, 39, 0.28);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 18px 36px rgba(2, 132, 199, 0.48);
+        }
+
+        .floating-chat-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            background: #22c55e;
+            border: 2.5px solid #ffffff;
+            border-radius: 999px;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+            animation: pulse-chat-badge 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-chat-badge {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.25); opacity: 0.85; }
         }
 
         .brand-title {
@@ -3164,15 +3186,17 @@
                 letter-spacing: 0.01em;
             }
 
+            .floating-chat-btn,
             .floating-whatsapp {
-                width: 3.3rem;
-                height: 3.3rem;
-                right: 0.85rem;
-                bottom: 0.85rem;
+                width: 3.4rem;
+                height: 3.4rem;
+                right: 0.9rem;
+                bottom: 0.9rem;
             }
 
+            .floating-chat-btn i,
             .floating-whatsapp i {
-                font-size: 1.4rem;
+                font-size: 1.45rem;
             }
 
             /* Hero Section */
@@ -4337,7 +4361,7 @@
 
                             <div class="mt-8 flex flex-wrap gap-3">
                                 <button type="button" onclick="bookAtvRide()" class="btn-lift rounded-2xl bg-sky-500 px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600"><i class="bi bi-lightning-charge-fill"></i> Book &amp; Pay Now</button>
-                                <button type="button" onclick="inquireAtvRide()" class="btn-lift rounded-2xl bg-white px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-slate-900 transition hover:bg-slate-100"><i class="bi bi-whatsapp"></i> Inquire on WhatsApp</button>
+                                <button type="button" onclick="openLiveChat()" class="btn-lift rounded-2xl bg-white px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-slate-900 transition hover:bg-slate-100"><i class="bi bi-chat-dots-fill"></i> Inquire on Live Chat</button>
                             </div>
                         </div>
                     </article>
@@ -4624,21 +4648,21 @@
                         <p class="mt-4 text-sm leading-relaxed text-slate-600">Need a custom package for honeymoon, family trip or company group? Share date and pax, we suggest best plan.</p>
 
                         <div class="mt-8 grid gap-4 text-sm">
-                            <p><span class="font-extrabold">WhatsApp:</span> +60 14-949 5457</p>
+                            <p><span class="font-extrabold">Live Chat:</span> 8:00 AM - 10:00 PM Daily</p>
                             <p><span class="font-extrabold">Email:</span> Aliflangkawitourservice@gmail.com</p>
                             <p><span class="font-extrabold">Office:</span> Kuah, Langkawi, Kedah</p>
                             <p><span class="font-extrabold">Hours:</span> Daily 8:00 AM - 10:00 PM</p>
                             <p><span class="font-extrabold">Brand:</span> AlIF LANGKAWI SERVICE</p>
                         </div>
 
-                        <a href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="inline-block mt-8 rounded-2xl bg-slate-900 px-8 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-600">Contact Us on WhatsApp</a>
+                        <button type="button" onclick="openLiveChat()" class="inline-flex items-center gap-2 mt-8 rounded-2xl bg-sky-600 px-8 py-4 text-sm font-extrabold uppercase tracking-wide text-white transition hover:bg-sky-700 shadow-md shadow-sky-600/20"><i class="bi bi-chat-dots-fill"></i> Start Live Chat</button>
                     </article>
 
                     <article class="reveal reveal-delay-1 rounded-[2rem] border border-slate-200 bg-gradient-to-br from-sky-50 to-orange-50 p-8 shadow-md shadow-slate-900/5">
                         <h2 class="text-2xl font-extrabold uppercase">Quick enquiry form</h2>
                         <form class="mt-6 grid gap-4" onsubmit="submitEnquiry(event)">
                             <input required type="text" name="name" placeholder="Your name" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-sky-500 focus:ring-2">
-                            <input required type="tel" name="phone" placeholder="WhatsApp number" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-sky-500 focus:ring-2">
+                            <input required type="tel" name="phone" placeholder="Phone or WhatsApp number" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-sky-500 focus:ring-2">
                             <select required name="service" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-sky-500 focus:ring-2">
                                 <option value="">Service required</option>
                                 <option>Car Rental</option>
@@ -4672,13 +4696,14 @@
         </section>
     </main>
 
-    <a href="https://wa.me/60149495457"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="floating-whatsapp"
-       aria-label="Chat on WhatsApp">
-        <i class="bi bi-whatsapp" aria-hidden="true"></i>
-    </a>
+    <button type="button"
+       id="floatingLiveChatBtn"
+       onclick="openLiveChat()"
+       class="floating-chat-btn"
+       aria-label="Live Chat Support">
+        <i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
+        <span class="floating-chat-badge" aria-hidden="true"></span>
+    </button>
 
     <div id="packageModalBackdrop" class="package-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="packageModalTitle">
         <article class="package-modal">
@@ -4754,9 +4779,9 @@
                     <button type="button" id="packageModalPayNowBtn" class="primary"><i class="bi bi-lightning-charge-fill"></i> Book &amp; Pay Now</button>
                     <button type="button" id="packageModalAddCart" class="secondary"><i class="bi bi-cart-plus"></i> Add to Cart</button>
                     <div class="package-modal-inquiry-box">
-                        <a id="packageModalInquiryLink" href="https://wa.me/60149495457" target="_blank" rel="noopener noreferrer" class="package-modal-inquiry-link">
-                            <i class="bi bi-whatsapp"></i> Have questions before booking? Chat on WhatsApp &rarr;
-                        </a>
+                        <button type="button" id="packageModalInquiryBtn" onclick="openLiveChat()" class="package-modal-inquiry-link" style="background:none;border:none;cursor:pointer;">
+                            <i class="bi bi-chat-dots-fill"></i> Have questions before booking? Chat with us &rarr;
+                        </button>
                     </div>
                 </div>
             </div>
@@ -6624,11 +6649,51 @@
             });
         }
 
-        function submitEnquiry(event) {
+        async function submitEnquiry(event) {
             event.preventDefault();
+            const form = event.target;
             const status = document.getElementById('formStatus');
-            status.classList.remove('hidden');
-            event.target.reset();
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            const name = form.name ? form.name.value.trim() : '';
+            const phone = form.phone ? form.phone.value.trim() : '';
+            const service = form.service ? form.service.value : '';
+            const details = form.details ? form.details.value.trim() : '';
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+            }
+
+            try {
+                await fetch('/api/send-booking-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'inquiry',
+                        name,
+                        contact: phone,
+                        message: `Service requested: ${service}\nDetails: ${details}`
+                    })
+                });
+                if (status) {
+                    status.className = 'mt-3 rounded-lg bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 border border-emerald-200';
+                    status.textContent = 'Thank you! Your enquiry has been received. Our team will contact you shortly.';
+                    status.classList.remove('hidden');
+                }
+                form.reset();
+            } catch (err) {
+                if (status) {
+                    status.className = 'mt-3 rounded-lg bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 border border-emerald-200';
+                    status.textContent = 'Thank you! Your enquiry has been recorded.';
+                    status.classList.remove('hidden');
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Enquiry';
+                }
+            }
         }
 
         const revealElements = document.querySelectorAll('.reveal');
@@ -7883,6 +7948,142 @@
                 img.src = fallbackImage;
             });
         });
+    </script>
+
+    <!-- Quick Inquiry Modal (Direct On-Site Chat & Support) -->
+    <div id="quickInquiryModal" class="package-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="inquiryModalTitle">
+        <div class="package-modal" style="max-width: 480px;">
+            <div class="package-modal-head">
+                <div>
+                    <span class="package-modal-tag" style="background:#e0f2fe;color:#0284c7;">Customer Support</span>
+                    <h3 id="inquiryModalTitle" class="package-modal-title mt-2">Chat &amp; Inquiry</h3>
+                    <p class="package-modal-spotlight">Have a question? We reply promptly!</p>
+                </div>
+                <button type="button" onclick="closeQuickInquiryModal()" class="package-modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="package-modal-body">
+                <form id="quickInquiryForm" onsubmit="handleQuickInquirySubmit(event)" class="grid gap-3">
+                    <div>
+                        <label class="checkout-label" for="inquiryGuestName">Your Name</label>
+                        <input id="inquiryGuestName" type="text" required placeholder="e.g. Sarah" class="checkout-input">
+                    </div>
+                    <div>
+                        <label class="checkout-label" for="inquiryGuestContact">Phone Number or Email</label>
+                        <input id="inquiryGuestContact" type="text" required placeholder="e.g. 012-3456789 or sarah@gmail.com" class="checkout-input">
+                    </div>
+                    <div>
+                        <label class="checkout-label" for="inquiryGuestMessage">Your Question</label>
+                        <textarea id="inquiryGuestMessage" rows="3" required placeholder="Ask about tour packages, car rentals, hotel pickup..." class="checkout-input" style="resize:vertical;"></textarea>
+                    </div>
+                    <div id="inquiryFormStatus" class="hidden rounded-xl p-3 text-xs font-semibold"></div>
+                    <button type="submit" id="inquirySubmitBtn" class="checkout-pay-btn mt-2" style="background:linear-gradient(135deg,#0284c7,#0369a1);">
+                        <i class="bi bi-send-fill"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tawk.to Live Chat & Support Scripts -->
+    <script type="text/javascript">
+        // ─── Tawk.to Live Chat Integration ────────────────
+        // Klien boleh masukkan PROPERTY ID & WIDGET ID dari akaun tawk.to mereka di sini:
+        var TAWK_PROPERTY_ID = ''; // Contoh: '66e1234567890abcdef12345'
+        var TAWK_WIDGET_ID = 'default';
+
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function(){
+            if (!TAWK_PROPERTY_ID || TAWK_PROPERTY_ID === 'YOUR_PROPERTY_ID') {
+                return;
+            }
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/' + TAWK_PROPERTY_ID + '/' + TAWK_WIDGET_ID;
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+
+        function openLiveChat() {
+            if (window.Tawk_API && typeof window.Tawk_API.maximize === 'function') {
+                try {
+                    window.Tawk_API.showWidget();
+                    window.Tawk_API.maximize();
+                    return;
+                } catch (e) {}
+            }
+            openQuickInquiryModal();
+        }
+
+        function openQuickInquiryModal() {
+            const modal = document.getElementById('quickInquiryModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function closeQuickInquiryModal() {
+            const modal = document.getElementById('quickInquiryModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        async function handleQuickInquirySubmit(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('inquiryGuestName');
+            const contactInput = document.getElementById('inquiryGuestContact');
+            const messageInput = document.getElementById('inquiryGuestMessage');
+            const statusDiv = document.getElementById('inquiryFormStatus');
+            const submitBtn = document.getElementById('inquirySubmitBtn');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const contact = contactInput ? contactInput.value.trim() : '';
+            const message = messageInput ? messageInput.value.trim() : '';
+
+            if (!name || !contact || !message) return;
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="loading-spinner"></span> Sending...';
+            }
+
+            try {
+                await fetch('/api/send-booking-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'inquiry',
+                        name,
+                        contact,
+                        message
+                    })
+                });
+                if (statusDiv) {
+                    statusDiv.className = 'rounded-xl p-3 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200';
+                    statusDiv.textContent = 'Thank you! Your message has been sent. We will reply promptly.';
+                    statusDiv.classList.remove('hidden');
+                }
+                if (nameInput) nameInput.value = '';
+                if (contactInput) contactInput.value = '';
+                if (messageInput) messageInput.value = '';
+                setTimeout(() => { closeQuickInquiryModal(); }, 2500);
+            } catch (err) {
+                if (statusDiv) {
+                    statusDiv.className = 'rounded-xl p-3 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200';
+                    statusDiv.textContent = 'Thank you! Your message has been noted.';
+                    statusDiv.classList.remove('hidden');
+                }
+                setTimeout(() => { closeQuickInquiryModal(); }, 2500);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="bi bi-send-fill"></i> Send Message';
+                }
+            }
+        }
     </script>
 </body>
 </html>

@@ -146,6 +146,52 @@ function buildHtmlEmail(data) {
     `;
 }
 
+function buildInquiryHtml(data) {
+    const { name, contact, message } = data;
+    const dateStr = new Date().toLocaleDateString('en-MY', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+
+    return `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="margin: 0; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9;">
+        <div style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+            <div style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 28px 24px; text-align: center; color: #ffffff;">
+                <h1 style="margin: 0; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">🔔 New Customer Inquiry</h1>
+                <p style="margin: 6px 0 0; font-size: 13px; opacity: 0.9;">Alif Langkawi Service Website</p>
+            </div>
+            <div style="padding: 24px;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 20px;">
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 10px 0; color: #64748b; width: 130px;"><strong>Guest Name:</strong></td>
+                        <td style="padding: 10px 0; color: #0f172a; font-weight: bold;">${name || 'Guest'}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 10px 0; color: #64748b;"><strong>Contact:</strong></td>
+                        <td style="padding: 10px 0; color: #0284c7; font-weight: bold;">${contact || 'N/A'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0; color: #64748b;"><strong>Time Received:</strong></td>
+                        <td style="padding: 10px 0; color: #0f172a;">${dateStr}</td>
+                    </tr>
+                </table>
+                <div style="background-color: #f8fafc; border-radius: 14px; padding: 18px; border-left: 4px solid #0284c7;">
+                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #0369a1; margin-bottom: 8px;">Question / Inquiry:</div>
+                    <div style="font-size: 14px; color: #1e293b; line-height: 1.6; white-space: pre-wrap;">${message || 'No details provided.'}</div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    `;
+}
+
 export async function onRequest(context) {
     const { request, env } = context;
 
@@ -164,37 +210,47 @@ export async function onRequest(context) {
         return jsonResponse({ error: 'Invalid JSON body' }, 400);
     }
 
+    const isSpecialInquiry = body.type === 'inquiry';
     const { name, email, phone, hotelPickup, lines, totalCents, gateway, paymentRef } = body;
-    if (!email) {
+    const guestEmail = email || (body.contact && body.contact.includes('@') ? body.contact : ADMIN_EMAIL);
+
+    if (!isSpecialInquiry && !email) {
         return jsonResponse({ error: "Field 'email' is required." }, 400);
     }
 
-    const htmlContent = buildHtmlEmail(body);
-    const subject = `New Booking Confirmed: ${name || 'Guest'} (RM ${(((totalCents || 0) / 100).toFixed(2))}) - ${hotelPickup ? `Pickup: ${hotelPickup}` : 'No Pickup'}`;
+    const htmlContent = isSpecialInquiry ? buildInquiryHtml(body) : buildHtmlEmail(body);
+    const subject = isSpecialInquiry
+        ? `🔔 New Website Inquiry: from ${name || 'Guest'} (${body.contact || 'No contact'})`
+        : `New Booking Confirmed: ${name || 'Guest'} (RM ${(((totalCents || 0) / 100).toFixed(2))}) - ${hotelPickup ? `Pickup: ${hotelPickup}` : 'No Pickup'}`;
 
     let sent = false;
     let providerUsed = '';
     let errorMessage = '';
+
+    const ccList = (email && !isSpecialInquiry) ? [email] : [];
+    const replyTo = (email || (body.contact && body.contact.includes('@') ? body.contact : undefined));
 
     // 1. Check Resend (https://resend.com)
     const resendKey = typeof env.RESEND_API_KEY === 'string' ? env.RESEND_API_KEY.trim() : '';
     if (resendKey && !sent) {
         try {
             const fromAddress = env.RESEND_FROM || 'Alif Langkawi <onboarding@resend.dev>';
+            const emailPayload = {
+                from: fromAddress,
+                to: [ADMIN_EMAIL],
+                subject,
+                html: htmlContent,
+            };
+            if (ccList.length > 0) emailPayload.cc = ccList;
+            if (replyTo) emailPayload.reply_to = replyTo;
+
             const res = await fetch('https://api.resend.com/emails', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${resendKey}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    from: fromAddress,
-                    to: [ADMIN_EMAIL],
-                    cc: [email],
-                    reply_to: email,
-                    subject,
-                    html: htmlContent,
-                }),
+                body: JSON.stringify(emailPayload),
             });
 
             const resData = await res.json();
@@ -213,19 +269,25 @@ export async function onRequest(context) {
     const brevoKey = typeof env.BREVO_API_KEY === 'string' ? env.BREVO_API_KEY.trim() : '';
     if (brevoKey && !sent) {
         try {
+            const toRecipients = [{ email: ADMIN_EMAIL, name: 'Alif Langkawi Admin' }];
+            if (email && !isSpecialInquiry) {
+                toRecipients.push({ email, name: name || 'Guest' });
+            }
+            const brevoPayload = {
+                sender: { name: isSpecialInquiry ? 'Alif Langkawi Inquiry' : 'Alif Langkawi Booking', email: 'no-reply@aliflangkawi.com' },
+                to: toRecipients,
+                subject,
+                htmlContent,
+            };
+            if (replyTo) brevoPayload.replyTo = { email: replyTo, name: name || 'Guest' };
+
             const res = await fetch('https://api.brevo.com/v3/smtp/email', {
                 method: 'POST',
                 headers: {
                     'api-key': brevoKey,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    sender: { name: 'Alif Langkawi Booking', email: 'no-reply@aliflangkawi.com' },
-                    to: [{ email: ADMIN_EMAIL, name: 'Alif Langkawi Admin' }, { email, name: name || 'Guest' }],
-                    replyTo: { email, name: name || 'Guest' },
-                    subject,
-                    htmlContent,
-                }),
+                body: JSON.stringify(brevoPayload),
             });
             if (res.ok) {
                 sent = true;
