@@ -2341,8 +2341,10 @@
         .cart-backdrop {
             position: fixed;
             inset: 0;
-            z-index: 55;
-            background: rgba(15, 23, 42, 0.45);
+            z-index: 900;
+            background: rgba(15, 23, 42, 0.48);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.25s ease;
@@ -2357,15 +2359,18 @@
             position: fixed;
             top: 0;
             right: 0;
-            z-index: 56;
-            width: min(100%, 420px);
+            z-index: 905;
+            width: min(100%, 430px);
             height: 100%;
+            height: 100dvh;
+            max-height: 100dvh;
             background: #fff;
-            box-shadow: -12px 0 40px rgba(15, 23, 42, 0.12);
+            box-shadow: -12px 0 40px rgba(15, 23, 42, 0.18);
             transform: translateX(100%);
             transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .cart-drawer.is-open {
@@ -2373,12 +2378,16 @@
         }
 
         .cart-drawer-head {
+            flex: 0 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 1.1rem;
+            padding: 1rem 1.2rem;
             border-bottom: 1px solid #e2e8f0;
             background: #f8fafc;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .cart-drawer-head h3 {
@@ -2400,10 +2409,22 @@
             padding: 0.25rem;
         }
 
-        .cart-lines {
-            flex: 1;
+        .cart-drawer-scrollable {
+            flex: 1 1 auto;
             overflow-y: auto;
-            padding: 0.75rem 1rem 1rem;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: contain;
+            touch-action: pan-y;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            height: 100%;
+        }
+
+        .cart-lines {
+            flex: 0 0 auto;
+            padding: 0.75rem 1rem 0.5rem;
             display: flex;
             flex-direction: column;
             gap: 0.65rem;
@@ -2467,8 +2488,9 @@
         }
 
         .cart-drawer-footer {
+            flex: 0 0 auto;
             border-top: 1px solid #e2e8f0;
-            padding: 1rem 1.1rem 1.35rem;
+            padding: 1rem 1.1rem calc(3rem + env(safe-area-inset-bottom, 24px));
             background: #f8fafc;
         }
 
@@ -3421,6 +3443,15 @@
             .floating-chat-btn i,
             .floating-whatsapp i {
                 font-size: 1.45rem;
+            }
+
+            .cart-drawer {
+                width: 100vw;
+                max-width: 100vw;
+            }
+
+            .cart-drawer-footer {
+                padding: 1rem 1rem calc(5.5rem + env(safe-area-inset-bottom, 28px));
             }
 
             /* Hero Section */
@@ -5018,64 +5049,66 @@
             <h3>Cart</h3>
             <button type="button" id="cartCloseBtn" aria-label="Close cart">×</button>
         </div>
-        <p id="cartEmptyHint" class="cart-empty">No items yet. Open a tour package and tap Add to cart.</p>
-        <div id="cartLines" class="cart-lines"></div>
-        <div class="cart-drawer-footer">
-            <div class="cart-total-row">
-                <span>Total</span>
-                <strong id="cartTotalDisplay">RM 0.00</strong>
-            </div>
-            <label class="checkout-label" for="checkoutName">Full name</label>
-            <input id="checkoutName" class="checkout-input" type="text" autocomplete="name" placeholder="As on ID / passport">
-            <label class="checkout-label" for="checkoutEmail">Email</label>
-            <input id="checkoutEmail" class="checkout-input" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
-            <label class="checkout-label" for="checkoutPhone">Phone / WhatsApp</label>
-            <input id="checkoutPhone" class="checkout-input" type="text" inputmode="numeric" autocomplete="tel" placeholder="e.g. 0149495457">
-            <div class="checkout-hotel-card is-active" id="checkoutHotelCard">
-                <div class="checkout-hotel-head">
-                    <label class="checkout-hotel-toggle" for="checkoutHotelPickupToggle">
-                        <input type="checkbox" id="checkoutHotelPickupToggle" checked>
-                        <span>Add hotel pickup</span>
+        <div id="cartDrawerScrollable" class="cart-drawer-scrollable">
+            <p id="cartEmptyHint" class="cart-empty">No items yet. Open a tour package and tap Add to cart.</p>
+            <div id="cartLines" class="cart-lines"></div>
+            <div class="cart-drawer-footer">
+                <div class="cart-total-row">
+                    <span>Total</span>
+                    <strong id="cartTotalDisplay">RM 0.00</strong>
+                </div>
+                <label class="checkout-label" for="checkoutName">Full name</label>
+                <input id="checkoutName" class="checkout-input" type="text" autocomplete="name" placeholder="As on ID / passport">
+                <label class="checkout-label" for="checkoutEmail">Email</label>
+                <input id="checkoutEmail" class="checkout-input" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
+                <label class="checkout-label" for="checkoutPhone">Phone / WhatsApp</label>
+                <input id="checkoutPhone" class="checkout-input" type="text" inputmode="numeric" autocomplete="tel" placeholder="e.g. 0149495457">
+                <div class="checkout-hotel-card is-active" id="checkoutHotelCard">
+                    <div class="checkout-hotel-head">
+                        <label class="checkout-hotel-toggle" for="checkoutHotelPickupToggle">
+                            <input type="checkbox" id="checkoutHotelPickupToggle" checked>
+                            <span>Add hotel pickup</span>
+                        </label>
+                        <span class="checkout-hotel-free-badge">Free</span>
+                    </div>
+                    <p class="checkout-hotel-hint">Complimentary pickup &amp; drop-off in selected Langkawi areas.</p>
+                    <div id="checkoutHotelFieldGroup" class="checkout-hotel-field-group">
+                        <label class="checkout-label" for="checkoutHotelName">Hotel name / pickup location</label>
+                        <input id="checkoutHotelName" class="checkout-input" type="text" placeholder="e.g. Grand Hotel, Room 205">
+                    </div>
+                </div>
+                <label class="checkout-label">Payment Method</label>
+                <div class="checkout-pm-grid" role="radiogroup" aria-label="Payment Method">
+                    <label class="checkout-pm-option is-selected" for="checkoutPmStripe">
+                        <input type="radio" id="checkoutPmStripe" name="checkoutPaymentMethod" value="stripe" checked>
+                        <div class="checkout-pm-card">
+                            <div class="checkout-pm-top">
+                                <span class="checkout-pm-name">💳 Credit / Debit Card</span>
+                                <span class="checkout-pm-badge">Stripe</span>
+                            </div>
+                            <span class="checkout-pm-desc">Visa, Mastercard, Apple Pay</span>
+                        </div>
                     </label>
-                    <span class="checkout-hotel-free-badge">Free</span>
-                </div>
-                <p class="checkout-hotel-hint">Complimentary pickup &amp; drop-off in selected Langkawi areas.</p>
-                <div id="checkoutHotelFieldGroup" class="checkout-hotel-field-group">
-                    <label class="checkout-label" for="checkoutHotelName">Hotel name / pickup location</label>
-                    <input id="checkoutHotelName" class="checkout-input" type="text" placeholder="e.g. Grand Hotel, Room 205">
-                </div>
-            </div>
-            <label class="checkout-label">Payment Method</label>
-            <div class="checkout-pm-grid" role="radiogroup" aria-label="Payment Method">
-                <label class="checkout-pm-option is-selected" for="checkoutPmStripe">
-                    <input type="radio" id="checkoutPmStripe" name="checkoutPaymentMethod" value="stripe" checked>
-                    <div class="checkout-pm-card">
-                        <div class="checkout-pm-top">
-                            <span class="checkout-pm-name">💳 Credit / Debit Card</span>
-                            <span class="checkout-pm-badge">Stripe</span>
+                    <label class="checkout-pm-option" for="checkoutPmBillplz">
+                        <input type="radio" id="checkoutPmBillplz" name="checkoutPaymentMethod" value="billplz">
+                        <div class="checkout-pm-card">
+                            <div class="checkout-pm-top">
+                                <span class="checkout-pm-name">🏛️ FPX Online Banking</span>
+                                <span class="checkout-pm-badge">Billplz</span>
+                            </div>
+                            <span class="checkout-pm-desc">Maybank2u, CIMB, Bank Islam, etc.</span>
                         </div>
-                        <span class="checkout-pm-desc">Visa, Mastercard, Apple Pay</span>
-                    </div>
-                </label>
-                <label class="checkout-pm-option" for="checkoutPmBillplz">
-                    <input type="radio" id="checkoutPmBillplz" name="checkoutPaymentMethod" value="billplz">
-                    <div class="checkout-pm-card">
-                        <div class="checkout-pm-top">
-                            <span class="checkout-pm-name">🏛️ FPX Online Banking</span>
-                            <span class="checkout-pm-badge">Billplz</span>
-                        </div>
-                        <span class="checkout-pm-desc">Maybank2u, CIMB, Bank Islam, etc.</span>
-                    </div>
-                </label>
+                    </label>
+                </div>
+                <div class="checkout-terms-row">
+                    <input type="checkbox" id="checkoutTermsAgree" class="checkout-terms-checkbox" autocomplete="off">
+                    <p class="checkout-terms-label" style="margin: 0">
+                        <label for="checkoutTermsAgree">I have read and agree to the </label><button type="button" id="termsOpenBtn" class="checkout-terms-link">Terms &amp; Conditions</button>.
+                    </p>
+                </div>
+                <button type="button" id="cartPayBtn" class="checkout-pay-btn" disabled>Pay with Card (Stripe)</button>
+                <button type="button" id="cartClearBtn" class="cart-secondary-btn">Empty cart</button>
             </div>
-            <div class="checkout-terms-row">
-                <input type="checkbox" id="checkoutTermsAgree" class="checkout-terms-checkbox" autocomplete="off">
-                <p class="checkout-terms-label" style="margin: 0">
-                    <label for="checkoutTermsAgree">I have read and agree to the </label><button type="button" id="termsOpenBtn" class="checkout-terms-link">Terms &amp; Conditions</button>.
-                </p>
-            </div>
-            <button type="button" id="cartPayBtn" class="checkout-pay-btn" disabled>Pay with Card (Stripe)</button>
-            <button type="button" id="cartClearBtn" class="cart-secondary-btn">Empty cart</button>
         </div>
     </aside>
 
@@ -6266,6 +6299,10 @@
             }
             document.body.style.overflow = 'hidden';
             renderCartPanel();
+            const scrollable = document.getElementById('cartDrawerScrollable');
+            if (scrollable) {
+                scrollable.scrollTop = 0;
+            }
         }
 
         function closeCart() {
