@@ -4771,12 +4771,12 @@
                                 </div>
                                 <p id="rentalSeasonHint" class="rental-season-note">Low Season from RM 80/day. Peak Season from RM 100/day.</p>
                                 <p id="rentalExtraHourHint" class="rental-season-note">Additional hour: RM10/hour. If rental exceeds 5 hours, it will be charged as a full day.</p>
-                                <p id="rentalTotalHint" class="rental-season-note">Rental period: 1 day. Estimated total: RM 80.</p>
+                                <p id="rentalTotalHint" class="rental-season-note">Rental period: 1 day. Rental: RM 80 + Deposit: RM 100 = Total RM 180.</p>
                                 <div class="rental-showroom-actions">
-                                    <button id="rentalPayDepositBtn" type="button" class="pay-deposit"><i class="bi bi-lightning-charge-fill"></i> Pay Deposit RM100</button>
+                                    <button id="rentalPayDepositBtn" type="button" class="pay-deposit"><i class="bi bi-lightning-charge-fill"></i> Pay Full (RM 180)</button>
                                     <button id="rentalAddToCartBtn" type="button" class="add-cart"><i class="bi bi-cart-plus"></i> Add to Cart</button>
                                 </div>
-                                <p class="rental-deposit-note"><strong>RM100 deposit</strong> required to secure booking. Balance paid on arrival.</p>
+                                <p class="rental-deposit-note">Full payment online: <strong>Includes refundable RM100 security deposit</strong> + rental charge.</p>
                             </div>
                             <div class="rental-showroom-specs">
                                 <div class="rental-showroom-spec">
@@ -4886,12 +4886,12 @@
                                         <option value="Jetty">Jetty</option>
                                     </select>
                                 </div>
-                                <p id="rentalMotorTotalHint" class="rental-season-note">Rental period: 1 day. Estimated total: RM 90.</p>
+                                <p id="rentalMotorTotalHint" class="rental-season-note">Rental period: 1 day. Rental: RM 90 + Deposit: RM 100 = Total RM 190.</p>
                                 <div class="rental-showroom-actions">
-                                    <button id="rentalMotorPayDepositBtn" type="button" class="pay-deposit"><i class="bi bi-lightning-charge-fill"></i> Pay Deposit RM100</button>
+                                    <button id="rentalMotorPayDepositBtn" type="button" class="pay-deposit"><i class="bi bi-lightning-charge-fill"></i> Pay Full (RM 190)</button>
                                     <button id="rentalMotorAddToCartBtn" type="button" class="add-cart"><i class="bi bi-cart-plus"></i> Add to Cart</button>
                                 </div>
-                                <p class="rental-deposit-note"><strong>RM100 deposit</strong> required to secure booking. Balance paid on arrival.</p>
+                                <p class="rental-deposit-note">Full payment online: <strong>Includes refundable RM100 security deposit</strong> + rental charge.</p>
                             </div>
                             <div class="rental-showroom-specs">
                                 <div class="rental-showroom-spec">
@@ -6406,7 +6406,7 @@
                 row.className = 'cart-line';
                 row.innerHTML = `
                     <p class="cart-line-title">${line.title}</p>
-                    <p class="cart-line-meta">${line.variant ? `${line.variant}<br>` : ''}${line.date ? `Date: ${line.date}` : ''}${line.time ? ` · Time: ${line.time}` : ''}${line.pickupLocation ? `<br>📍 Pickup: ${line.pickupLocation} · Return: ${line.returnLocation || line.pickupLocation}` : ''}${line.isDeposit ? `<br><em style="color:#0a8f72;font-size:0.76rem;font-weight:700;">⚡ Deposit only — ${line.depositNote || 'Balance paid on arrival.'}</em>` : ''}</p>
+                    <p class="cart-line-meta">${line.variant ? `${line.variant}<br>` : ''}${line.date ? `Date: ${line.date}` : ''}${line.time ? ` · Time: ${line.time}` : ''}${line.pickupLocation ? `<br>📍 Pickup: ${line.pickupLocation} · Return: ${line.returnLocation || line.pickupLocation}` : ''}${line.isDeposit ? `<br><em style="color:#0a8f72;font-size:0.76rem;font-weight:700;">⚡ Deposit only — ${line.depositNote || 'Balance paid on arrival.'}</em>` : (line.depositNote ? `<br><em style="color:#0a8f72;font-size:0.76rem;font-weight:700;">🛡️ ${line.depositNote}</em>` : '')}</p>
                     <div class="cart-line-foot">
                         <span class="cart-line-price">${line.priceLabel}</span>
                         <button type="button" class="cart-line-remove" data-id="${line.id}">Remove</button>
@@ -7685,7 +7685,12 @@
             const extraHourLine = summary.extraHours > 0
                 ? ` + ${summary.extraHours} extra hour${summary.extraHours > 1 ? 's' : ''}`
                 : '';
-            rentalTotalHint.textContent = `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${extraHourLine}. Estimated total: RM ${summary.totalPriceValue.toLocaleString('en-MY')}.`;
+            const depositRm = 100;
+            const fullTotal = summary.totalPriceValue + depositRm;
+            rentalTotalHint.textContent = `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${extraHourLine}. Rental: RM ${summary.totalPriceValue.toLocaleString('en-MY')} + Deposit: RM 100 = Total RM ${fullTotal.toLocaleString('en-MY')}.`;
+            if (rentalPayDepositBtn) {
+                rentalPayDepositBtn.innerHTML = `<i class="bi bi-lightning-charge-fill"></i> Pay Full (RM ${fullTotal.toLocaleString('en-MY')})`;
+            }
         }
 
         function openSelfDriveWhatsAppBooking() {
@@ -7695,6 +7700,8 @@
             }
 
             const summary = getSelfDriveBookingSummary(model);
+            const depositRm = 100;
+            const fullTotal = summary.totalPriceValue + depositRm;
 
             const message = [
                 'Hi ALIF LANGKAWI EXPERIENCE,',
@@ -7708,12 +7715,14 @@
                 `Return location: ${summary.returnLocation}`,
                 `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${summary.extraHours > 0 ? ` + ${summary.extraHours} hour${summary.extraHours > 1 ? 's' : ''}` : ''}`,
                 `Rate (24 Hour / Unit): ${summary.dailyRateLabel} (${summary.seasonLabel})`,
-                `Additional hour charge: RM ${summary.extraHourCharge.toLocaleString('en-MY')}`,
-                `Total price: RM ${summary.totalPriceValue.toLocaleString('en-MY')}`,
+                summary.extraHourCharge > 0 ? `Additional hour charge: RM ${summary.extraHourCharge.toLocaleString('en-MY')}` : '',
+                `Rental price: RM ${summary.totalPriceValue.toLocaleString('en-MY')}`,
+                `Security deposit (refundable): RM 100`,
+                `Total payable (Full payment): RM ${fullTotal.toLocaleString('en-MY')}`,
                 `Transmission: ${model.transmission}`,
                 `Capacity: ${model.capacity}`,
                 'Please confirm availability. Thank you.'
-            ].join('\n');
+            ].filter(Boolean).join('\n');
 
             window.open(`https://wa.me/60149495457?text=${encodeURIComponent(message)}`, '_blank');
         }
@@ -7723,7 +7732,9 @@
             const model = rentalModels[activeRentalModelKey];
             if (!model) return null;
             const summary = getSelfDriveBookingSummary(model);
-            const depositCents = 10000; // RM100 deposit
+            const depositRm = 100;
+            const totalRm = summary.totalPriceValue + depositRm;
+            const totalCents = totalRm * 100;
             const pickupDateStr = summary.pickupDate !== 'Not selected'
                 ? summary.pickupDate
                 : (rentalDateInput ? rentalDateInput.value : '');
@@ -7734,15 +7745,15 @@
                 id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
                 packageKey: 'rental-self-drive',
                 title: `Self Drive — ${model.name}`,
-                variant: `${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''} | Total est. RM${summary.totalPriceValue.toLocaleString('en-MY')}`,
-                priceLabel: 'RM100 (Deposit)',
-                cents: depositCents,
+                variant: `${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${summary.extraHours > 0 ? ` + ${summary.extraHours}h` : ''} | Rental RM${summary.totalPriceValue.toLocaleString('en-MY')} + Deposit RM100`,
+                priceLabel: `RM ${totalRm.toLocaleString('en-MY')}`,
+                cents: totalCents,
                 date: formattedDate,
                 time: summary.pickupTime,
                 pickupLocation: summary.pickupLocation,
                 returnLocation: summary.returnLocation,
-                isDeposit: true,
-                depositNote: 'Balance paid on arrival.'
+                isDeposit: false,
+                depositNote: 'Includes refundable RM100 security deposit.'
             };
         }
 
@@ -7795,7 +7806,9 @@
             const model = motorModels[activeMotorModelKey];
             if (!model) return null;
             const summary = getMotorBookingSummary(model);
-            const depositCents = 10000; // RM100 deposit
+            const depositRm = 100;
+            const totalRm = summary.totalPriceValue + depositRm;
+            const totalCents = totalRm * 100;
             const pickupDateStr = summary.pickupDate !== 'Not selected'
                 ? summary.pickupDate
                 : (rentalMotorDateInput ? rentalMotorDateInput.value : '');
@@ -7806,15 +7819,15 @@
                 id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
                 packageKey: 'rental-motor',
                 title: `Motor Rental — ${model.name}`,
-                variant: `${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''} | Total est. RM${summary.totalPriceValue.toLocaleString('en-MY')}`,
-                priceLabel: 'RM100 (Deposit)',
-                cents: depositCents,
+                variant: `${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${summary.extraHours > 0 ? ` + ${summary.extraHours}h` : ''} | Rental RM${summary.totalPriceValue.toLocaleString('en-MY')} + Deposit RM100`,
+                priceLabel: `RM ${totalRm.toLocaleString('en-MY')}`,
+                cents: totalCents,
                 date: formattedDate,
                 time: summary.pickupTime,
                 pickupLocation: summary.pickupLocation,
                 returnLocation: summary.returnLocation,
-                isDeposit: true,
-                depositNote: 'Balance paid on arrival.'
+                isDeposit: false,
+                depositNote: 'Includes refundable RM100 security deposit.'
             };
         }
 
@@ -8225,7 +8238,12 @@
             const extraHourLine = summary.extraHours > 0
                 ? ` + ${summary.extraHours} extra hour${summary.extraHours > 1 ? 's' : ''}`
                 : '';
-            rentalMotorTotalHint.textContent = `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${extraHourLine}. Estimated total: RM ${summary.totalPriceValue.toLocaleString('en-MY')}.`;
+            const depositRm = 100;
+            const fullTotal = summary.totalPriceValue + depositRm;
+            rentalMotorTotalHint.textContent = `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${extraHourLine}. Rental: RM ${summary.totalPriceValue.toLocaleString('en-MY')} + Deposit: RM 100 = Total RM ${fullTotal.toLocaleString('en-MY')}.`;
+            if (rentalMotorPayDepositBtn) {
+                rentalMotorPayDepositBtn.innerHTML = `<i class="bi bi-lightning-charge-fill"></i> Pay Full (RM ${fullTotal.toLocaleString('en-MY')})`;
+            }
         }
 
         function setMotorModel(modelKey) {
@@ -8256,6 +8274,8 @@
                 return;
             }
             const summary = getMotorBookingSummary(model);
+            const depositRm = 100;
+            const fullTotal = summary.totalPriceValue + depositRm;
 
             const message = [
                 'Hi ALIF LANGKAWI EXPERIENCE,',
@@ -8269,10 +8289,13 @@
                 `Return location: ${summary.returnLocation}`,
                 `Rental period: ${summary.rentalDays} day${summary.rentalDays > 1 ? 's' : ''}${summary.extraHours > 0 ? ` + ${summary.extraHours} hour${summary.extraHours > 1 ? 's' : ''}` : ''}`,
                 `Rate (per day): ${summary.dailyRateLabel}`,
-                `Total price: RM ${summary.totalPriceValue.toLocaleString('en-MY')}`,
+                summary.extraHourCharge > 0 ? `Additional hour charge: RM ${summary.extraHourCharge.toLocaleString('en-MY')}` : '',
+                `Rental price: RM ${summary.totalPriceValue.toLocaleString('en-MY')}`,
+                `Security deposit (refundable): RM 100`,
+                `Total payable (Full payment): RM ${fullTotal.toLocaleString('en-MY')}`,
                 `Transmission: ${model.transmission}`,
                 'Please confirm availability. Thank you.'
-            ].join('\n');
+            ].filter(Boolean).join('\n');
 
             window.open(`https://wa.me/60149495457?text=${encodeURIComponent(message)}`, '_blank');
         }
@@ -8624,7 +8647,7 @@
                         &bull; <strong>Toyota Vios</strong>: Serendah RM130 - RM160 / hari<br>
                         &bull; <strong>Toyota Vellfire / Staria</strong>: Dari RM400 - RM600 / hari<br>
                         &bull; <strong>Sewa Motor (ADV160, NMAX)</strong>: Dari RM50 - RM90 / hari<br><br>
-                        ⚡ <em>Hanya bayar deposit RM100 secara online di website, baki bayar semasa ambil kunci di Langkawi!</em>`,
+                        ⚡ <em>Bayaran penuh dibuat di website (termasuk sewa + deposit sekuriti RM100 yang dipulangkan semasa serah kenderaan)!</em>`,
                         [
                             { text: '👉 Pilih Kereta Sewa', action: 'goto_rental' },
                             { text: '💬 Chat Terus dengan Admin', action: 'live_admin', isPrimary: true }
