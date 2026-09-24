@@ -3040,6 +3040,76 @@
             }
         }
 
+        .mangrove-addon-box {
+            margin: 0 0.85rem 1.15rem;
+            padding: 0.85rem 0.95rem;
+            background: #f0fdf9;
+            border: 1.5px solid #a7f3d0;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .mangrove-addon-box.is-checked {
+            border-color: #0a8f72;
+            background: #ecfdf5;
+            box-shadow: 0 2px 8px rgba(10, 143, 114, 0.12);
+        }
+
+        .mangrove-addon-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            cursor: pointer;
+            user-select: none;
+            width: 100%;
+        }
+
+        .mangrove-addon-label input[type="checkbox"] {
+            margin-top: 0.2rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: #0a8f72;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .mangrove-addon-content {
+            flex: 1;
+        }
+
+        .mangrove-addon-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .mangrove-addon-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #064e3b;
+        }
+
+        .mangrove-addon-price {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #0a8f72;
+            background: #d1fae5;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            white-space: nowrap;
+        }
+
+        .mangrove-addon-desc {
+            margin: 0.25rem 0 0;
+            font-size: 0.78rem;
+            color: #047857;
+            line-height: 1.35;
+        }
+
         .package-slot-grid {
             padding: 0.85rem;
             display: grid;
@@ -5068,6 +5138,20 @@
                         </div>
                     </div>
 
+                    <!-- Mangrove Tour Add-on: Licensed Tourist Guide -->
+                    <div id="mangroveAddonContainer" class="mangrove-addon-box hidden" style="display: none;">
+                        <label class="mangrove-addon-label" for="mangroveGuideCheckbox">
+                            <input type="checkbox" id="mangroveGuideCheckbox">
+                            <div class="mangrove-addon-content">
+                                <div class="mangrove-addon-title-row">
+                                    <span class="mangrove-addon-title">🧑‍💼 Licensed Tourist Guide</span>
+                                    <span class="mangrove-addon-price">+ RM 250</span>
+                                </div>
+                                <p class="mangrove-addon-desc">Optional certified nature guide to accompany your boat tour &amp; provide comprehensive Geopark interpretation.</p>
+                            </div>
+                        </label>
+                    </div>
+
                     <div class="package-booking-alert">
                         <p id="packageBookingDeadline">42 hours left to book. This slot is filling up fast.</p>
                     </div>
@@ -5253,6 +5337,17 @@
         const packageBookingPrice = document.getElementById('packageBookingPrice');
         const packageBookingUnit = document.getElementById('packageBookingUnit');
         const packageModalAddCart = document.getElementById('packageModalAddCart');
+        const mangroveAddonContainer = document.getElementById('mangroveAddonContainer');
+        const mangroveGuideCheckbox = document.getElementById('mangroveGuideCheckbox');
+        let activePackageKey = '';
+
+        function isMangrovePackage() {
+            return activePackageKey === 'mangrove' || (activePackageDetail && (activePackageDetail === (typeof packageDetails !== 'undefined' ? packageDetails.mangrove : null) || activePackageDetail.tag === 'Package Mangrove Langkawi'));
+        }
+
+        function isMangroveGuideSelected() {
+            return isMangrovePackage() && Boolean(mangroveGuideCheckbox && mangroveGuideCheckbox.checked);
+        }
         const cartBackdrop = document.getElementById('cartBackdrop');
         const cartDrawer = document.getElementById('cartDrawer');
         const cartCloseBtn = document.getElementById('cartCloseBtn');
@@ -6034,7 +6129,11 @@
             }) : 'Not selected';
             const timeText = selectedBookingTime || packageModalTimeSelect.value || 'Not selected';
             const selectedVariant = getSelectedVariant(activePackageDetail);
-            const selectedVariantText = selectedVariant ? `${selectedVariant.name} - ${selectedVariant.price}` : '';
+            const isGuide = isMangroveGuideSelected();
+            let selectedVariantText = selectedVariant ? `${selectedVariant.name} - ${selectedVariant.price}` : '';
+            if (isGuide) {
+                selectedVariantText += ' (+ Licensed Tourist Guide RM250)';
+            }
             const selectedPackageTitle = getSelectedPackageTitle(activePackageDetail);
 
             const reserveLines = [
@@ -6047,6 +6146,10 @@
                 reserveLines.push(`Selected option: ${selectedVariantText}`);
             } else {
                 reserveLines.push(activePackageDetail.price);
+            }
+
+            if (isGuide) {
+                reserveLines.push('Add-on: Licensed Tourist Guide (+RM 250)');
             }
 
             reserveLines.push(`Preferred date: ${preferredDate}`);
@@ -6065,6 +6168,10 @@
                 bookLines.push(`Selected option: ${selectedVariantText}`);
             } else {
                 bookLines.push(activePackageDetail.price);
+            }
+
+            if (isGuide) {
+                bookLines.push('Add-on: Licensed Tourist Guide (+RM 250)');
             }
 
             bookLines.push(`Preferred date: ${preferredDate}`);
@@ -6103,6 +6210,46 @@
             }
 
             updateBookingLinks();
+        }
+
+        function updatePackageModalPriceDisplay() {
+            if (!activePackageDetail) return;
+            const bookingMeta = getBookingMeta(activePackageDetail);
+            const selectedVariant = getSelectedVariant(activePackageDetail);
+            const basePriceStr = selectedVariant ? parsePriceValue(selectedVariant.price) : bookingMeta.displayPrice;
+            const baseCents = parsePriceToCents(basePriceStr);
+            const guideSelected = isMangroveGuideSelected();
+            const addonCents = guideSelected ? 25000 : 0;
+            const totalCents = baseCents + addonCents;
+            const totalRm = Math.round(totalCents / 100);
+
+            if (guideSelected) {
+                packageModalPrice.textContent = `RM ${totalRm} selected (incl. Guide)`;
+                packageBookingPrice.textContent = `RM ${totalRm}`;
+                packageBookingUnit.textContent = selectedVariant
+                    ? `Selected: ${selectedVariant.name} + Tourist Guide (+RM250)`
+                    : 'Selected with Tourist Guide (+RM250)';
+            } else {
+                if (selectedVariant) {
+                    packageModalPrice.textContent = `${basePriceStr} selected`;
+                    packageBookingPrice.textContent = basePriceStr;
+                    packageBookingUnit.textContent = `Selected: ${selectedVariant.name}`;
+                } else {
+                    packageModalPrice.textContent = activePackageDetail.price;
+                    packageBookingPrice.textContent = bookingMeta.displayPrice;
+                    packageBookingUnit.textContent = bookingMeta.unitText;
+                }
+            }
+            if (mangroveAddonContainer) {
+                mangroveAddonContainer.classList.toggle('is-checked', guideSelected);
+            }
+            updateBookingLinks();
+        }
+
+        if (mangroveGuideCheckbox) {
+            mangroveGuideCheckbox.addEventListener('change', () => {
+                updatePackageModalPriceDisplay();
+            });
         }
 
         function renderVariantSelection(detail) {
@@ -6179,13 +6326,8 @@
                 card.addEventListener('click', () => {
                     selectedPackageVariantName = variant.name;
                     renderVariantSelection(detail);
-                    updateBookingLinks();
                     packageModalTitle.textContent = getSelectedPackageTitle(detail);
-
-                    const selectedPrice = parsePriceValue(variant.price);
-                    packageModalPrice.textContent = `${selectedPrice} selected`;
-                    packageBookingPrice.textContent = selectedPrice;
-                    packageBookingUnit.textContent = 'selected package price';
+                    updatePackageModalPriceDisplay();
                 });
 
                 packageModalVariants.appendChild(card);
@@ -6231,6 +6373,7 @@
             }
 
             activePackageDetail = detail;
+            activePackageKey = packageKey || Object.keys(packageDetails).find((k) => packageDetails[k] === detail) || '';
             selectedPackageTitleOverride = initialTitleOverride;
             if (Array.isArray(detail.variants) && detail.variants.length > 0) {
                 const hasInitialVariant = initialVariantName
@@ -6258,19 +6401,19 @@
             packageBookingDeadline.textContent = `${bookingMeta.deadlineHours} hours left to book. The tour operator will stop accepting bookings for your date soon.`;
             packageBookingCancel.innerHTML = `<strong>Free cancellation</strong> ${bookingMeta.cancellationText}`;
             packageBookingReserve.innerHTML = `<strong>Reserve now, pay nothing</strong> ${bookingMeta.reserveText}`;
-            const selectedVariant = getSelectedVariant(detail);
-            const selectedVariantPrice = selectedVariant ? parsePriceValue(selectedVariant.price) : bookingMeta.displayPrice;
-            packageBookingPrice.textContent = selectedVariantPrice;
-            packageBookingUnit.textContent = selectedVariant ? `Selected: ${selectedVariant.name}` : bookingMeta.unitText;
 
-            if (selectedVariant) {
-                packageModalPrice.textContent = `${selectedVariantPrice} selected`;
-            } else {
-                packageModalPrice.textContent = detail.price;
+            const isMangrove = isMangrovePackage();
+            if (mangroveAddonContainer) {
+                mangroveAddonContainer.style.display = isMangrove ? 'block' : 'none';
+                mangroveAddonContainer.classList.toggle('hidden', !isMangrove);
+                mangroveAddonContainer.classList.remove('is-checked');
+            }
+            if (mangroveGuideCheckbox) {
+                mangroveGuideCheckbox.checked = false;
             }
 
             renderVariantSelection(detail);
-            updateBookingLinks();
+            updatePackageModalPriceDisplay();
 
             packageModalHighlights.innerHTML = '';
             detail.highlights.forEach((item) => {
@@ -6287,9 +6430,16 @@
             packageModalBackdrop.classList.add('hidden');
             document.body.style.overflow = '';
             activePackageDetail = null;
+            activePackageKey = '';
             selectedBookingTime = '';
             selectedPackageVariantName = '';
             selectedPackageTitleOverride = '';
+            if (mangroveGuideCheckbox) {
+                mangroveGuideCheckbox.checked = false;
+            }
+            if (mangroveAddonContainer) {
+                mangroveAddonContainer.classList.remove('is-checked');
+            }
         }
 
         packageModalClose.addEventListener('click', closePackageDetails);
@@ -6489,14 +6639,24 @@
             }
 
             const priceLabel = getSelectionPriceLabel(activePackageDetail);
-            const cents = parsePriceToCents(priceLabel);
-            if (cents <= 0) {
+            const baseCents = parsePriceToCents(priceLabel);
+            if (baseCents <= 0) {
                 window.alert('Invalid price for this item.');
                 return;
             }
 
+            const isGuide = isMangroveGuideSelected();
+            const guideCents = isGuide ? 25000 : 0;
+            const finalCents = baseCents + guideCents;
+            const finalPriceLabel = `RM ${Math.round(finalCents / 100)}`;
+
             const packageKey = Object.keys(packageDetails).find((k) => packageDetails[k] === activePackageDetail) || '';
             const variant = getSelectedVariant(activePackageDetail);
+            const variantName = variant ? variant.name : '';
+            const fullVariant = isGuide
+                ? (variantName ? `${variantName} + Licensed Tourist Guide (+RM250)` : 'Licensed Tourist Guide (+RM250)')
+                : variantName;
+
             const preferredDateStr = new Date(`${dateVal}T00:00:00`).toLocaleDateString('en-MY', {
                 day: '2-digit',
                 month: 'short',
@@ -6507,9 +6667,10 @@
                 id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
                 packageKey,
                 title: getSelectedPackageTitle(activePackageDetail),
-                variant: variant ? variant.name : '',
-                priceLabel: parsePriceValue(priceLabel),
-                cents,
+                variant: fullVariant,
+                priceLabel: finalPriceLabel,
+                cents: finalCents,
+                hasGuide: isGuide,
                 date: preferredDateStr,
                 time: timeVal,
             };
