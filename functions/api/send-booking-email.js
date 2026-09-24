@@ -27,7 +27,7 @@ function jsonResponse(data, status = 200) {
 }
 
 function buildHtmlEmail(data) {
-    const { name, email, phone, hotelPickup, lines, totalCents, gateway, paymentRef } = data;
+    const { name, email, phone, hotelPickup, lines, totalCents, subtotalCents, feeCents, feeLabel, gateway, paymentRef } = data;
     const totalRm = ((totalCents || 0) / 100).toFixed(2);
     const dateStr = new Date().toLocaleDateString('en-MY', {
         day: '2-digit',
@@ -120,6 +120,15 @@ function buildHtmlEmail(data) {
                         ${itemsRows}
                     </tbody>
                     <tfoot>
+                        ${feeCents ? `
+                        <tr>
+                            <td style="padding: 10px 8px 4px; font-size: 13px; color: #64748b;">Subtotal</td>
+                            <td style="padding: 10px 8px 4px; font-size: 13px; color: #64748b; text-align: right; font-weight: 600;">RM ${(((subtotalCents || (totalCents - feeCents)) / 100)).toFixed(2)}</td>
+                        </tr>
+                        <tr style="border-bottom: 2px solid #cbd5e1;">
+                            <td style="padding: 4px 8px 10px; font-size: 13px; color: #64748b;">Processing Fee (${feeLabel || 'Gateway Fee'})</td>
+                            <td style="padding: 4px 8px 10px; font-size: 13px; color: #64748b; text-align: right; font-weight: 600;">+ RM ${((feeCents || 0) / 100).toFixed(2)}</td>
+                        </tr>` : ''}
                         <tr>
                             <td style="padding: 16px 8px; font-size: 16px; font-weight: 800; color: #0f172a;">Total Paid</td>
                             <td style="padding: 16px 8px; font-size: 18px; font-weight: 900; color: #0a8f72; text-align: right;">RM ${totalRm}</td>

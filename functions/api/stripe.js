@@ -93,7 +93,7 @@ export async function onRequest(context) {
             return jsonResponse({ error: 'Invalid JSON body' }, 400);
         }
 
-        const { email, name, mobile, redirect_url, cart, amount, description, hotelPickup } = body;
+        const { email, name, mobile, redirect_url, cart, amount, description, hotelPickup, fee } = body;
         if (!email || !redirect_url) {
             return jsonResponse({ error: "Fields 'email' and 'redirect_url' are required." }, 400);
         }
@@ -107,6 +107,7 @@ export async function onRequest(context) {
         if (mobile) params.append('metadata[customer_phone]', String(mobile).trim());
         if (hotelPickup) params.append('metadata[hotel_pickup]', String(hotelPickup).slice(0, 500));
         if (description) params.append('metadata[booking_desc]', String(description).slice(0, 500));
+        if (fee) params.append('metadata[fee_amount]', String(fee));
 
         const cleanRedirect = String(redirect_url).split('?')[0].split('#')[0];
         params.append('success_url', `${cleanRedirect}?stripe_return=1&session_id={CHECKOUT_SESSION_ID}`);
@@ -128,6 +129,16 @@ export async function onRequest(context) {
                 }
                 params.append(`line_items[${index}][quantity]`, '1');
             });
+
+            const feeCents = Number(fee || 0);
+            if (feeCents > 0) {
+                const feeIndex = cart.length;
+                params.append(`line_items[${feeIndex}][price_data][currency]`, 'myr');
+                params.append(`line_items[${feeIndex}][price_data][unit_amount]`, String(feeCents));
+                params.append(`line_items[${feeIndex}][price_data][product_data][name]`, 'Processing Fee (Card 5%)');
+                params.append(`line_items[${feeIndex}][price_data][product_data][description]`, 'Credit / Debit Card payment processing fee');
+                params.append(`line_items[${feeIndex}][quantity]`, '1');
+            }
         } else if (amount) {
             params.append('line_items[0][price_data][currency]', 'myr');
             params.append('line_items[0][price_data][unit_amount]', String(amount));

@@ -2495,17 +2495,45 @@
             background: #f8fafc;
         }
 
+        .cart-summary-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 0.75rem 0.85rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .cart-subtotal-row,
+        .cart-fee-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: #64748b;
+            margin-bottom: 0.35rem;
+        }
+
+        .cart-fee-row span:last-child {
+            color: #d97706;
+            font-weight: 700;
+        }
+
         .cart-total-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.85rem;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #0f172a;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
         }
 
         .cart-total-row strong {
             font-size: 1.15rem;
-            color: #0f172a;
+            color: #0a8f72;
         }
 
         .checkout-label {
@@ -5074,9 +5102,19 @@
             <p id="cartEmptyHint" class="cart-empty">No items yet. Open a tour package and tap Add to cart.</p>
             <div id="cartLines" class="cart-lines"></div>
             <div class="cart-drawer-footer">
-                <div class="cart-total-row">
-                    <span>Total</span>
-                    <strong id="cartTotalDisplay">RM 0.00</strong>
+                <div class="cart-summary-box">
+                    <div class="cart-subtotal-row">
+                        <span>Subtotal</span>
+                        <span id="cartSubtotalDisplay">RM 0.00</span>
+                    </div>
+                    <div class="cart-fee-row" id="cartFeeRow">
+                        <span id="cartFeeLabel">Processing Fee (Card 5%)</span>
+                        <span id="cartFeeDisplay">+ RM 0.00</span>
+                    </div>
+                    <div class="cart-total-row">
+                        <span>Total Payable</span>
+                        <strong id="cartTotalDisplay">RM 0.00</strong>
+                    </div>
                 </div>
                 <label class="checkout-label" for="checkoutName">Full name</label>
                 <input id="checkoutName" class="checkout-input" type="text" autocomplete="name" placeholder="As on ID / passport">
@@ -5105,7 +5143,7 @@
                         <div class="checkout-pm-card">
                             <div class="checkout-pm-top">
                                 <span class="checkout-pm-name">💳 Credit / Debit Card</span>
-                                <span class="checkout-pm-badge">Stripe</span>
+                                <span class="checkout-pm-badge">+5% fee</span>
                             </div>
                             <span class="checkout-pm-desc">Visa, Mastercard, Apple Pay</span>
                         </div>
@@ -5115,7 +5153,7 @@
                         <div class="checkout-pm-card">
                             <div class="checkout-pm-top">
                                 <span class="checkout-pm-name">🏛️ FPX Online Banking</span>
-                                <span class="checkout-pm-badge">Billplz</span>
+                                <span class="checkout-pm-badge">+RM1.50</span>
                             </div>
                             <span class="checkout-pm-desc">Maybank2u, CIMB, Bank Islam, etc.</span>
                         </div>
@@ -5143,7 +5181,7 @@
                 <h4>1. Bookings</h4>
                 <p>All tours and services are subject to availability and weather or operational conditions. ALIF LANGKAWI EXPERIENCE may reschedule or suggest alternatives where necessary.</p>
                 <h4>2. Pricing &amp; payment</h4>
-                <p>Prices shown on this website are subject to change until payment is completed. Online payments are processed securely via Stripe (Credit / Debit Card) and Billplz (FPX Online Banking). You agree to pay the total amount shown at checkout for the items in your cart.</p>
+                <p>Prices shown on this website are subject to change until payment is completed. Online payments are processed securely via Stripe (Credit / Debit Card, subject to a 5% card processing fee) and Billplz (FPX Online Banking, subject to a RM 1.50 gateway fee). The buyer agrees to pay the final total amount shown at checkout for the items in their cart.</p>
                 <h4>3. Cancellations &amp; refunds</h4>
                 <p>Cancellation and refund rules follow the policy stated on each package or as communicated by us in writing. Service fees or third-party charges may be non-refundable.</p>
                 <h4>4. Conduct &amp; safety</h4>
@@ -5218,6 +5256,10 @@
         const navCartBadge = document.getElementById('navCartBadge');
         const cartEmptyHint = document.getElementById('cartEmptyHint');
         const cartLines = document.getElementById('cartLines');
+        const cartSubtotalDisplay = document.getElementById('cartSubtotalDisplay');
+        const cartFeeRow = document.getElementById('cartFeeRow');
+        const cartFeeLabel = document.getElementById('cartFeeLabel');
+        const cartFeeDisplay = document.getElementById('cartFeeDisplay');
         const cartTotalDisplay = document.getElementById('cartTotalDisplay');
         const checkoutName = document.getElementById('checkoutName');
         const checkoutEmail = document.getElementById('checkoutEmail');
@@ -5272,10 +5314,30 @@
             cartPayBtn.disabled = !hasCart || !termsOk;
 
             const pm = getSelectedPaymentMethod();
+            const subtotalCents = typeof getCartSubtotalCents === 'function' ? getCartSubtotalCents() : 0;
+            const feeCents = typeof getPaymentFeeCents === 'function' ? getPaymentFeeCents(subtotalCents, pm) : 0;
+            const totalCents = subtotalCents > 0 ? (subtotalCents + feeCents) : 0;
+
+            if (cartSubtotalDisplay) {
+                cartSubtotalDisplay.textContent = formatRmFromCents(subtotalCents);
+            }
+            if (cartFeeLabel && cartFeeDisplay) {
+                if (pm === 'stripe') {
+                    cartFeeLabel.textContent = 'Processing Fee (Card 5%)';
+                    cartFeeDisplay.textContent = `+ ${formatRmFromCents(feeCents)}`;
+                } else {
+                    cartFeeLabel.textContent = 'Processing Fee (FPX)';
+                    cartFeeDisplay.textContent = `+ ${formatRmFromCents(feeCents)}`;
+                }
+            }
+            if (cartTotalDisplay) {
+                cartTotalDisplay.textContent = formatRmFromCents(totalCents);
+            }
+
             if (pm === 'stripe') {
-                cartPayBtn.textContent = 'Pay with Card (Stripe)';
+                cartPayBtn.textContent = hasCart ? `Pay ${formatRmFromCents(totalCents)} with Card (Stripe)` : 'Pay with Card (Stripe)';
             } else {
-                cartPayBtn.textContent = 'Pay with Billplz (FPX)';
+                cartPayBtn.textContent = hasCart ? `Pay ${formatRmFromCents(totalCents)} with Billplz (FPX)` : 'Pay with Billplz (FPX)';
             }
 
             document.querySelectorAll('.checkout-pm-option').forEach((opt) => {
@@ -6243,8 +6305,25 @@
             localStorage.setItem(CART_KEY, JSON.stringify(cart));
         }
 
-        function getCartTotalCents() {
+        function getCartSubtotalCents() {
             return cart.reduce((sum, line) => sum + (line.cents || 0), 0);
+        }
+
+        function getPaymentFeeCents(subtotalCents, paymentMethod) {
+            if (!subtotalCents || subtotalCents <= 0) return 0;
+            const pm = paymentMethod || getSelectedPaymentMethod();
+            if (pm === 'stripe') {
+                return Math.round(subtotalCents * 0.05); // 5% card fee
+            } else if (pm === 'billplz') {
+                return 150; // RM1.50 FPX fee
+            }
+            return 0;
+        }
+
+        function getCartTotalCents(paymentMethod) {
+            const subtotal = getCartSubtotalCents();
+            if (subtotal <= 0) return 0;
+            return subtotal + getPaymentFeeCents(subtotal, paymentMethod);
         }
 
         function formatRmFromCents(cents) {
@@ -6271,8 +6350,15 @@
 
             cartLines.innerHTML = '';
 
+            const subtotalCents = getCartSubtotalCents();
+            const pm = getSelectedPaymentMethod();
+            const feeCents = getPaymentFeeCents(subtotalCents, pm);
+            const totalCents = subtotalCents > 0 ? (subtotalCents + feeCents) : 0;
+
             if (cart.length === 0) {
                 cartEmptyHint.classList.remove('hidden');
+                if (cartSubtotalDisplay) cartSubtotalDisplay.textContent = 'RM 0.00';
+                if (cartFeeDisplay) cartFeeDisplay.textContent = '+ RM 0.00';
                 cartTotalDisplay.textContent = 'RM 0.00';
                 updateNavBadge();
                 updateCheckoutPayEnabled();
@@ -6305,7 +6391,19 @@
                 });
             });
 
-            cartTotalDisplay.textContent = formatRmFromCents(getCartTotalCents());
+            if (cartSubtotalDisplay) {
+                cartSubtotalDisplay.textContent = formatRmFromCents(subtotalCents);
+            }
+            if (cartFeeLabel && cartFeeDisplay) {
+                if (pm === 'stripe') {
+                    cartFeeLabel.textContent = 'Processing Fee (Card 5%)';
+                    cartFeeDisplay.textContent = `+ ${formatRmFromCents(feeCents)}`;
+                } else {
+                    cartFeeLabel.textContent = 'Processing Fee (FPX)';
+                    cartFeeDisplay.textContent = `+ ${formatRmFromCents(feeCents)}`;
+                }
+            }
+            cartTotalDisplay.textContent = formatRmFromCents(totalCents);
             updateNavBadge();
             updateCheckoutPayEnabled();
         }
@@ -6390,7 +6488,10 @@
             openCart();
         }
 
-        function buildBillDescription() {
+        function buildBillDescription(paymentMethod) {
+            const pm = paymentMethod || getSelectedPaymentMethod();
+            const subtotalCents = typeof getCartSubtotalCents === 'function' ? getCartSubtotalCents() : 0;
+            const feeCents = typeof getPaymentFeeCents === 'function' ? getPaymentFeeCents(subtotalCents, pm) : 0;
             const parts = cart.map((line, i) => {
                 const bits = [`${i + 1}. ${line.title}`];
                 if (line.variant) bits.push(`(${line.variant})`);
@@ -6398,6 +6499,10 @@
                 if (line.pickupLocation) bits.push(`[Pickup: ${line.pickupLocation}, Return: ${line.returnLocation || line.pickupLocation}]`);
                 return bits.join(' ');
             });
+            if (feeCents > 0) {
+                const feeLabel = pm === 'stripe' ? 'Card Fee 5%' : 'FPX Fee RM1.50';
+                parts.push(`[${feeLabel}: RM ${(feeCents / 100).toFixed(2)}]`);
+            }
             let desc = parts.join(' | ');
             if (desc.length > 190) desc = `${desc.slice(0, 187)}...`;
             return desc || 'Alif Langkawi booking';
@@ -6426,7 +6531,9 @@
                 return;
             }
 
-            const totalCents = getCartTotalCents();
+            const subtotalCents = getCartSubtotalCents();
+            const feeCents = getPaymentFeeCents(subtotalCents, 'stripe');
+            const totalCents = subtotalCents + feeCents;
             if (totalCents < 1) {
                 window.alert('Invalid payment amount.');
                 return;
@@ -6444,6 +6551,9 @@
 
             const pending = {
                 lines: cart.map((l) => ({ ...l })),
+                subtotalCents,
+                feeCents,
+                feeLabel: 'Card 5%',
                 totalCents,
                 name,
                 email,
@@ -6457,7 +6567,7 @@
                 // ignore
             }
 
-            const description = buildBillDescription();
+            const description = buildBillDescription('stripe');
 
             try {
                 const res = await fetch(STRIPE_CONFIG.proxyUrl, {
@@ -6469,6 +6579,7 @@
                         name,
                         hotelPickup,
                         cart,
+                        fee: feeCents,
                         amount: totalCents,
                         description: `${description}${hotelPickup ? ` | Hotel: ${hotelPickup}` : ''}`,
                         redirect_url: redirectUrl,
@@ -6522,7 +6633,9 @@
                 return;
             }
 
-            const totalCents = getCartTotalCents();
+            const subtotalCents = getCartSubtotalCents();
+            const feeCents = getPaymentFeeCents(subtotalCents, 'billplz');
+            const totalCents = subtotalCents + feeCents;
             if (totalCents < 1) {
                 window.alert('Invalid payment amount.');
                 return;
@@ -6533,10 +6646,16 @@
             const currentUrl = window.location.href.split('?')[0].split('#')[0];
             const redirectUrl = `${currentUrl}?billplz_return=1`;
 
-            if (cartPayBtn) cartPayBtn.disabled = true;
+            if (cartPayBtn) {
+                cartPayBtn.disabled = true;
+                cartPayBtn.textContent = 'Connecting to Billplz...';
+            }
 
             const pending = {
                 lines: cart.map((l) => ({ ...l })),
+                subtotalCents,
+                feeCents,
+                feeLabel: 'FPX RM1.50',
                 totalCents,
                 name,
                 email,
@@ -6550,7 +6669,7 @@
                 // ignore
             }
 
-            let description = buildBillDescription();
+            let description = buildBillDescription('billplz');
             if (hotelPickup) {
                 description = `${description} | Hotel: ${hotelPickup}`;
             }
@@ -6621,13 +6740,17 @@
         }
 
         function buildWhatsAppAfterPayMessage(refId, pending, gateway = 'Billplz') {
-            const methodLabel = gateway === 'Stripe' ? 'Stripe (Card)' : 'Billplz';
+            const methodLabel = gateway === 'Stripe' ? 'Stripe (Card)' : 'Billplz (FPX)';
             const idLabel = gateway === 'Stripe' ? 'Payment Ref' : 'Bill ID';
+            const subtotalLine = pending.subtotalCents ? `Subtotal: ${formatRmFromCents(pending.subtotalCents)}` : '';
+            const feeLine = pending.feeCents ? `Processing Fee: ${formatRmFromCents(pending.feeCents)} (${pending.feeLabel || 'Gateway Fee'})` : '';
             const lines = [
                 'Hi ALIF LANGKAWI EXPERIENCE,',
                 `I have completed payment (${methodLabel}).`,
                 refId ? `${idLabel}: ${refId}` : '',
-                `Amount: ${formatRmFromCents(pending.totalCents || 0)}`,
+                subtotalLine,
+                feeLine,
+                `Total Paid: ${formatRmFromCents(pending.totalCents || 0)}`,
                 pending.hotelPickup ? `🏨 Hotel Pickup: ${pending.hotelPickup}` : '',
                 'Booking details:',
                 ...(pending.lines || []).map((l, i) => `${i + 1}. ${l.title}${l.variant ? ` — ${l.variant}` : ''} | ${l.date} ${l.time}${l.pickupLocation ? ` | Pickup: ${l.pickupLocation} · Return: ${l.returnLocation || l.pickupLocation}` : ''} | ${l.priceLabel}`),
@@ -6651,6 +6774,9 @@
                         phone: pending.phone || '',
                         hotelPickup: pending.hotelPickup || '',
                         lines: pending.lines || [],
+                        subtotalCents: pending.subtotalCents || 0,
+                        feeCents: pending.feeCents || 0,
+                        feeLabel: pending.feeLabel || '',
                         totalCents: pending.totalCents || 0,
                         gateway: gateway || pending.gateway || 'Online',
                         paymentRef: refId || '',
@@ -6690,12 +6816,13 @@
         }
 
         function showPaymentSuccessModal(refId, pending, gateway = 'Billplz') {
-            const amountLine = `Amount paid: <strong>${formatRmFromCents(pending.totalCents || 0)}</strong>`;
+            const amountLine = `Total Paid: <strong>${formatRmFromCents(pending.totalCents || 0)}</strong>`;
             const idLabel = gateway === 'Stripe' ? 'Payment Ref' : 'Bill ID';
             const idLine = refId ? `${idLabel}: <strong>${refId}</strong>` : '';
+            const feeLine = pending.feeCents ? `Includes fee: <strong>${formatRmFromCents(pending.feeCents)}</strong> (${pending.feeLabel || 'Processing Fee'})` : '';
             const pickupLine = pending.hotelPickup ? `Hotel Pickup: <strong>${pending.hotelPickup}</strong>` : '';
             if (paymentSuccessDetail) {
-                paymentSuccessDetail.innerHTML = [idLine, amountLine, pickupLine].filter(Boolean).join('<br>');
+                paymentSuccessDetail.innerHTML = [idLine, amountLine, feeLine, pickupLine].filter(Boolean).join('<br>');
             }
             paymentSuccessWaUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(buildWhatsAppAfterPayMessage(refId, pending, gateway))}`;
             if (paymentSuccessBackdrop) {
