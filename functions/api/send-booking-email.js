@@ -88,15 +88,16 @@ function buildHtmlEmail(data) {
                     </div>
                 </div>
 
+                ${hotelPickup && hotelPickup.trim() ? `
                 <!-- Hotel Pickup Highlight Box -->
                 <div style="margin: 20px 0; padding: 16px; background-color: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px;">
                     <div style="font-size: 11px; font-weight: 800; color: #166534; text-transform: uppercase; letter-spacing: 0.5px;">
                         🏨 HOTEL PICKUP LOCATION
                     </div>
                     <div style="font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 4px;">
-                        ${hotelPickup && hotelPickup.trim() ? hotelPickup.trim() : '<span style="color: #64748b; font-weight: normal; font-style: italic;">No pickup requested (Self-arrange)</span>'}
+                        ${hotelPickup.trim()}
                     </div>
-                </div>
+                </div>` : ''}
 
                 <!-- Guest Details -->
                 <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #475569; margin: 20px 0 10px;">Guest Information</h3>
@@ -231,7 +232,7 @@ export async function onRequest(context) {
     const htmlContent = isSpecialInquiry ? buildInquiryHtml(body) : buildHtmlEmail(body);
     const subject = isSpecialInquiry
         ? `🔔 New Website Inquiry: from ${name || 'Guest'} (${body.contact || 'No contact'})`
-        : `New Booking Confirmed: ${name || 'Guest'} (RM ${(((totalCents || 0) / 100).toFixed(2))}) - ${hotelPickup ? `Pickup: ${hotelPickup}` : 'No Pickup'}`;
+        : `New Booking Confirmed: ${name || 'Guest'} (RM ${(((totalCents || 0) / 100).toFixed(2))})${hotelPickup ? ` - Pickup: ${hotelPickup}` : ''}`;
 
     let sent = false;
     let providerUsed = '';

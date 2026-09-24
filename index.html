@@ -2569,6 +2569,10 @@
             background: #f0fdf9;
         }
 
+        .checkout-hotel-card.is-hidden {
+            display: none !important;
+        }
+
         .checkout-hotel-head {
             display: flex;
             justify-content: space-between;
@@ -5122,7 +5126,7 @@
                 <input id="checkoutEmail" class="checkout-input" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
                 <label class="checkout-label" for="checkoutPhone">Phone / WhatsApp</label>
                 <input id="checkoutPhone" class="checkout-input" type="text" inputmode="numeric" autocomplete="tel" placeholder="e.g. 0149495457">
-                <div class="checkout-hotel-card is-active" id="checkoutHotelCard">
+                <div class="checkout-hotel-card is-active is-hidden" id="checkoutHotelCard" style="display: none;">
                     <div class="checkout-hotel-head">
                         <label class="checkout-hotel-toggle" for="checkoutHotelPickupToggle">
                             <input type="checkbox" id="checkoutHotelPickupToggle" checked>
@@ -5130,7 +5134,7 @@
                         </label>
                         <span class="checkout-hotel-free-badge">Free</span>
                     </div>
-                    <p class="checkout-hotel-hint">Complimentary pickup &amp; drop-off in selected Langkawi areas.</p>
+                    <p class="checkout-hotel-hint">Complimentary pickup &amp; drop-off in selected Langkawi areas (for tour packages).</p>
                     <div id="checkoutHotelFieldGroup" class="checkout-hotel-field-group">
                         <label class="checkout-label" for="checkoutHotelName">Hotel name / pickup location</label>
                         <input id="checkoutHotelName" class="checkout-input" type="text" placeholder="e.g. Grand Hotel, Room 205">
@@ -5269,9 +5273,27 @@
         const checkoutHotelFieldGroup = document.getElementById('checkoutHotelFieldGroup');
         const checkoutHotelName = document.getElementById('checkoutHotelName');
 
+        function isRentalCartLine(line) {
+            if (!line) return false;
+            const key = String(line.packageKey || '');
+            if (key === 'rental-self-drive' || key === 'rental-motor' || key.startsWith('rental-')) return true;
+            if (line.pickupLocation || line.returnLocation) return true;
+            const title = String(line.title || '').toLowerCase();
+            if (title.includes('self drive') || title.includes('motor rental') || title.includes('car rental')) return true;
+            return false;
+        }
+
+        function cartHasTourPackages() {
+            if (typeof cart === 'undefined' || !Array.isArray(cart)) return false;
+            return cart.some((line) => !isRentalCartLine(line));
+        }
+
         function getHotelPickupValue() {
+            if (!cartHasTourPackages()) {
+                return '';
+            }
             if (!checkoutHotelPickupToggle || !checkoutHotelPickupToggle.checked) {
-                return 'No pickup requested';
+                return '';
             }
             const val = checkoutHotelName ? checkoutHotelName.value.trim() : '';
             return val || 'Hotel Pickup Requested (Hotel to be advised)';
@@ -6357,6 +6379,10 @@
 
             if (cart.length === 0) {
                 cartEmptyHint.classList.remove('hidden');
+                if (checkoutHotelCard) {
+                    checkoutHotelCard.classList.add('is-hidden');
+                    checkoutHotelCard.style.display = 'none';
+                }
                 if (cartSubtotalDisplay) cartSubtotalDisplay.textContent = 'RM 0.00';
                 if (cartFeeDisplay) cartFeeDisplay.textContent = '+ RM 0.00';
                 cartTotalDisplay.textContent = 'RM 0.00';
@@ -6367,6 +6393,12 @@
 
             if (cartEmptyHint) {
                 cartEmptyHint.classList.add('hidden');
+            }
+
+            const hasTourPackages = cartHasTourPackages();
+            if (checkoutHotelCard) {
+                checkoutHotelCard.classList.toggle('is-hidden', !hasTourPackages);
+                checkoutHotelCard.style.display = hasTourPackages ? '' : 'none';
             }
 
             cart.forEach((line) => {
